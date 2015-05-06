@@ -1,0 +1,30 @@
+{
+  "name": "react-sidebar",
+  "version": "0.1.0",
+  "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>",
+  "description": "A sidebar component for React.",
+  "main": "react-sidebar",
+  "scripts": {
+    "build": "babel src --out-dir dist-modules && webpack",
+    "dev": "webpack --watch"
+  },
+  "keywords": [
+    "component",
+    "react",
+    "react-component",
+    "sidebar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/balloob/react-sidebar.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.2.12",
+    "babel-core": "^5.2.12",
+    "babel-loader": "^5.0.0",
+    "react": "^0.13.2",
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.8.2"
+  }
+}

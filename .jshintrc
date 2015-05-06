@@ -1,0 +1,10 @@
+{
+    "browser": true,
+    "strict": false,
+
+    // to allow CommonJS syntax
+    "browserify": true,
+
+    // ES6
+    "esnext": true
+}
