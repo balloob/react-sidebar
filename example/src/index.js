@@ -42,11 +42,12 @@ var App = React.createClass({
       let newState = {};
       newState[prop] = ev.target.checked;
       this.setState(newState);
-    }
+    };
 
     return (
       <p key={prop}>
-        <input type='checkbox' onChange={toggleMethod} checked={this.state[prop]} /> {prop}
+        <input type='checkbox' onChange={toggleMethod} checked={this.state[prop]} id={prop} />
+        <label htmlFor={prop}> {prop}</label>
       </p>);
   },
 
@@ -55,7 +56,7 @@ var App = React.createClass({
       let newState = {};
       newState[prop] = parseInt(ev.target.value);
       this.setState(newState);
-    }
+    };
 
     return (
       <p key={prop}>
@@ -70,7 +71,7 @@ var App = React.createClass({
       <span>
         {!this.state.docked &&
          <a onClick={this.menuButtonClick} href='#' style={styles.contentHeaderMenuLink}>=</a>}
-        <span> React Sidebar properties playground</span>
+        <span> React Sidebar</span>
       </span>);
 
     let sidebarProps = {
@@ -85,7 +86,14 @@ var App = React.createClass({
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.content}>
-            <p>See the menu for more examples.</p>
+            <p>React Sidebar is a sidebar component for React. It offers the following features:</p>
+            <ul>
+              <li>Slide over main content</li>
+              <li>Dock sidebar on the left of the content</li>
+              <li>Touch enabled: drag from the side to open the menu</li>
+              <li>Easy to combine with media queries for auto-docking (<a href='responsive-example.html'>see example</a>)</li>
+              <li>Sidebar and content passed in as PORCS (Plain Old React Components)</li>
+            </ul>
             <p>Change properties below.</p>
             {['open', 'docked', 'transitions', 'touch'].map(this.renderPropCheckbox)}
             {['touchDistance', 'toggleDragDistance'].map(this.renderPropNumber)}

@@ -12,8 +12,6 @@ const styles = {
     right: 0,
     bottom: 0,
     overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'row',
   },
   sidebar: {
     zIndex: 2,
@@ -26,6 +24,7 @@ const styles = {
     boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     transform: 'translateX(-100%)',
     willChange: 'transform',
+    backgroundColor: 'white',
   },
   content: {
     flexGrow: 1,

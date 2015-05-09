@@ -6,29 +6,18 @@ const update = React.addons.update;
 const styles = {
   sidebar: {
     width: 256,
-    backgroundColor: 'white',
     height: '100%',
     transition: 'width 1s',
   },
-  sidebarItem: {
-    padding: '16px 0px',
-    listStyle: 'none',
-  },
   sidebarLink: {
-    color: 'black',
+    display: 'block',
+    padding: '16px 0px',
+    color: '#757575',
+    textDecoration: 'none',
   },
-}
+};
 
 var SidebarContent = React.createClass({
-  createMenuLink(href, caption) {
-    return (
-      <li key={href} style={styles.sidebarItem}>
-        <a href={href} style={styles.sidebarLink}>
-           {caption}
-        </a>
-      </li>);
-  },
-
   render() {
     let style = styles.sidebar;
 
@@ -36,10 +25,18 @@ var SidebarContent = React.createClass({
       style = update(style, {$merge: this.props.style});
     }
 
+    let links = [];
+
+    for(let i=0; i < 10; i++) {
+      links.push(
+        <a key={i} href='#' style={styles.sidebarLink}>Menu item {i}</a>);
+    }
+
     return (
       <MaterialTitlePanel title="Menu" style={style}>
-        {this.createMenuLink('index.html', 'Property playground')}
-        {this.createMenuLink('responsive_example.html', 'Responsive example')}
+        <a key='h' href='index.html' style={styles.sidebarLink}>Home</a>
+        <a key='r' href='responsive_example.html' style={styles.sidebarLink}>Responsive Example</a>
+        {links}
       </MaterialTitlePanel>);
   },
 });

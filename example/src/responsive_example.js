@@ -1,5 +1,4 @@
 import React from 'react';
-import MQFacade from 'media-query-facade';
 import Sidebar from '../../src';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
@@ -15,10 +14,8 @@ const styles = {
 
 var App = React.createClass({
   getInitialState() {
-    return {
-      docked: false,
-      open: false,
-    };
+    return {docked: false, open: false};
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
   },
 
   toggleOpen(ev) {
@@ -34,31 +31,35 @@ var App = React.createClass({
   },
 
   componentDidMount() {
-    var mq = new MQFacade();
-
-    mq.on('only screen and (min-width: 800px)', () => this.setState({docked: true, open: false}));
-    mq.on('only screen and (max-width: 800px)', () => this.setState({docked: false}));
-
-    mq.on('only screen and (max-width: 600px)', () => this.setState({narrow: true}));
-    mq.on('only screen and (min-width: 600px)', () => this.setState({narrow: false}));
-
-    this.setState({mq: mq})
+    this.setupMediaQuery();
   },
 
   componentWillUnmount() {
-    this.state.mq.off();
+    this.destroyMediaQuery();
+  },
+
+  setupMediaQuery() {
+    let mql = window.matchMedia(`(min-width: 800px)`);
+    mql.addListener(this.mediaQueryChanged);
+    this.setState({mql: mql, docked: mql.matches});
+  },
+
+  destroyMediaQuery() {
+    this.state.mql.removeListener(this.mediaQueryChanged);
+  },
+
+  mediaQueryChanged() {
+    this.setState({docked: this.state.mql.matches});
   },
 
   render() {
-    let sidebarStyle = this.state.narrow ? {width: 150} : false;
-
-    let sidebar = <SidebarContent style={sidebarStyle} />;
+    let sidebar = <SidebarContent />;
 
     let contentHeader = (
       <span>
         {!this.state.docked &&
          <a onClick={this.toggleOpen} href='#' style={styles.contentHeaderMenuLink}>=</a>}
-        <span> React Sidebar responsive example</span>
+        <span> Responsive React Sidebar</span>
       </span>);
 
     let sidebarProps = {
@@ -71,11 +72,10 @@ var App = React.createClass({
     return (
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <p>The following media queries are active on this page:</p>
-          <ol>
-            <li>Dock the sidebar if width of page &gt; 800px - active: {''+this.state.docked}</li>
-            <li>Reduce width of sidebar if page &lt; 600px - active: {''+this.state.narrow}</li>
-          </ol>
+          <p>
+            This example will show how to auto dock the sidebar if the page
+            width is below 800px (which is currently {''+this.state.docked})
+          </p>
         </MaterialTitlePanel>
       </Sidebar>
     );
