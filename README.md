@@ -6,7 +6,7 @@ React Sidebar is a sidebar component for React. It offers the following features
   - Slide over main content
   - Dock sidebar on the left of the content
   - Touch enabled: drag from the side to open the menu
-  - Easy to combine with media queries for auto-docking (<a href='responsive_example.html'>see example</a>)
+  - Easy to combine with media queries for auto-docking ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html))
   - Sidebar and content passed in as PORCS (Plain Old React Components)
   - MIT license
   - Only dependency is React.
