@@ -25,7 +25,7 @@ var App = React.createClass({
     }
   },
 
-  setOpen(open) {
+  onSetOpen(open) {
     this.setState({open: open});
   },
 
@@ -57,7 +57,7 @@ var App = React.createClass({
       sidebar: sidebar,
       docked: this.state.docked,
       open: this.state.open,
-      setOpen: this.setOpen,
+      onSetOpen: this.onSetOpen,
     };
 
     return (

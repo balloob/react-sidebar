@@ -100,7 +100,7 @@ var Sidebar = (function (_React$Component) {
     key: 'overlayClicked',
     value: function overlayClicked() {
       if (this.props.open) {
-        this.props.setOpen(false);
+        this.props.onSetOpen(false);
       }
     }
   }, {
@@ -144,7 +144,7 @@ var Sidebar = (function (_React$Component) {
         var isTap = info.currentX == info.startX && info.currentY == info.startY;
 
         if (this.props.open && (isTap || dragX < -this.props.dragToggleDistance) || !this.props.open && dragX > this.props.dragToggleDistance) {
-          this.props.setOpen(!this.props.open);
+          this.props.onSetOpen(!this.props.open);
           this.setState({ dragging: false });
         }
 
@@ -286,7 +286,7 @@ Sidebar.propTypes = {
   dragToggleDistance: _reactAddons2['default'].PropTypes.number,
 
   // callback called when the overlay is clicked
-  setOpen: _reactAddons2['default'].PropTypes.func };
+  onSetOpen: _reactAddons2['default'].PropTypes.func };
 
 Sidebar.defaultProps = {
   docked: false,
@@ -295,7 +295,7 @@ Sidebar.defaultProps = {
   touch: true,
   dragHandleWidth: 20,
   dragToggleDistance: 30,
-  setOpen: function setOpen() {} };
+  onSetOpen: function onSetOpen() {} };
 
 exports['default'] = Sidebar;
 module.exports = exports['default'];

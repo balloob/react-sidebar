@@ -26,32 +26,32 @@ Because React Sidebar can be toggled by dragging the sidebar into its open/close
 The minimum React component to integrate React Sidebar looks like this:
 
 ```javascript
-import React from 'react';
-import Sidebar from 'react-sidebar';
+var React = require('react');
+var Sidebar = require('react-sidebar');
 
 var App = React.createClass({
-  getInitialState() {
+  getInitialState: function() {
     return {sidebarOpen: false};
   },
 
-  setSidebarOpen(open) {
+  onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
   },
 
-  render() {
-    let sidebarContent = <b>Sidebar content</b>;
+  render: function() {
+    var sidebarContent = <b>Sidebar content</b>;
 
     return (
       <Sidebar sidebar={sidebarContent}
                open={this.state.sidebarOpen}
-               setOpen={this.setSidebarOpen}>
+               setOpen={this.onSetSidebarOpen}>
         <b>Main content</b>
       </Sidebar>
     );
   }
 });
 
-export default App;
+module.exports = App;
 ```
 
 Responsive sidebar
@@ -61,47 +61,47 @@ A common use case for a sidebar is to show it automatically when there is enough
 [mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
 ```javascript
-import React from 'react';
-import Sidebar from 'react-sidebar';
+var React = require('react');
+var Sidebar = require('react-sidebar');
 
 var App = React.createClass({
   getInitialState() {
     return {sidebarOpen: false, sidebarDocked: false};
   },
 
-  setSidebarOpen(open) {
+  onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
   },
 
-  componentWillMount() {
-    let mql = window.matchMedia(`(min-width: 800px)`);
+  componentWillMount: function() {
+    var mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
     this.setState({mql: mql, docked: mql.matches});
   },
 
-  componentWillUnmount() {
+  componentWillUnmount: function() {
     this.state.mql.removeListener(this.mediaQueryChanged);
   },
 
-  mediaQueryChanged() {
+  mediaQueryChanged: function() {
     this.setState({sidebarDocked: this.state.mql.matches});
   },
 
-  render() {
-    let sidebarContent = <b>Sidebar content</b>;
+  render: function() {
+    var sidebarContent = <b>Sidebar content</b>;
 
     return (
       <Sidebar sidebar={sidebarContent}
                open={this.state.sidebarOpen}
                docked={this.state.sidebarDocked}
-               setOpen={this.setSidebarOpen}>
+               setOpen={this.onSetSidebarOpen}>
         <b>Main content</b>
       </Sidebar>
     );
   }
 });
 
-export default App;
+module.exports = App;
 ```
 
 Acknowledgements

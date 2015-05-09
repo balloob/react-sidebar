@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>",
   "description": "A sidebar component for React.",
-  "main": "react-sidebar",
+  "main": "dist-modules/index.js",
   "scripts": {
     "build": "babel src --out-dir dist-modules && webpack",
     "dev": "webpack --watch"
@@ -20,10 +20,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.2.12",
-    "babel-core": "^5.2.12",
+    "babel": "^5.2.17",
+    "babel-core": "^5.2.17",
     "babel-loader": "^5.0.0",
-    "react": "^0.13.2",
+    "react": "^0.13.3",
     "webpack": "^1.8.11",
     "webpack-dev-server": "^1.8.2"
   }

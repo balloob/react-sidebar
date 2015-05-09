@@ -27,13 +27,13 @@ var App = React.createClass({
     };
   },
 
-  setOpen(open) {
+  onSetOpen(open) {
     this.setState({open: open});
   },
 
   menuButtonClick(ev) {
     ev.preventDefault();
-    this.setOpen(!this.state.open);
+    this.onSetOpen(!this.state.open);
   },
 
   renderPropCheckbox(prop) {
@@ -81,7 +81,7 @@ var App = React.createClass({
       dragHandleWidth: this.state.dragHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
-      setOpen: this.setOpen,
+      onSetOpen: this.onSetOpen,
     };
 
     return (

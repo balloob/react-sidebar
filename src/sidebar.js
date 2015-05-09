@@ -79,7 +79,7 @@ class Sidebar extends React.Component {
 
   overlayClicked() {
     if (this.props.open) {
-      this.props.setOpen(false);
+      this.props.onSetOpen(false);
     }
   }
 
@@ -120,7 +120,7 @@ class Sidebar extends React.Component {
 
       if (this.props.open && (isTap || dragX < -this.props.dragToggleDistance) ||
           !this.props.open && dragX > this.props.dragToggleDistance) {
-        this.props.setOpen(!this.props.open);
+        this.props.onSetOpen(!this.props.open);
         this.setState({dragging: false});
       }
 
@@ -267,7 +267,7 @@ Sidebar.propTypes = {
   dragToggleDistance: React.PropTypes.number,
 
   // callback called when the overlay is clicked
-  setOpen: React.PropTypes.func,
+  onSetOpen: React.PropTypes.func,
 };
 
 Sidebar.defaultProps = {
@@ -277,7 +277,7 @@ Sidebar.defaultProps = {
   touch: true,
   dragHandleWidth: 20,
   dragToggleDistance: 30,
-  setOpen: function() {},
+  onSetOpen: function() {},
 };
 
 export default Sidebar;
