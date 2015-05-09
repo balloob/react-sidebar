@@ -46,20 +46,18 @@ var TouchDragListener = (function (_React$Component) {
       var startX = ev.targetTouches[0].clientX,
           startY = ev.targetTouches[0].clientY;
 
-      if (this.props.filter(ev.target, startX, startY)) {
-        this.setState({
-          touching: true,
-          startX: startX,
-          startY: startY,
-          currentX: startX,
-          currentY: startY });
+      this.setState({
+        touching: true,
+        startX: startX,
+        startY: startY,
+        currentX: startX,
+        currentY: startY });
 
-        this.props.onDrag({
-          startX: startX,
-          startY: startY,
-          currentX: startX,
-          currentY: startY });
-      }
+      this.props.onDrag({
+        startX: startX,
+        startY: startY,
+        currentX: startX,
+        currentY: startY });
     }
   }, {
     key: 'touchMove',
@@ -110,13 +108,7 @@ var TouchDragListener = (function (_React$Component) {
 })(_react2['default'].Component);
 
 TouchDragListener.propTypes = {
-  onDrag: _react2['default'].PropTypes.func.isRequired,
-  filter: _react2['default'].PropTypes.func };
-
-TouchDragListener.defaultProps = {
-  filter: function filter() {
-    return true;
-  } };
+  onDrag: _react2['default'].PropTypes.func.isRequired };
 
 exports['default'] = TouchDragListener;
 module.exports = exports['default'];
