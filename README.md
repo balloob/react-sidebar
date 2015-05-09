@@ -7,7 +7,7 @@ React Sidebar is a sidebar component for React. It offers the following features
   - Dock sidebar on the left of the content
   - Touch enabled: drag from the side to open the menu
   - Easy to combine with media queries for auto-docking ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html))
-  - Sidebar and content passed in as PORCS (Plain Old React Components)
+  - Sidebar and content passed in as PORCs (Plain Old React Components)
   - MIT license
   - Only dependency is React.
 
@@ -19,7 +19,7 @@ React Sidebar is available on NPM. Install the package into your project: `npm i
 
 Getting started
 -----------------
-React Sidebar does not keep track if it is open or not. This is done by the parent component. This is by design as it allows the parent component to make changes to the sidebar and main content based on the open/closed/docked state. An example could be to hide the "show menu" button from the main content when the sidebar is docked.
+React Sidebar does not keep track of whether it is open or not. This is done by the parent component. This is by design as it allows the parent component to make changes to the sidebar and main content based on the open/closed/docked state. An example could be to hide the "show menu" button from the main content when the sidebar is docked.
 
 Because React Sidebar can be toggled by dragging the sidebar into its open/closed position, you will have to pass in a `setOpen` method into the sidebar to control the open state in the parent.
 
@@ -56,7 +56,9 @@ export default App;
 
 Responsive sidebar
 ------------------
-A common usecase for a sidebar is to show it automatically when there is enough screen width available. This can be achieved using media queries. This again has to be integrated into the parent component so you can use the information to make changes to the sidebar and main content.
+A common use case for a sidebar is to show it automatically when there is enough screen width available. This can be achieved using media queries via [`window.matchMedia`][mdn-matchmedia]. This again has to be integrated into the parent component so you can use the information to make changes to the sidebar and main content.
+
+[mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
 ```javascript
 import React from 'react';
@@ -105,4 +107,4 @@ export default App;
 Acknowledgements
 ----------------
 
-My goal was to make a React Component that implements the [material design spec for navigation drawers](http://www.google.com/design/spec/patterns/navigation-drawer.html#navigation-drawer-content). My initial attempt was to improve [hamburger-basement by arnemart](https://github.com/arnemart/hamburger-basement) but I quickly figured that I better started from scratch. Still that project helped me a ton to get started.
+My goal was to make a React Component that implements the [material design spec for navigation drawers](http://www.google.com/design/spec/patterns/navigation-drawer.html#navigation-drawer-content). My initial attempt was to improve [hamburger-basement by arnemart](https://github.com/arnemart/hamburger-basement) but I quickly figured that I better start from scratch. Still, that project helped me a ton to get started.
