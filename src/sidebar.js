@@ -19,7 +19,6 @@ const styles = {
     top: 0,
     left: 0,
     bottom: 0,
-    overflowX: 'hidden',
     transition: 'transform .3s ease-out',
     boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     transform: 'translateX(-100%)',
@@ -27,17 +26,17 @@ const styles = {
     backgroundColor: 'white',
   },
   content: {
-    flexGrow: 1,
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    overflow: 'scroll',
     transition: 'left .3s ease-out',
   },
   overlay: {
-    zIndex: 0,
-    position: 'absolute',
+    zIndex: 1,
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
@@ -47,13 +46,13 @@ const styles = {
     transition: 'opacity .3s ease-out',
     backgroundColor: 'rgba(0,0,0,.3)',
   },
-  touchListener: {
-    position: 'absolute',
+  dragHandle: {
+    zIndex: 1,
+    position: 'fixed',
     top: 0,
     left: 0,
-    right: 0,
     bottom: 0,
-  }
+  },
 };
 
 class Sidebar extends React.Component {
@@ -61,18 +60,27 @@ class Sidebar extends React.Component {
     super(props);
 
     this.state = {
+      // the detected width of the sidebar in pixels
       sidebarWidth: 0,
+
+      // if we are currently dragging
       dragging: false,
+
+      // the distance we dragged on the X-axis
       dragX: 0,
+
+      // if touch is supported by the browser
+      dragSupported: 'ontouchstart' in window,
     };
 
     this.overlayClicked = this.overlayClicked.bind(this);
-    this.dragStartFilter = this.dragStartFilter.bind(this);
     this.onDrag = this.onDrag.bind(this);
   }
 
   overlayClicked() {
-    this.props.setOpen(false);
+    if (this.props.open) {
+      this.props.setOpen(false);
+    }
   }
 
   componentDidMount() {
@@ -80,8 +88,8 @@ class Sidebar extends React.Component {
   }
 
   componentDidUpdate(prevState, prevProps) {
-    // We only care about it if we're docked
-    if (this.props.docked) {
+    // filter out the updates when we're dragging
+    if (!this.state.dragging) {
       this.saveSidebarWidth();
     }
   }
@@ -90,26 +98,28 @@ class Sidebar extends React.Component {
     let width = React.findDOMNode(this.refs.sidebar).offsetWidth;
 
     if (width != this.state.sidebarWidth) {
-      this.setState({
-        sidebarWidth: width,
-      });
+      this.setState({sidebarWidth: width});
     }    
-  }
-
-  dragStartFilter(element, posX, posY) {
-    return this.props.open && posX > this.state.sidebarWidth &&
-           posX < this.state.sidebarWidth + this.props.toggleDragDistance ||
-           !this.props.open && posX < this.props.toggleDragDistance;
   }
 
   onDrag(info) {
     let dragX = info.currentX - info.startX;
 
+    if (this.props.open) {
+      // swiping on the overlay should only impact the sidebar once the finger
+      // is over the sidebar
+      dragX += info.startX - this.state.sidebarWidth;
+    }
+
     if (info.end) {
       this.setState({dragging: false, dragX: 0});
 
-      if (this.props.open && dragX < -this.props.toggleDragDistance ||
-          !this.props.open && dragX > this.props.toggleDragDistance) {
+      // if start position == end position, it was a tap on the drag handler
+      // if sidebar is open, a tap will close the bar.
+      let isTap = info.currentX == info.startX && info.currentY == info.startY;
+
+      if (this.props.open && (isTap || dragX < -this.props.dragToggleDistance) ||
+          !this.props.open && dragX > this.props.dragToggleDistance) {
         this.props.setOpen(!this.props.open);
         this.setState({dragging: false});
       }
@@ -117,17 +127,15 @@ class Sidebar extends React.Component {
       return;
     }
 
-    this.setState({
-      dragging: true,
-      dragX: dragX,
-    });
+    this.setState({dragging: true, dragX: dragX});
   }
 
   render() {
     let sidebarStyle = styles.sidebar,
         contentStyle = styles.content,
         overlayStyle = styles.overlay,
-        overlay, children;
+        showDragHandle = this.state.dragSupported && this.props.touch && !this.props.docked,
+        dragHandleStyle, overlay, children;
 
     if (this.state.dragging) {
 
@@ -156,6 +164,7 @@ class Sidebar extends React.Component {
 
     } else if (this.props.docked) {
 
+      // show sidebar
       sidebarStyle = update(sidebarStyle, {$merge: {
         transform: `translateX(0%)`,
       }});
@@ -201,23 +210,44 @@ class Sidebar extends React.Component {
       }});
     }
 
+    if (showDragHandle) {
+      if (this.props.open) {
+        dragHandleStyle = update(styles.dragHandle, {$merge: {
+          left: this.state.sidebarWidth,
+          right: 0,
+        }})
+      } else {
+        dragHandleStyle = update(styles.dragHandle, {$merge: {
+          left: 0,
+          width: this.props.dragHandleWidth,
+        }})
+      }
+    }
+
     return (
       <div style={styles.root}>
         <div style={sidebarStyle} ref='sidebar'>
           {this.props.sidebar}
         </div>
-        <TouchDragListener style={contentStyle} onDrag={this.onDrag}
-                           filter={this.dragStartFilter}>
-          <div style={overlayStyle}
-               onClick={this.overlayClicked} onTouchTap={this.overlayClicked} />
+        <div style={overlayStyle}
+             onClick={this.overlayClicked} onTouchTap={this.overlayClicked} />
+        <div style={contentStyle}>
+          {showDragHandle &&
+           <TouchDragListener onDrag={this.onDrag} style={dragHandleStyle} />}
           {this.props.children}
-        </TouchDragListener>
+        </div>
       </div>
     );
   }
 };
 
 Sidebar.propTypes = {
+  // main content to render
+  children: React.PropTypes.node.isRequired,
+
+  // sidebar content to render
+  sidebar: React.PropTypes.node.isRequired,
+
   // boolean if sidebar should be docked
   docked: React.PropTypes.bool,
 
@@ -231,10 +261,10 @@ Sidebar.propTypes = {
   touch: React.PropTypes.bool,
 
   // max distance from the edge we can start dragging
-  touchDistance: React.PropTypes.number,
+  dragHandleWidth: React.PropTypes.number,
 
-  // how much we have to drag the sidebar to toggle open state
-  toggleDragDistance: React.PropTypes.number,
+  // distance we have to drag the sidebar to toggle open state
+  dragToggleDistance: React.PropTypes.number,
 
   // callback called when the overlay is clicked
   setOpen: React.PropTypes.func,
@@ -245,8 +275,8 @@ Sidebar.defaultProps = {
   open: false,
   transitions: true,
   touch: true,
-  touchDistance: 20,
-  toggleDragDistance: 30,
+  dragHandleWidth: 20,
+  dragToggleDistance: 30,
   setOpen: function() {},
 };
 

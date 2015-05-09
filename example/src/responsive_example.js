@@ -4,11 +4,10 @@ import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
 
 const styles = {
-  content: {
-  },
   contentHeaderMenuLink: {
     textDecoration: 'none',
     color: 'white',
+    padding: 8,
   },
 };
 
@@ -31,20 +30,12 @@ var App = React.createClass({
   },
 
   componentDidMount() {
-    this.setupMediaQuery();
-  },
-
-  componentWillUnmount() {
-    this.destroyMediaQuery();
-  },
-
-  setupMediaQuery() {
     let mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
     this.setState({mql: mql, docked: mql.matches});
   },
 
-  destroyMediaQuery() {
+  componentWillUnmount() {
     this.state.mql.removeListener(this.mediaQueryChanged);
   },
 
@@ -73,8 +64,15 @@ var App = React.createClass({
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <p>
-            This example will show how to auto dock the sidebar if the page
-            width is below 800px (which is currently {''+this.state.docked})
+            This example will automatically dock the sidebar if the page
+            width is above 800px (which is currently {''+this.state.docked}).
+          </p>
+          <p>
+            This functionality should live in the component that renders the sidebar.
+            This way you're able to modify the sidebar and main content based on the
+            responsiveness data. For example, the menu button in the header of the
+            content is now {this.state.docked ? 'hidden' : 'shown'} because the sidebar
+            is {!this.state.docked && 'not'} visible.
           </p>
         </MaterialTitlePanel>
       </Sidebar>

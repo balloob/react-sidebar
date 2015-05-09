@@ -7,13 +7,18 @@ const styles = {
   sidebar: {
     width: 256,
     height: '100%',
-    transition: 'width 1s',
+    overflow: 'scroll',
   },
   sidebarLink: {
     display: 'block',
     padding: '16px 0px',
     color: '#757575',
     textDecoration: 'none',
+  },
+  divider: {
+    margin: '8px 0',
+    height: 1,
+    backgroundColor: '#757575',
   },
 };
 
@@ -29,13 +34,14 @@ var SidebarContent = React.createClass({
 
     for(let i=0; i < 10; i++) {
       links.push(
-        <a key={i} href='#' style={styles.sidebarLink}>Menu item {i}</a>);
+        <a key={i} href='#' style={styles.sidebarLink}>Mock menu item {i}</a>);
     }
 
     return (
       <MaterialTitlePanel title="Menu" style={style}>
-        <a key='h' href='index.html' style={styles.sidebarLink}>Home</a>
-        <a key='r' href='responsive_example.html' style={styles.sidebarLink}>Responsive Example</a>
+        <a href='index.html' style={styles.sidebarLink}>Home</a>
+        <a href='responsive_example.html' style={styles.sidebarLink}>Responsive Example</a>
+        <div style={styles.divider} />
         {links}
       </MaterialTitlePanel>);
   },
