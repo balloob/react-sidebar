@@ -228,12 +228,14 @@ var Sidebar = (function (_React$Component) {
       var sidebarStyle = styles.sidebar,
           contentStyle = styles.content,
           overlayStyle = styles.overlay,
-          showDragHandle = this.state.dragSupported && this.props.touch && !this.props.docked && !this.props.open,
-          dragHandleStyle = undefined,
-          overlay = undefined,
-          children = undefined;
+          useTouch = this.state.dragSupported && this.props.touch,
+          isTouching = this.isTouching(),
+          dragHandle = undefined;
 
-      if (this.isTouching()) {
+      var rootProps = {
+        style: styles.root };
+
+      if (isTouching) {
 
         var percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
 
@@ -271,7 +273,7 @@ var Sidebar = (function (_React$Component) {
             transform: 'translateX(-100%)' } });
       }
 
-      if (this.isTouching() || !this.props.transitions) {
+      if (isTouching || !this.props.transitions) {
         sidebarStyle = update(sidebarStyle, { $merge: {
             transition: 'none' } });
 
@@ -282,20 +284,21 @@ var Sidebar = (function (_React$Component) {
             transition: 'none' } });
       }
 
-      if (showDragHandle) {
-        dragHandleStyle = update(styles.dragHandle, { $merge: {
-            width: this.props.touchHandleWidth } });
-      }
+      if (useTouch) {
+        if (this.props.open) {
+          rootProps.onTouchStart = this.onTouchStart;
+          rootProps.onTouchMove = this.onTouchMove;
+          rootProps.onTouchEnd = this.onTouchEnd;
+          rootProps.onTouchCancel = this.onTouchEnd;
+          rootProps.onScroll = this.onScroll;
+        } else {
+          var dragHandleStyle = update(styles.dragHandle, { $merge: {
+              width: this.props.touchHandleWidth } });
 
-      var rootProps = {
-        style: styles.root };
-
-      if (this.props.open) {
-        rootProps.onTouchStart = this.onTouchStart;
-        rootProps.onTouchMove = this.onTouchMove;
-        rootProps.onTouchEnd = this.onTouchEnd;
-        rootProps.onTouchCancel = this.onTouchEnd;
-        rootProps.onScroll = this.onScroll;
+          dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
+            onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
+            onTouchEnd: this.onTouchEnd, onTouchCancel: this.onTouchEnd });
+        }
       }
 
       return _reactAddons2['default'].createElement(
@@ -311,9 +314,7 @@ var Sidebar = (function (_React$Component) {
         _reactAddons2['default'].createElement(
           'div',
           { style: contentStyle },
-          showDragHandle && _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
-            onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
-            onTouchEnd: this.onTouchEnd, onTouchCancel: this.onTouchEnd }),
+          dragHandle,
           this.props.children
         )
       );

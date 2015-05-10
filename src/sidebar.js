@@ -201,11 +201,15 @@ class Sidebar extends React.Component {
     let sidebarStyle = styles.sidebar,
         contentStyle = styles.content,
         overlayStyle = styles.overlay,
-        showDragHandle = this.state.dragSupported && this.props.touch &&
-                         !this.props.docked && !this.props.open,
-        dragHandleStyle, overlay, children;
+        useTouch = this.state.dragSupported && this.props.touch,
+        isTouching = this.isTouching(),
+        dragHandle;
 
-    if (this.isTouching()) {
+    let rootProps = {
+      style: styles.root,
+    }
+
+    if (isTouching) {
 
       let percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
 
@@ -251,10 +255,9 @@ class Sidebar extends React.Component {
       sidebarStyle = update(sidebarStyle, {$merge: {
         transform: `translateX(-100%)`,
       }});
-
     }
 
-    if (this.isTouching() || !this.props.transitions) {
+    if (isTouching || !this.props.transitions) {
       sidebarStyle = update(sidebarStyle, {$merge: {
         transition: 'none',
       }});
@@ -268,22 +271,23 @@ class Sidebar extends React.Component {
       }});
     }
 
-    if(showDragHandle) {
-      dragHandleStyle = update(styles.dragHandle, {$merge: {
-        width: this.props.touchHandleWidth,
-      }})
-    }
+    if (useTouch) {
+      if (this.props.open) {
+        rootProps.onTouchStart = this.onTouchStart;
+        rootProps.onTouchMove = this.onTouchMove;
+        rootProps.onTouchEnd = this.onTouchEnd;
+        rootProps.onTouchCancel = this.onTouchEnd;
+        rootProps.onScroll = this.onScroll;
+      } else {
+        let dragHandleStyle = update(styles.dragHandle, {$merge: {
+          width: this.props.touchHandleWidth,
+        }})
 
-    let rootProps = {
-      style: styles.root,
-    }
-
-    if (this.props.open) {
-      rootProps.onTouchStart = this.onTouchStart;
-      rootProps.onTouchMove = this.onTouchMove;
-      rootProps.onTouchEnd = this.onTouchEnd;
-      rootProps.onTouchCancel = this.onTouchEnd;
-      rootProps.onScroll = this.onScroll;
+        dragHandle = (
+          <div style={dragHandleStyle}
+               onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove}
+               onTouchEnd={this.onTouchEnd} onTouchCancel={this.onTouchEnd} />);
+      }
     }
 
     return (
@@ -294,10 +298,7 @@ class Sidebar extends React.Component {
         <div style={overlayStyle}
              onClick={this.overlayClicked} onTouchTap={this.overlayClicked} />
         <div style={contentStyle}>
-          {showDragHandle &&
-           <div style={dragHandleStyle}
-                onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove}
-                onTouchEnd={this.onTouchEnd} onTouchCancel={this.onTouchEnd} />}
+          {dragHandle}
           {this.props.children}
         </div>
       </div>
