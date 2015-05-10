@@ -6,8 +6,6 @@ const update = React.addons.update;
 const styles = {
   sidebar: {
     width: 256,
-    height: '100%',
-    overflow: 'scroll',
   },
   sidebarLink: {
     display: 'block',

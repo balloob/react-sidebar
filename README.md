@@ -3,9 +3,9 @@ React Sidebar
 
 React Sidebar is a sidebar component for React. It offers the following features:
 
-  - Slide over main content
-  - Dock sidebar on the left of the content
-  - Touch enabled: drag from the side to open the menu
+  - Have the sidebar slide over main content
+  - Dock the sidebar on the left of the content
+  - Touch enabled: swipe to open and close the sidebar
   - Easy to combine with media queries for auto-docking ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html))
   - Sidebar and content passed in as PORCs (Plain Old React Components)
   - MIT license
@@ -13,15 +13,38 @@ React Sidebar is a sidebar component for React. It offers the following features
 
 [See a demo here.](http://balloob.github.io/react-sidebar/example/)
 
+Touch specifics
+---------------
+The touch interaction of the React Sidebar mimics the interactions that are supported by Android apps that implement the material design spec:
+
+ - When the sidebar is closed, dragging from the left side of the screen will have the right side of the sidebar follow your finger.
+ - When the sidebar is open, sliding your finger over the screen will only affect the sidebar once your finger is over the sidebar.
+ - On release, it will call `onSetOpen` prop if the distance the sidebar was dragged is more than the `dragToggleDistance` prop.
+
+Supported props
+---------------
+
+| Property name | Type | Default | Description |
+|---------------|------|---------|-------------|
+| children | Anything React can render | n/a | The main content |
+| sidebar | Anything React can render | n/a | The sidebar content |
+| onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
+| docked | boolean | false | If the sidebar should be always visible |
+| open | boolean | false | If the sidebar should be open |
+| transitions | boolean | true | If transitions should be enabled |
+| touch | boolean | true | If touch gestures should be enabled |
+| touchHandleWidth | number | 20 | Width in pixels you can start dragging from the edge when the sidebar is closed. |
+| dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
+
 Installation
 ------------
 React Sidebar is available on NPM. Install the package into your project: `npm install react-sidebar --save`
 
 Getting started
 -----------------
-React Sidebar does not keep track of whether it is open or not. This is done by the parent component. This is by design as it allows the parent component to make changes to the sidebar and main content based on the open/closed/docked state. An example could be to hide the "show menu" button from the main content when the sidebar is docked.
+By design, React Sidebar does not keep track of whether it is open or not. This has to be done by the parent component. This allows the parent component to make changes to the sidebar and main content based on the open/docked state. An example could be to hide the "show menu" button from the main content when the sidebar is docked.
 
-Because React Sidebar can be toggled by dragging the sidebar into its open/closed position, you will have to pass in a `setOpen` method into the sidebar to control the open state in the parent.
+Because React Sidebar can be toggled by dragging the sidebar into its open/closed position, you will have to pass in an `onSetOpen` method as a prop to allow the sidebar to control the open state in the parent.
 
 The minimum React component to integrate React Sidebar looks like this:
 
@@ -44,7 +67,7 @@ var App = React.createClass({
     return (
       <Sidebar sidebar={sidebarContent}
                open={this.state.sidebarOpen}
-               setOpen={this.onSetSidebarOpen}>
+               onSetOpen={this.onSetSidebarOpen}>
         <b>Main content</b>
       </Sidebar>
     );
@@ -94,7 +117,7 @@ var App = React.createClass({
       <Sidebar sidebar={sidebarContent}
                open={this.state.sidebarOpen}
                docked={this.state.sidebarDocked}
-               setOpen={this.onSetSidebarOpen}>
+               onSetOpen={this.onSetSidebarOpen}>
         <b>Main content</b>
       </Sidebar>
     );

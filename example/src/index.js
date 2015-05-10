@@ -22,7 +22,7 @@ var App = React.createClass({
       open: false,
       transitions: true,
       touch: true,
-      dragHandleWidth: 20,
+      touchHandleWidth: 20,
       dragToggleDistance: 30,
     };
   },
@@ -78,7 +78,7 @@ var App = React.createClass({
       docked: this.state.docked,
       open: this.state.open,
       touch: this.state.touch,
-      dragHandleWidth: this.state.dragHandleWidth,
+      touchHandleWidth: this.state.touchHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
       onSetOpen: this.onSetOpen,
@@ -89,17 +89,18 @@ var App = React.createClass({
         <MaterialTitlePanel title={contentHeader}>
           <p>React Sidebar is a sidebar component for React. It offers the following features:</p>
           <ul>
-            <li>Slide over main content</li>
-            <li>Dock sidebar on the left of the content</li>
-            <li>Touch enabled: drag from the side to open the menu</li>
+            <li>Have the sidebar slide over main content</li>
+            <li>Dock the sidebar on the left of the content</li>
+            <li>Touch enabled: swipe to open and close the sidebar</li>
             <li>Easy to combine with media queries for auto-docking (<a href='responsive_example.html'>see example</a>)</li>
             <li>Sidebar and content passed in as PORCS (Plain Old React Components)</li>
             <li><a href='https://github.com/balloob/react-sidebar'>Source on GitHub</a> (MIT license)</li>
+            <li>Only dependency is React</li>
           </ul>
           <p><a href='https://github.com/balloob/react-sidebar#installation'>Instructions how to get started.</a></p>
           <p><b>Current rendered sidebar properties:</b></p>
           {['open', 'docked', 'transitions', 'touch'].map(this.renderPropCheckbox)}
-          {['dragHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
+          {['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
         </MaterialTitlePanel>
       </Sidebar>
     );
