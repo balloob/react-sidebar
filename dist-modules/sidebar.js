@@ -22,6 +22,8 @@ var _reactAddons2 = _interopRequireDefault(_reactAddons);
 
 var update = _reactAddons2['default'].addons.update;
 
+var CANCEL_DISTANCE_ON_SCROLL = 20;
+
 var styles = {
   root: {
     position: 'absolute',
@@ -41,7 +43,7 @@ var styles = {
     transform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflow: 'scroll' },
+    overflowY: 'scroll' },
   content: {
     position: 'absolute',
     top: 0,
@@ -92,6 +94,7 @@ var Sidebar = (function (_React$Component) {
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   _inherits(Sidebar, _React$Component);
@@ -107,7 +110,7 @@ var Sidebar = (function (_React$Component) {
     key: 'onTouchStart',
     value: function onTouchStart(ev) {
       // filter out if a user starts swiping with a second finger
-      if (this.state.touchIdentifier === null) {
+      if (!this.isTouching()) {
         var touch = ev.targetTouches[0];
         this.setState({
           touchIdentifier: touch.identifier,
@@ -120,14 +123,7 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'onTouchMove',
     value: function onTouchMove(ev) {
-      if (window.a) {
-        window.a++;
-      } else {
-        window.a = 1;
-      }
-
-      // if (window.a == 40) debugger;
-      if (this.state.touchIdentifier !== null) {
+      if (this.isTouching()) {
         for (var i = 0; i < ev.targetTouches.length; i++) {
           // we only care about the finger that we are tracking
           if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
@@ -142,7 +138,7 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'onTouchEnd',
     value: function onTouchEnd(ev) {
-      if (this.state.touchIdentifier !== null) {
+      if (this.isTouching()) {
         // trigger a change to open if sidebar has been dragged beyond dragToggleDistance
         var touchWidth = this.touchSidebarWidth();
 
@@ -150,6 +146,22 @@ var Sidebar = (function (_React$Component) {
           this.props.onSetOpen(!this.props.open);
         }
 
+        this.setState({
+          touchIdentifier: null,
+          touchStartX: null,
+          touchStartY: null,
+          touchCurrentX: null,
+          touchCurrentY: null });
+      }
+    }
+  }, {
+    key: 'onScroll',
+
+    // This logic helps us prevents the user from sliding the sidebar horizontally
+    // while scrolling the sidebar vertically. When a scroll event comes in, we're
+    // cancelling the ongoing gesture if it did not move horizontally much.
+    value: function onScroll(ev) {
+      if (this.isTouching() && this.inCancelDistanceOnScroll()) {
         this.setState({
           touchIdentifier: null,
           touchStartX: null,
@@ -167,7 +179,7 @@ var Sidebar = (function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevState, prevProps) {
       // filter out the updates when we're touching
-      if (this.state.touchIdentifier === null) {
+      if (!this.isTouching()) {
         this.saveSidebarWidth();
       }
     }
@@ -179,6 +191,18 @@ var Sidebar = (function (_React$Component) {
       if (width != this.state.sidebarWidth) {
         this.setState({ sidebarWidth: width });
       }
+    }
+  }, {
+    key: 'isTouching',
+    value: function isTouching() {
+      return this.state.touchIdentifier !== null;
+    }
+  }, {
+    key: 'inCancelDistanceOnScroll',
+
+    // True if the on going gesture X distance is less than the cancel distance
+    value: function inCancelDistanceOnScroll() {
+      return Math.abs(this.state.touchStartX - this.state.touchCurrentX) < CANCEL_DISTANCE_ON_SCROLL;
     }
   }, {
     key: 'touchSidebarWidth',
@@ -209,7 +233,7 @@ var Sidebar = (function (_React$Component) {
           overlay = undefined,
           children = undefined;
 
-      if (this.state.touchIdentifier !== null) {
+      if (this.isTouching()) {
 
         var percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
 
@@ -247,7 +271,7 @@ var Sidebar = (function (_React$Component) {
             transform: 'translateX(-100%)' } });
       }
 
-      if (this.state.touchIdentifier !== null || !this.props.transitions) {
+      if (this.isTouching() || !this.props.transitions) {
         sidebarStyle = update(sidebarStyle, { $merge: {
             transition: 'none' } });
 
@@ -271,6 +295,7 @@ var Sidebar = (function (_React$Component) {
         rootProps.onTouchMove = this.onTouchMove;
         rootProps.onTouchEnd = this.onTouchEnd;
         rootProps.onTouchCancel = this.onTouchEnd;
+        rootProps.onScroll = this.onScroll;
       }
 
       return _reactAddons2['default'].createElement(

@@ -2,6 +2,8 @@ import React from 'react/addons';
 
 const update = React.addons.update;
 
+const CANCEL_DISTANCE_ON_SCROLL = 20;
+
 const styles = {
   root: {
     position: 'absolute',
@@ -22,7 +24,7 @@ const styles = {
     transform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflow: 'scroll',
+    overflowY: 'scroll',
   },
   content: {
     position: 'absolute',
@@ -77,7 +79,7 @@ class Sidebar extends React.Component {
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
-
+    this.onScroll = this.onScroll.bind(this);
   }
 
   overlayClicked() {
@@ -88,7 +90,7 @@ class Sidebar extends React.Component {
 
   onTouchStart(ev) {
     // filter out if a user starts swiping with a second finger
-    if (this.state.touchIdentifier === null) {
+    if (!this.isTouching()) {
       let touch = ev.targetTouches[0];
       this.setState({
         touchIdentifier: touch.identifier,
@@ -101,14 +103,7 @@ class Sidebar extends React.Component {
   }
 
   onTouchMove(ev) {
-    if (window.a) {
-      window.a++;
-    } else {
-      window.a = 1;
-    }
-
-    // if (window.a == 40) debugger;
-    if (this.state.touchIdentifier !== null) {
+    if (this.isTouching()) {
       for (let i = 0; i < ev.targetTouches.length; i++) {
         // we only care about the finger that we are tracking
         if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
@@ -123,7 +118,7 @@ class Sidebar extends React.Component {
   }
 
   onTouchEnd(ev) {
-    if (this.state.touchIdentifier !== null) {
+    if (this.isTouching()) {
       // trigger a change to open if sidebar has been dragged beyond dragToggleDistance
       let touchWidth = this.touchSidebarWidth();
 
@@ -142,13 +137,28 @@ class Sidebar extends React.Component {
     }
   }
 
+  // This logic helps us prevents the user from sliding the sidebar horizontally
+  // while scrolling the sidebar vertically. When a scroll event comes in, we're
+  // cancelling the ongoing gesture if it did not move horizontally much.
+  onScroll(ev) {
+    if (this.isTouching() && this.inCancelDistanceOnScroll()) {
+      this.setState({
+        touchIdentifier: null,
+        touchStartX: null,
+        touchStartY: null,
+        touchCurrentX: null,
+        touchCurrentY: null,
+      });
+    }
+  }
+
   componentDidMount() {
     this.saveSidebarWidth();
   }
 
   componentDidUpdate(prevState, prevProps) {
     // filter out the updates when we're touching
-    if (this.state.touchIdentifier === null) {
+    if (!this.isTouching()) {
       this.saveSidebarWidth();
     }
   }
@@ -159,6 +169,16 @@ class Sidebar extends React.Component {
     if (width != this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
     }    
+  }
+
+  isTouching() {
+    return this.state.touchIdentifier !== null;
+  }
+
+  // True if the on going gesture X distance is less than the cancel distance
+  inCancelDistanceOnScroll() {
+    return Math.abs(this.state.touchStartX-this.state.touchCurrentX) <
+                    CANCEL_DISTANCE_ON_SCROLL;
   }
 
   // calculate the sidebarWidth based on current touch info
@@ -185,7 +205,7 @@ class Sidebar extends React.Component {
                          !this.props.docked && !this.props.open,
         dragHandleStyle, overlay, children;
 
-    if (this.state.touchIdentifier !== null) {
+    if (this.isTouching()) {
 
       let percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
 
@@ -234,7 +254,7 @@ class Sidebar extends React.Component {
 
     }
 
-    if (this.state.touchIdentifier !== null || !this.props.transitions) {
+    if (this.isTouching() || !this.props.transitions) {
       sidebarStyle = update(sidebarStyle, {$merge: {
         transition: 'none',
       }});
@@ -263,6 +283,7 @@ class Sidebar extends React.Component {
       rootProps.onTouchMove = this.onTouchMove;
       rootProps.onTouchEnd = this.onTouchEnd;
       rootProps.onTouchCancel = this.onTouchEnd;
+      rootProps.onScroll = this.onScroll;
     }
 
     return (
