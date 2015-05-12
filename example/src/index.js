@@ -93,7 +93,7 @@ var App = React.createClass({
             <li>Dock the sidebar on the left of the content</li>
             <li>Touch enabled: swipe to open and close the sidebar</li>
             <li>Easy to combine with media queries for auto-docking (<a href='responsive_example.html'>see example</a>)</li>
-            <li>Sidebar and content passed in as PORCS (Plain Old React Components)</li>
+            <li>Sidebar and content passed in as PORCs (Plain Old React Components)</li>
             <li><a href='https://github.com/balloob/react-sidebar'>Source on GitHub</a> (MIT license)</li>
             <li>Only dependency is React</li>
           </ul>
