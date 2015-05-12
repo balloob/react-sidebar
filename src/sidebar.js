@@ -19,9 +19,11 @@ const styles = {
     top: 0,
     left: 0,
     bottom: 0,
-    transition: 'transform .3s ease-out',
     boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
+    transition: 'transform .3s ease-out',
     transform: 'translateX(-100%)',
+    WebkitTransition: '-webkit-transform .3s ease-out',
+    WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
     overflowY: 'scroll',
@@ -216,6 +218,7 @@ class Sidebar extends React.Component {
       // slide open to what we dragged
       sidebarStyle = update(sidebarStyle, {$merge: {
         transform: `translateX(-${(1-percentage)*100}%)`,
+        WebkitTransform: `translateX(-${(1-percentage)*100}%)`,
       }});
 
       // fade overlay to match distance of drag
@@ -229,6 +232,7 @@ class Sidebar extends React.Component {
       // show sidebar
       sidebarStyle = update(sidebarStyle, {$merge: {
         transform: `translateX(0%)`,
+        WebkitTransform: `translateX(0%)`,
       }});
 
       // make space on the left size of the sidebar
@@ -241,6 +245,7 @@ class Sidebar extends React.Component {
       // slide open sidebar
       sidebarStyle = update(sidebarStyle, {$merge: {
         transform: `translateX(0%)`,
+        WebkitTransform: `translateX(0%)`,
       }});
 
       // show overlay
@@ -249,17 +254,12 @@ class Sidebar extends React.Component {
         visibility: 'visible',
       }});
 
-    } else {
-
-      // hide sidebar
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transform: `translateX(-100%)`,
-      }});
     }
 
     if (isTouching || !this.props.transitions) {
       sidebarStyle = update(sidebarStyle, {$merge: {
         transition: 'none',
+        WebkitTransition: 'none',
       }});
 
       contentStyle = update(contentStyle, {$merge: {
