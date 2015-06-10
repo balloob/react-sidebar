@@ -45,14 +45,14 @@ var styles = {
     WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'scroll' },
+    overflowY: 'auto' },
   content: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'scroll',
+    overflow: 'auto',
     transition: 'left .3s ease-out' },
   overlay: {
     zIndex: 1,

@@ -26,7 +26,7 @@ const styles = {
     WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   content: {
     position: 'absolute',
@@ -34,7 +34,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'scroll',
+    overflow: 'auto',
     transition: 'left .3s ease-out',
   },
   overlay: {
