@@ -170,7 +170,7 @@ class Sidebar extends React.Component {
 
     if (width != this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
-    }    
+    }
   }
 
   isTouching() {
@@ -230,11 +230,12 @@ class Sidebar extends React.Component {
     } else if (this.props.docked) {
 
       // show sidebar
-      if (this.state.sidebarWidth !== 0)
+      if (this.state.sidebarWidth !== 0) {
         sidebarStyle = update(sidebarStyle, {$merge: {
           transform: `translateX(0%)`,
           WebkitTransform: `translateX(0%)`,
-      }});
+        }});
+      }
 
       // make space on the left size of the sidebar
       contentStyle = update(contentStyle, {$merge: {
