@@ -38,19 +38,21 @@ var styles = {
     top: 0,
     left: 0,
     bottom: 0,
-    transition: 'transform .3s ease-out',
     boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
+    transition: 'transform .3s ease-out',
     transform: 'translateX(-100%)',
+    WebkitTransition: '-webkit-transform .3s ease-out',
+    WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'scroll' },
+    overflowY: 'auto' },
   content: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'scroll',
+    overflow: 'auto',
     transition: 'left .3s ease-out' },
   overlay: {
     zIndex: 1,
@@ -241,7 +243,8 @@ var Sidebar = (function (_React$Component) {
 
         // slide open to what we dragged
         sidebarStyle = update(sidebarStyle, { $merge: {
-            transform: 'translateX(-' + (1 - percentage) * 100 + '%)' } });
+            transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
+            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)' } });
 
         // fade overlay to match distance of drag
         overlayStyle = update(overlayStyle, { $merge: {
@@ -250,8 +253,11 @@ var Sidebar = (function (_React$Component) {
       } else if (this.props.docked) {
 
         // show sidebar
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            transform: 'translateX(0%)' } });
+        if (this.state.sidebarWidth !== 0) {
+          sidebarStyle = update(sidebarStyle, { $merge: {
+              transform: 'translateX(0%)',
+              WebkitTransform: 'translateX(0%)' } });
+        }
 
         // make space on the left size of the sidebar
         contentStyle = update(contentStyle, { $merge: {
@@ -260,22 +266,19 @@ var Sidebar = (function (_React$Component) {
 
         // slide open sidebar
         sidebarStyle = update(sidebarStyle, { $merge: {
-            transform: 'translateX(0%)' } });
+            transform: 'translateX(0%)',
+            WebkitTransform: 'translateX(0%)' } });
 
         // show overlay
         overlayStyle = update(overlayStyle, { $merge: {
             opacity: 1,
             visibility: 'visible' } });
-      } else {
-
-        // hide sidebar
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            transform: 'translateX(-100%)' } });
       }
 
       if (isTouching || !this.props.transitions) {
         sidebarStyle = update(sidebarStyle, { $merge: {
-            transition: 'none' } });
+            transition: 'none',
+            WebkitTransition: 'none' } });
 
         contentStyle = update(contentStyle, { $merge: {
             transition: 'none' } });

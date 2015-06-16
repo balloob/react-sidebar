@@ -26,7 +26,7 @@ const styles = {
     WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   content: {
     position: 'absolute',
@@ -34,7 +34,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'scroll',
+    overflow: 'auto',
     transition: 'left .3s ease-out',
   },
   overlay: {
@@ -170,7 +170,7 @@ class Sidebar extends React.Component {
 
     if (width != this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
-    }    
+    }
   }
 
   isTouching() {
@@ -230,10 +230,12 @@ class Sidebar extends React.Component {
     } else if (this.props.docked) {
 
       // show sidebar
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transform: `translateX(0%)`,
-        WebkitTransform: `translateX(0%)`,
-      }});
+      if (this.state.sidebarWidth !== 0) {
+        sidebarStyle = update(sidebarStyle, {$merge: {
+          transform: `translateX(0%)`,
+          WebkitTransform: `translateX(0%)`,
+        }});
+      }
 
       // make space on the left size of the sidebar
       contentStyle = update(contentStyle, {$merge: {
