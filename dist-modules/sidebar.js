@@ -253,7 +253,8 @@ var Sidebar = (function (_React$Component) {
       } else if (this.props.docked) {
 
         // show sidebar
-        sidebarStyle = update(sidebarStyle, { $merge: {
+        if (this.state.sidebarWidth !== 0)
+          sidebarStyle = update(sidebarStyle, { $merge: {
             transform: 'translateX(0%)',
             WebkitTransform: 'translateX(0%)' } });
 
