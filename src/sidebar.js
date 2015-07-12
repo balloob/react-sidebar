@@ -7,7 +7,6 @@ const CANCEL_DISTANCE_ON_SCROLL = 20;
 const styles = {
   root: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
@@ -17,13 +16,9 @@ const styles = {
     zIndex: 2,
     position: 'absolute',
     top: 0,
-    left: 0,
     bottom: 0,
-    boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     transition: 'transform .3s ease-out',
-    transform: 'translateX(-100%)',
     WebkitTransition: '-webkit-transform .3s ease-out',
-    WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
     overflowY: 'auto',
@@ -35,7 +30,6 @@ const styles = {
     right: 0,
     bottom: 0,
     overflow: 'auto',
-    transition: 'left .3s ease-out',
   },
   overlay: {
     zIndex: 1,
@@ -53,7 +47,6 @@ const styles = {
     zIndex: 1,
     position: 'fixed',
     top: 0,
-    left: 0,
     bottom: 0,
   },
 };
@@ -100,7 +93,7 @@ class Sidebar extends React.Component {
         touchStartY: touch.clientY,
         touchCurrentX: touch.clientX,
         touchCurrentY: touch.clientY,
-      });      
+      });
     }
   }
 
@@ -209,6 +202,36 @@ class Sidebar extends React.Component {
 
     let rootProps = {
       style: styles.root,
+    };
+
+    rootProps.style.top = this.props.topSidebar;
+
+    if (this.props.pullRight) {
+      if (this.props.enableShadow) {
+        sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+      }
+      sidebarStyle = update(sidebarStyle, { $merge: {
+        right: 0,
+        transform: 'translateX(100%)',
+        WebkitTransform: 'translateX(100%)',
+      }});
+
+      contentStyle.transition = 'right .3s ease-out';
+
+      styles.dragHandle.left = 0;
+    } else {
+      if (this.props.enableShadow) {
+        sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+      }
+      sidebarStyle = update(sidebarStyle, { $merge: {
+        left: 0,
+        transform: 'translateX(-100%)',
+        WebkitTransform: 'translateX(-100%)',
+      }});
+
+      contentStyle.transition = 'left .3s ease-out';
+
+      styles.dragHandle.right = 0;
     }
 
     if (isTouching) {
@@ -237,10 +260,18 @@ class Sidebar extends React.Component {
         }});
       }
 
-      // make space on the left size of the sidebar
-      contentStyle = update(contentStyle, {$merge: {
-        left: `${this.state.sidebarWidth}px`,
-      }});
+      // make space on the left/right size of the sidebar
+     let spaceSidebar;
+     if (this.props.pullRight) {
+       spaceSidebar = {
+         right: this.state.sidebarWidth + 'px'
+       };
+     } else {
+       spaceSidebar = {
+         left: this.state.sidebarWidth + 'px'
+       };
+     }
+     contentStyle = update(contentStyle, { $merge: spaceSidebar });
 
     } else if (this.props.open) {
 
@@ -330,6 +361,15 @@ Sidebar.propTypes = {
   // max distance from the edge we can start touching
   touchHandleWidth: React.PropTypes.number,
 
+  // Sidebar distance from the top
+  topSidebar: React.PropTypes.number,
+
+  // Place the sidebar on the right
+  pullRight: React.PropTypes.bool,
+
+  // Enable sidebar shadow
+  enableShadow: React.PropTypes.bool,
+
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: React.PropTypes.number,
 
@@ -343,6 +383,9 @@ Sidebar.defaultProps = {
   transitions: true,
   touch: true,
   touchHandleWidth: 20,
+  topSidebar: 0,
+  pullRight: false,
+  enableShadow: true,
   dragToggleDistance: 30,
   onSetOpen: function() {},
 };

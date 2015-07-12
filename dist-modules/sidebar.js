@@ -6,9 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { desc = parent = getter = undefined; _again = false; var object = _x,
-    property = _x2,
-    receiver = _x3; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -27,33 +25,30 @@ var CANCEL_DISTANCE_ON_SCROLL = 20;
 var styles = {
   root: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'hidden' },
+    overflow: 'hidden'
+  },
   sidebar: {
     zIndex: 2,
     position: 'absolute',
     top: 0,
-    left: 0,
     bottom: 0,
-    boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     transition: 'transform .3s ease-out',
-    transform: 'translateX(-100%)',
     WebkitTransition: '-webkit-transform .3s ease-out',
-    WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'auto' },
+    overflowY: 'auto'
+  },
   content: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'auto',
-    transition: 'left .3s ease-out' },
+    overflow: 'auto'
+  },
   overlay: {
     zIndex: 1,
     position: 'fixed',
@@ -64,15 +59,19 @@ var styles = {
     opacity: 0,
     visibility: 'hidden',
     transition: 'opacity .3s ease-out',
-    backgroundColor: 'rgba(0,0,0,.3)' },
+    backgroundColor: 'rgba(0,0,0,.3)'
+  },
   dragHandle: {
     zIndex: 1,
     position: 'fixed',
     top: 0,
-    left: 0,
-    bottom: 0 } };
+    bottom: 0
+  }
+};
 
 var Sidebar = (function (_React$Component) {
+  _inherits(Sidebar, _React$Component);
+
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
@@ -90,7 +89,8 @@ var Sidebar = (function (_React$Component) {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: 'ontouchstart' in window };
+      dragSupported: 'ontouchstart' in window
+    };
 
     this.overlayClicked = this.overlayClicked.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
@@ -98,8 +98,6 @@ var Sidebar = (function (_React$Component) {
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
-
-  _inherits(Sidebar, _React$Component);
 
   _createClass(Sidebar, [{
     key: 'overlayClicked',
@@ -119,7 +117,8 @@ var Sidebar = (function (_React$Component) {
           touchStartX: touch.clientX,
           touchStartY: touch.clientY,
           touchCurrentX: touch.clientX,
-          touchCurrentY: touch.clientY });
+          touchCurrentY: touch.clientY
+        });
       }
     }
   }, {
@@ -131,7 +130,8 @@ var Sidebar = (function (_React$Component) {
           if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
             this.setState({
               touchCurrentX: ev.targetTouches[i].clientX,
-              touchCurrentY: ev.targetTouches[i].clientY });
+              touchCurrentY: ev.targetTouches[i].clientY
+            });
             break;
           }
         }
@@ -153,7 +153,8 @@ var Sidebar = (function (_React$Component) {
           touchStartX: null,
           touchStartY: null,
           touchCurrentX: null,
-          touchCurrentY: null });
+          touchCurrentY: null
+        });
       }
     }
   }, {
@@ -169,7 +170,8 @@ var Sidebar = (function (_React$Component) {
           touchStartX: null,
           touchStartY: null,
           touchCurrentX: null,
-          touchCurrentY: null });
+          touchCurrentY: null
+        });
       }
     }
   }, {
@@ -235,7 +237,38 @@ var Sidebar = (function (_React$Component) {
           dragHandle = undefined;
 
       var rootProps = {
-        style: styles.root };
+        style: styles.root
+      };
+
+      rootProps.style.top = this.props.topSidebar;
+
+      if (this.props.pullRight) {
+        if (this.props.enableShadow) {
+          sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+        }
+        sidebarStyle = update(sidebarStyle, { $merge: {
+            right: 0,
+            transform: 'translateX(100%)',
+            WebkitTransform: 'translateX(100%)'
+          } });
+
+        contentStyle.transition = 'right .3s ease-out';
+
+        styles.dragHandle.left = 0;
+      } else {
+        if (this.props.enableShadow) {
+          sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+        }
+        sidebarStyle = update(sidebarStyle, { $merge: {
+            left: 0,
+            transform: 'translateX(-100%)',
+            WebkitTransform: 'translateX(-100%)'
+          } });
+
+        contentStyle.transition = 'left .3s ease-out';
+
+        styles.dragHandle.right = 0;
+      }
 
       if (isTouching) {
 
@@ -244,47 +277,64 @@ var Sidebar = (function (_React$Component) {
         // slide open to what we dragged
         sidebarStyle = update(sidebarStyle, { $merge: {
             transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
-            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)' } });
+            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)'
+          } });
 
         // fade overlay to match distance of drag
         overlayStyle = update(overlayStyle, { $merge: {
             opacity: percentage,
-            visibility: 'visible' } });
+            visibility: 'visible'
+          } });
       } else if (this.props.docked) {
 
         // show sidebar
         if (this.state.sidebarWidth !== 0) {
           sidebarStyle = update(sidebarStyle, { $merge: {
               transform: 'translateX(0%)',
-              WebkitTransform: 'translateX(0%)' } });
+              WebkitTransform: 'translateX(0%)'
+            } });
         }
 
-        // make space on the left size of the sidebar
-        contentStyle = update(contentStyle, { $merge: {
-            left: '' + this.state.sidebarWidth + 'px' } });
+        // make space on the left/right size of the sidebar
+        var spaceSidebar = undefined;
+        if (this.props.pullRight) {
+          spaceSidebar = {
+            right: this.state.sidebarWidth + 'px'
+          };
+        } else {
+          spaceSidebar = {
+            left: this.state.sidebarWidth + 'px'
+          };
+        }
+        contentStyle = update(contentStyle, { $merge: spaceSidebar });
       } else if (this.props.open) {
 
         // slide open sidebar
         sidebarStyle = update(sidebarStyle, { $merge: {
             transform: 'translateX(0%)',
-            WebkitTransform: 'translateX(0%)' } });
+            WebkitTransform: 'translateX(0%)'
+          } });
 
         // show overlay
         overlayStyle = update(overlayStyle, { $merge: {
             opacity: 1,
-            visibility: 'visible' } });
+            visibility: 'visible'
+          } });
       }
 
       if (isTouching || !this.props.transitions) {
         sidebarStyle = update(sidebarStyle, { $merge: {
             transition: 'none',
-            WebkitTransition: 'none' } });
+            WebkitTransition: 'none'
+          } });
 
         contentStyle = update(contentStyle, { $merge: {
-            transition: 'none' } });
+            transition: 'none'
+          } });
 
         overlayStyle = update(overlayStyle, { $merge: {
-            transition: 'none' } });
+            transition: 'none'
+          } });
       }
 
       if (useTouch) {
@@ -296,7 +346,8 @@ var Sidebar = (function (_React$Component) {
           rootProps.onScroll = this.onScroll;
         } else {
           var dragHandleStyle = update(styles.dragHandle, { $merge: {
-              width: this.props.touchHandleWidth } });
+              width: this.props.touchHandleWidth
+            } });
 
           dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
@@ -351,11 +402,21 @@ Sidebar.propTypes = {
   // max distance from the edge we can start touching
   touchHandleWidth: _reactAddons2['default'].PropTypes.number,
 
+  // Sidebar distance from the top
+  topSidebar: _reactAddons2['default'].PropTypes.number,
+
+  // Place the sidebar on the right
+  pullRight: _reactAddons2['default'].PropTypes.bool,
+
+  // Enable sidebar shadow
+  enableShadow: _reactAddons2['default'].PropTypes.bool,
+
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: _reactAddons2['default'].PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _reactAddons2['default'].PropTypes.func };
+  onSetOpen: _reactAddons2['default'].PropTypes.func
+};
 
 Sidebar.defaultProps = {
   docked: false,
@@ -363,8 +424,12 @@ Sidebar.defaultProps = {
   transitions: true,
   touch: true,
   touchHandleWidth: 20,
+  topSidebar: 0,
+  pullRight: false,
+  enableShadow: true,
   dragToggleDistance: 30,
-  onSetOpen: function onSetOpen() {} };
+  onSetOpen: function onSetOpen() {}
+};
 
 exports['default'] = Sidebar;
 module.exports = exports['default'];
