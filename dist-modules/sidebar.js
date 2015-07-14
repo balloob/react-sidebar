@@ -25,6 +25,7 @@ var CANCEL_DISTANCE_ON_SCROLL = 20;
 var styles = {
   root: {
     position: 'absolute',
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
