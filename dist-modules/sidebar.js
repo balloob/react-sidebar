@@ -47,7 +47,8 @@ var styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'auto'
+    overflow: 'auto',
+    transition: 'left .3s ease-out, right .3s ease-out'
   },
   overlay: {
     zIndex: 1,
@@ -229,46 +230,46 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var sidebarStyle = styles.sidebar,
+      var rootStyle = styles.root,
+          sidebarStyle = styles.sidebar,
           contentStyle = styles.content,
           overlayStyle = styles.overlay,
           useTouch = this.state.dragSupported && this.props.touch,
           isTouching = this.isTouching(),
-          dragHandle = undefined;
+          dragHandle = undefined,
+          sidebarStyleToMerge = undefined;
+
+      var rootStyleToMerge = {
+        top: this.props.topSidebar
+      };
+      rootStyle = update(rootStyle, { $merge: rootStyleToMerge });
 
       var rootProps = {
-        style: styles.root
+        style: rootStyle
       };
 
-      rootProps.style.top = this.props.topSidebar;
-
+      // sidebarStyle right/left
       if (this.props.pullRight) {
-        if (this.props.enableShadow) {
-          sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyleToMerge = {
+          right: 0,
+          transform: 'translateX(100%)',
+          WebkitTransform: 'translateX(100%)'
+        };
+        if (this.props.shadow) {
+          sidebarStyleToMerge.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            right: 0,
-            transform: 'translateX(100%)',
-            WebkitTransform: 'translateX(100%)'
-          } });
-
-        contentStyle.transition = 'right .3s ease-out';
-
-        styles.dragHandle.left = 0;
       } else {
-        if (this.props.enableShadow) {
-          sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyleToMerge = {
+          left: 0,
+          transform: 'translateX(-100%)',
+          WebkitTransform: 'translateX(-100%)'
+        };
+        if (this.props.shadow) {
+          sidebarStyleToMerge.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            left: 0,
-            transform: 'translateX(-100%)',
-            WebkitTransform: 'translateX(-100%)'
-          } });
-
-        contentStyle.transition = 'left .3s ease-out';
-
-        styles.dragHandle.right = 0;
       }
+
+      sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleToMerge });
 
       if (isTouching) {
 
@@ -345,9 +346,18 @@ var Sidebar = (function (_React$Component) {
           rootProps.onTouchCancel = this.onTouchEnd;
           rootProps.onScroll = this.onScroll;
         } else {
-          var dragHandleStyle = update(styles.dragHandle, { $merge: {
-              width: this.props.touchHandleWidth
-            } });
+          var dragHandleStyleToMerge = {
+            width: this.props.touchHandleWidth
+          };
+
+          // dragHandleStyle right/left
+          if (this.props.pullRight) {
+            dragHandleStyleToMerge.right = 0;
+          } else {
+            dragHandleStyleToMerge.left = 0;
+          }
+
+          var dragHandleStyle = update(styles.dragHandle, { $merge: dragHandleStyleToMerge });
 
           dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
@@ -408,8 +418,8 @@ Sidebar.propTypes = {
   // Place the sidebar on the right
   pullRight: _reactAddons2['default'].PropTypes.bool,
 
-  // Enable sidebar shadow
-  enableShadow: _reactAddons2['default'].PropTypes.bool,
+  // Enable/Disable sidebar shadow
+  shadow: _reactAddons2['default'].PropTypes.bool,
 
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: _reactAddons2['default'].PropTypes.number,
@@ -426,7 +436,7 @@ Sidebar.defaultProps = {
   touchHandleWidth: 20,
   topSidebar: 0,
   pullRight: false,
-  enableShadow: true,
+  shadow: true,
   dragToggleDistance: 30,
   onSetOpen: function onSetOpen() {}
 };

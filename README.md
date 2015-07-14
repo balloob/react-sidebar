@@ -37,7 +37,7 @@ Supported props
 | dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
 | pullRight | boolean | false | Place the sidebar on the right |
 | topSidebar | number | 0 | Sidebar distance from the top. |
-| enableShadow | boolean | true | Enable sidebar shadow |
+| shadow | boolean | true | Enable/Disable sidebar shadow |
 
 Installation
 ------------
