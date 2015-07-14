@@ -89,11 +89,16 @@ class Sidebar extends React.Component {
     // filter out if a user starts swiping with a second finger
     if (!this.isTouching()) {
       let touch = ev.targetTouches[0];
+      let tcX = touch.clientX;
+      if (this.props.pullRight) {
+        tcX = this.state.sidebarWidth - tcX;
+      }
+
       this.setState({
         touchIdentifier: touch.identifier,
-        touchStartX: touch.clientX,
+        touchStartX: tcX,
         touchStartY: touch.clientY,
-        touchCurrentX: touch.clientX,
+        touchCurrentX: tcX,
         touchCurrentY: touch.clientY,
       });
     }
@@ -104,8 +109,13 @@ class Sidebar extends React.Component {
       for (let i = 0; i < ev.targetTouches.length; i++) {
         // we only care about the finger that we are tracking
         if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
+          let tcX = ev.targetTouches[i].clientX;
+          if (this.props.pullRight) {
+            tcX = this.state.sidebarWidth - tcX;
+          }
+
           this.setState({
-            touchCurrentX: ev.targetTouches[i].clientX,
+            touchCurrentX: tcX,
             touchCurrentY: ev.targetTouches[i].clientY,
           });
           break;
@@ -233,12 +243,21 @@ class Sidebar extends React.Component {
     if (isTouching) {
 
       let percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
+      let sidebarStyleTouchToMerge;
 
       // slide open to what we dragged
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transform: `translateX(-${(1-percentage)*100}%)`,
-        WebkitTransform: `translateX(-${(1-percentage)*100}%)`,
-      }});
+      if (this.props.pullRight) {
+        sidebarStyleTouchToMerge = {
+          transform: `translateX(${(1-percentage)*100}%)`,
+          WebkitTransform: `translateX(${(1-percentage)*100}%)`,
+        };
+      } else {
+        sidebarStyleTouchToMerge = {
+          transform: `translateX(-${(1-percentage)*100}%)`,
+          WebkitTransform: `translateX(-${(1-percentage)*100}%)`,
+        };
+      }
+      sidebarStyle = update(sidebarStyle, {$merge: sidebarStyleTouchToMerge});
 
       // fade overlay to match distance of drag
       overlayStyle = update(overlayStyle, {$merge: {

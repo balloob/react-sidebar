@@ -114,11 +114,16 @@ var Sidebar = (function (_React$Component) {
       // filter out if a user starts swiping with a second finger
       if (!this.isTouching()) {
         var touch = ev.targetTouches[0];
+        var tcX = touch.clientX;
+        if (this.props.pullRight) {
+          tcX = this.state.sidebarWidth - tcX;
+        }
+
         this.setState({
           touchIdentifier: touch.identifier,
-          touchStartX: touch.clientX,
+          touchStartX: tcX,
           touchStartY: touch.clientY,
-          touchCurrentX: touch.clientX,
+          touchCurrentX: tcX,
           touchCurrentY: touch.clientY
         });
       }
@@ -130,8 +135,13 @@ var Sidebar = (function (_React$Component) {
         for (var i = 0; i < ev.targetTouches.length; i++) {
           // we only care about the finger that we are tracking
           if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
+            var tcX = ev.targetTouches[i].clientX;
+            if (this.props.pullRight) {
+              tcX = this.state.sidebarWidth - tcX;
+            }
+
             this.setState({
-              touchCurrentX: ev.targetTouches[i].clientX,
+              touchCurrentX: tcX,
               touchCurrentY: ev.targetTouches[i].clientY
             });
             break;
@@ -269,12 +279,21 @@ var Sidebar = (function (_React$Component) {
       if (isTouching) {
 
         var percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
+        var sidebarStyleTouchToMerge = undefined;
 
         // slide open to what we dragged
-        sidebarStyle = update(sidebarStyle, { $merge: {
+        if (this.props.pullRight) {
+          sidebarStyleTouchToMerge = {
+            transform: 'translateX(' + (1 - percentage) * 100 + '%)',
+            WebkitTransform: 'translateX(' + (1 - percentage) * 100 + '%)'
+          };
+        } else {
+          sidebarStyleTouchToMerge = {
             transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
             WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)'
-          } });
+          };
+        }
+        sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleTouchToMerge });
 
         // fade overlay to match distance of drag
         overlayStyle = update(overlayStyle, { $merge: {
