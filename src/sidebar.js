@@ -7,6 +7,7 @@ const CANCEL_DISTANCE_ON_SCROLL = 20;
 const styles = {
   root: {
     position: 'absolute',
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
@@ -194,8 +195,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let rootStyle = styles.root,
-        sidebarStyle = styles.sidebar,
+    let sidebarStyle = styles.sidebar,
         contentStyle = styles.content,
         overlayStyle = styles.overlay,
         useTouch = this.state.dragSupported && this.props.touch,
@@ -203,14 +203,8 @@ class Sidebar extends React.Component {
         dragHandle,
         sidebarStyleToMerge;
 
-
-    const rootStyleToMerge = {
-      top: this.props.topSidebar
-    };
-    rootStyle = update(rootStyle, { $merge: rootStyleToMerge });
-
     let rootProps = {
-      style: rootStyle,
+      style: styles.root,
     };
 
     // sidebarStyle right/left
@@ -372,9 +366,6 @@ Sidebar.propTypes = {
   // max distance from the edge we can start touching
   touchHandleWidth: React.PropTypes.number,
 
-  // Sidebar distance from the top
-  topSidebar: React.PropTypes.number,
-
   // Place the sidebar on the right
   pullRight: React.PropTypes.bool,
 
@@ -394,7 +385,6 @@ Sidebar.defaultProps = {
   transitions: true,
   touch: true,
   touchHandleWidth: 20,
-  topSidebar: 0,
   pullRight: false,
   shadow: true,
   dragToggleDistance: 30,

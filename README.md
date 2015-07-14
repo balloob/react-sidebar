@@ -36,7 +36,6 @@ Supported props
 | touchHandleWidth | number | 20 | Width in pixels you can start dragging from the edge when the sidebar is closed. |
 | dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
 | pullRight | boolean | false | Place the sidebar on the right |
-| topSidebar | number | 0 | Sidebar distance from the top. |
 | shadow | boolean | true | Enable/Disable sidebar shadow |
 
 Installation

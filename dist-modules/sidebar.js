@@ -230,8 +230,7 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var rootStyle = styles.root,
-          sidebarStyle = styles.sidebar,
+      var sidebarStyle = styles.sidebar,
           contentStyle = styles.content,
           overlayStyle = styles.overlay,
           useTouch = this.state.dragSupported && this.props.touch,
@@ -239,13 +238,8 @@ var Sidebar = (function (_React$Component) {
           dragHandle = undefined,
           sidebarStyleToMerge = undefined;
 
-      var rootStyleToMerge = {
-        top: this.props.topSidebar
-      };
-      rootStyle = update(rootStyle, { $merge: rootStyleToMerge });
-
       var rootProps = {
-        style: rootStyle
+        style: styles.root
       };
 
       // sidebarStyle right/left
@@ -412,9 +406,6 @@ Sidebar.propTypes = {
   // max distance from the edge we can start touching
   touchHandleWidth: _reactAddons2['default'].PropTypes.number,
 
-  // Sidebar distance from the top
-  topSidebar: _reactAddons2['default'].PropTypes.number,
-
   // Place the sidebar on the right
   pullRight: _reactAddons2['default'].PropTypes.bool,
 
@@ -434,7 +425,6 @@ Sidebar.defaultProps = {
   transitions: true,
   touch: true,
   touchHandleWidth: 20,
-  topSidebar: 0,
   pullRight: false,
   shadow: true,
   dragToggleDistance: 30,
