@@ -1,4 +1,4 @@
-React Sidebar
+React Sidebar [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar)
 =============
 
 React Sidebar is a sidebar component for React. It offers the following features:
