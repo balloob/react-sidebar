@@ -69,7 +69,7 @@ class Sidebar extends React.Component {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: 'ontouchstart' in window,
+      dragSupported: typeof window === 'object' && 'ontouchstart' in window,
     };
 
     this.overlayClicked = this.overlayClicked.bind(this);
