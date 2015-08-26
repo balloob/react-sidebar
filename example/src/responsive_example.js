@@ -2,6 +2,8 @@ import React from 'react';
 import Sidebar from '../../src';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
+require('match-media');
+require('match-media/matchMedia.addListener.js');
 
 const styles = {
   contentHeaderMenuLink: {

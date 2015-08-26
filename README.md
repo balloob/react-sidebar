@@ -81,6 +81,8 @@ Responsive sidebar
 ------------------
 A common use case for a sidebar is to show it automatically when there is enough screen width available. This can be achieved using media queries via [`window.matchMedia`][mdn-matchmedia]. This again has to be integrated into the parent component so you can use the information to make changes to the sidebar and main content.
 
+For IE9 support you can use https://github.com/paulirish/matchMedia.js/ polyfil. [See it in example](http://balloob.github.io/react-sidebar/example/responsive_example.html)
+
 [mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
 ```javascript
