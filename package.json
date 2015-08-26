@@ -26,5 +26,8 @@
     "react": "^0.13.3",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0"
+  },
+  "dependencies": {
+    "match-media": "^0.2.0"
   }
 }

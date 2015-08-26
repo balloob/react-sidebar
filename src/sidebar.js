@@ -1,5 +1,8 @@
 import React from 'react/addons';
 
+const isBrowser = typeof window !== 'undefined';
+const Modernizr = isBrowser ? require('./lib/modernizr.custom.js') : undefined;
+
 const update = React.addons.update;
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
@@ -199,6 +202,19 @@ class Sidebar extends React.Component {
     }
   }
 
+  openedStyle() {
+    const style = {
+      transform: `translateX(0%)`,
+      WebkitTransform: `translateX(0%)`,
+    }
+
+    if (isBrowser && !Modernizr.csstransforms3d) {
+      style.left = '0';
+    }
+
+    return style;
+  }
+
   render() {
     let sidebarStyle = styles.sidebar,
         contentStyle = styles.content,
@@ -231,10 +247,7 @@ class Sidebar extends React.Component {
 
       // show sidebar
       if (this.state.sidebarWidth !== 0) {
-        sidebarStyle = update(sidebarStyle, {$merge: {
-          transform: `translateX(0%)`,
-          WebkitTransform: `translateX(0%)`,
-        }});
+        sidebarStyle = update(sidebarStyle, {$merge: this.openedStyle()});
       }
 
       // make space on the left size of the sidebar
@@ -245,10 +258,7 @@ class Sidebar extends React.Component {
     } else if (this.props.open) {
 
       // slide open sidebar
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transform: `translateX(0%)`,
-        WebkitTransform: `translateX(0%)`,
-      }});
+      sidebarStyle = update(sidebarStyle, {$merge: this.openedStyle()});
 
       // show overlay
       overlayStyle = update(overlayStyle, {$merge: {
@@ -256,6 +266,8 @@ class Sidebar extends React.Component {
         visibility: 'visible',
       }});
 
+    } else if (isBrowser && !Modernizr.csstransforms3d) {
+      sidebarStyle.left = `-${this.state.sidebarWidth}px`;
     }
 
     if (isTouching || !this.props.transitions) {
