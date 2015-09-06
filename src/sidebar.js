@@ -14,7 +14,6 @@ const styles = {
     overflow: 'hidden',
   },
   sidebar: {
-    zIndex: 2,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -38,7 +37,6 @@ const styles = {
     transition: 'left .3s ease-out',
   },
   overlay: {
-    zIndex: 1,
     position: 'fixed',
     top: 0,
     left: 0,
@@ -50,7 +48,6 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,.3)',
   },
   dragHandle: {
-    zIndex: 1,
     position: 'fixed',
     top: 0,
     left: 0,
@@ -200,9 +197,9 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let sidebarStyle = styles.sidebar,
+    let sidebarStyle = Object.assign({}, styles.sidebar, { zIndex: this.props.zIndex + 1 }),
         contentStyle = styles.content,
-        overlayStyle = styles.overlay,
+        overlayStyle = Object.assign({}, styles.overlay, { zIndex: this.props.zIndex }),
         useTouch = this.state.dragSupported && this.props.touch,
         isTouching = this.isTouching(),
         dragHandle;
@@ -283,6 +280,7 @@ class Sidebar extends React.Component {
       } else {
         let dragHandleStyle = update(styles.dragHandle, {$merge: {
           width: this.props.touchHandleWidth,
+          zIndex: this.props.zIndex
         }})
 
         dragHandle = (
@@ -335,6 +333,9 @@ Sidebar.propTypes = {
 
   // callback called when the overlay is clicked
   onSetOpen: React.PropTypes.func,
+
+  // overlay zIndex
+  zIndex: React.PropTypes.number
 };
 
 Sidebar.defaultProps = {
@@ -345,6 +346,7 @@ Sidebar.defaultProps = {
   touchHandleWidth: 20,
   dragToggleDistance: 30,
   onSetOpen: function() {},
+  zIndex: 1
 };
 
 export default Sidebar;
