@@ -6,15 +6,13 @@ Object.defineProperty(exports, '__esModule', {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { desc = parent = getter = undefined; _again = false; var object = _x,
-    property = _x2,
-    receiver = _x3; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _reactAddons = require('react/addons');
 
@@ -31,7 +29,8 @@ var styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'hidden' },
+    overflow: 'hidden'
+  },
   sidebar: {
     zIndex: 2,
     position: 'absolute',
@@ -45,7 +44,8 @@ var styles = {
     WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
-    overflowY: 'auto' },
+    overflowY: 'auto'
+  },
   content: {
     position: 'absolute',
     top: 0,
@@ -53,7 +53,8 @@ var styles = {
     right: 0,
     bottom: 0,
     overflow: 'auto',
-    transition: 'left .3s ease-out' },
+    transition: 'left .3s ease-out'
+  },
   overlay: {
     zIndex: 1,
     position: 'fixed',
@@ -64,15 +65,20 @@ var styles = {
     opacity: 0,
     visibility: 'hidden',
     transition: 'opacity .3s ease-out',
-    backgroundColor: 'rgba(0,0,0,.3)' },
+    backgroundColor: 'rgba(0,0,0,.3)'
+  },
   dragHandle: {
     zIndex: 1,
     position: 'fixed',
     top: 0,
     left: 0,
-    bottom: 0 } };
+    bottom: 0
+  }
+};
 
 var Sidebar = (function (_React$Component) {
+  _inherits(Sidebar, _React$Component);
+
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
@@ -90,7 +96,8 @@ var Sidebar = (function (_React$Component) {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: typeof window === 'object' && 'ontouchstart' in window };
+      dragSupported: typeof window === 'object' && 'ontouchstart' in window
+    };
 
     this.overlayClicked = this.overlayClicked.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
@@ -98,8 +105,6 @@ var Sidebar = (function (_React$Component) {
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
-
-  _inherits(Sidebar, _React$Component);
 
   _createClass(Sidebar, [{
     key: 'overlayClicked',
@@ -119,7 +124,8 @@ var Sidebar = (function (_React$Component) {
           touchStartX: touch.clientX,
           touchStartY: touch.clientY,
           touchCurrentX: touch.clientX,
-          touchCurrentY: touch.clientY });
+          touchCurrentY: touch.clientY
+        });
       }
     }
   }, {
@@ -131,7 +137,8 @@ var Sidebar = (function (_React$Component) {
           if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
             this.setState({
               touchCurrentX: ev.targetTouches[i].clientX,
-              touchCurrentY: ev.targetTouches[i].clientY });
+              touchCurrentY: ev.targetTouches[i].clientY
+            });
             break;
           }
         }
@@ -153,15 +160,16 @@ var Sidebar = (function (_React$Component) {
           touchStartX: null,
           touchStartY: null,
           touchCurrentX: null,
-          touchCurrentY: null });
+          touchCurrentY: null
+        });
       }
     }
-  }, {
-    key: 'onScroll',
 
     // This logic helps us prevents the user from sliding the sidebar horizontally
     // while scrolling the sidebar vertically. When a scroll event comes in, we're
     // cancelling the ongoing gesture if it did not move horizontally much.
+  }, {
+    key: 'onScroll',
     value: function onScroll(ev) {
       if (this.isTouching() && this.inCancelDistanceOnScroll()) {
         this.setState({
@@ -169,7 +177,8 @@ var Sidebar = (function (_React$Component) {
           touchStartX: null,
           touchStartY: null,
           touchCurrentX: null,
-          touchCurrentY: null });
+          touchCurrentY: null
+        });
       }
     }
   }, {
@@ -199,17 +208,17 @@ var Sidebar = (function (_React$Component) {
     value: function isTouching() {
       return this.state.touchIdentifier !== null;
     }
-  }, {
-    key: 'inCancelDistanceOnScroll',
 
     // True if the on going gesture X distance is less than the cancel distance
+  }, {
+    key: 'inCancelDistanceOnScroll',
     value: function inCancelDistanceOnScroll() {
       return Math.abs(this.state.touchStartX - this.state.touchCurrentX) < CANCEL_DISTANCE_ON_SCROLL;
     }
-  }, {
-    key: 'touchSidebarWidth',
 
     // calculate the sidebarWidth based on current touch info
+  }, {
+    key: 'touchSidebarWidth',
     value: function touchSidebarWidth() {
       // if the sidebar is open and start point of drag is inside the sidebar
       // we will only drag the distance they moved their finger
@@ -235,7 +244,8 @@ var Sidebar = (function (_React$Component) {
           dragHandle = undefined;
 
       var rootProps = {
-        style: styles.root };
+        style: styles.root
+      };
 
       if (isTouching) {
 
@@ -244,47 +254,56 @@ var Sidebar = (function (_React$Component) {
         // slide open to what we dragged
         sidebarStyle = update(sidebarStyle, { $merge: {
             transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
-            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)' } });
+            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)'
+          } });
 
         // fade overlay to match distance of drag
         overlayStyle = update(overlayStyle, { $merge: {
             opacity: percentage,
-            visibility: 'visible' } });
+            visibility: 'visible'
+          } });
       } else if (this.props.docked) {
 
         // show sidebar
         if (this.state.sidebarWidth !== 0) {
           sidebarStyle = update(sidebarStyle, { $merge: {
               transform: 'translateX(0%)',
-              WebkitTransform: 'translateX(0%)' } });
+              WebkitTransform: 'translateX(0%)'
+            } });
         }
 
         // make space on the left size of the sidebar
         contentStyle = update(contentStyle, { $merge: {
-            left: '' + this.state.sidebarWidth + 'px' } });
+            left: this.state.sidebarWidth + 'px'
+          } });
       } else if (this.props.open) {
 
         // slide open sidebar
         sidebarStyle = update(sidebarStyle, { $merge: {
             transform: 'translateX(0%)',
-            WebkitTransform: 'translateX(0%)' } });
+            WebkitTransform: 'translateX(0%)'
+          } });
 
         // show overlay
         overlayStyle = update(overlayStyle, { $merge: {
             opacity: 1,
-            visibility: 'visible' } });
+            visibility: 'visible'
+          } });
       }
 
       if (isTouching || !this.props.transitions) {
         sidebarStyle = update(sidebarStyle, { $merge: {
             transition: 'none',
-            WebkitTransition: 'none' } });
+            WebkitTransition: 'none'
+          } });
 
         contentStyle = update(contentStyle, { $merge: {
-            transition: 'none' } });
+            transition: 'none'
+          } });
 
         overlayStyle = update(overlayStyle, { $merge: {
-            transition: 'none' } });
+            transition: 'none'
+          } });
       }
 
       if (useTouch) {
@@ -296,7 +315,8 @@ var Sidebar = (function (_React$Component) {
           rootProps.onScroll = this.onScroll;
         } else {
           var dragHandleStyle = update(styles.dragHandle, { $merge: {
-              width: this.props.touchHandleWidth } });
+              width: this.props.touchHandleWidth
+            } });
 
           dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
@@ -355,7 +375,8 @@ Sidebar.propTypes = {
   dragToggleDistance: _reactAddons2['default'].PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _reactAddons2['default'].PropTypes.func };
+  onSetOpen: _reactAddons2['default'].PropTypes.func
+};
 
 Sidebar.defaultProps = {
   docked: false,
@@ -364,7 +385,8 @@ Sidebar.defaultProps = {
   touch: true,
   touchHandleWidth: 20,
   dragToggleDistance: 30,
-  onSetOpen: function onSetOpen() {} };
+  onSetOpen: function onSetOpen() {}
+};
 
 exports['default'] = Sidebar;
 module.exports = exports['default'];
