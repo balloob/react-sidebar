@@ -89,16 +89,11 @@ class Sidebar extends React.Component {
     // filter out if a user starts swiping with a second finger
     if (!this.isTouching()) {
       let touch = ev.targetTouches[0];
-      let tcX = touch.clientX;
-      if (this.props.pullRight) {
-        tcX = this.state.sidebarWidth - tcX;
-      }
-
       this.setState({
         touchIdentifier: touch.identifier,
-        touchStartX: tcX,
+        touchStartX: touch.clientX,
         touchStartY: touch.clientY,
-        touchCurrentX: tcX,
+        touchCurrentX: touch.clientX,
         touchCurrentY: touch.clientY,
       });
     }
@@ -109,13 +104,8 @@ class Sidebar extends React.Component {
       for (let i = 0; i < ev.targetTouches.length; i++) {
         // we only care about the finger that we are tracking
         if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
-          let tcX = ev.targetTouches[i].clientX;
-          if (this.props.pullRight) {
-            tcX = this.state.sidebarWidth - tcX;
-          }
-
           this.setState({
-            touchCurrentX: tcX,
+            touchCurrentX: ev.targetTouches[i].clientX,
             touchCurrentY: ev.targetTouches[i].clientY,
           });
           break;
@@ -184,8 +174,16 @@ class Sidebar extends React.Component {
 
   // True if the on going gesture X distance is less than the cancel distance
   inCancelDistanceOnScroll() {
-    return Math.abs(this.state.touchStartX-this.state.touchCurrentX) <
-                    CANCEL_DISTANCE_ON_SCROLL;
+    let cancelDistanceOnScroll;
+
+    if (this.props.pullRight) {
+      cancelDistanceOnScroll = Math.abs(this.state.touchCurrentX - this.state.touchStartX) <
+                                        CANCEL_DISTANCE_ON_SCROLL;
+    } else {
+      cancelDistanceOnScroll = Math.abs(this.state.touchStartX - this.state.touchCurrentX) <
+                                        CANCEL_DISTANCE_ON_SCROLL;
+    }
+    return cancelDistanceOnScroll;
   }
 
   // calculate the sidebarWidth based on current touch info
@@ -193,14 +191,30 @@ class Sidebar extends React.Component {
     // if the sidebar is open and start point of drag is inside the sidebar
     // we will only drag the distance they moved their finger
     // otherwise we will move the sidebar to be below the finger.
-    if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
-      if (this.state.touchCurrentX > this.state.touchStartX) {
-        return this.state.sidebarWidth;
+    if (this.props.pullRight) {
+
+      if (this.props.open && window.innerWidth - this.state.touchStartX < this.state.sidebarWidth) {
+        if (this.state.touchCurrentX > this.state.touchStartX) {
+          return this.state.sidebarWidth + this.state.touchStartX - this.state.touchCurrentX;
+        } else {
+          return this.state.sidebarWidth;
+        }
       } else {
-        return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+        return Math.min(window.innerWidth - this.state.touchCurrentX, this.state.sidebarWidth);
       }
+
     } else {
-      return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
+
+      if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
+        if (this.state.touchCurrentX > this.state.touchStartX) {
+          return this.state.sidebarWidth;
+        } else {
+          return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+        }
+      } else {
+        return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
+      }
+
     }
   }
 

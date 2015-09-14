@@ -35,13 +35,9 @@ var styles = {
     zIndex: 2,
     position: 'absolute',
     top: 0,
-    left: 0,
     bottom: 0,
-    boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.15)',
     transition: 'transform .3s ease-out',
-    transform: 'translateX(-100%)',
     WebkitTransition: '-webkit-transform .3s ease-out',
-    WebkitTransform: 'translateX(-100%)',
     willChange: 'transform',
     backgroundColor: 'white',
     overflowY: 'auto'
@@ -53,7 +49,7 @@ var styles = {
     right: 0,
     bottom: 0,
     overflow: 'auto',
-    transition: 'left .3s ease-out'
+    transition: 'left .3s ease-out, right .3s ease-out'
   },
   overlay: {
     zIndex: 1,
@@ -71,7 +67,6 @@ var styles = {
     zIndex: 1,
     position: 'fixed',
     top: 0,
-    left: 0,
     bottom: 0
   }
 };
@@ -213,7 +208,14 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'inCancelDistanceOnScroll',
     value: function inCancelDistanceOnScroll() {
-      return Math.abs(this.state.touchStartX - this.state.touchCurrentX) < CANCEL_DISTANCE_ON_SCROLL;
+      var cancelDistanceOnScroll = undefined;
+
+      if (this.props.pullRight) {
+        cancelDistanceOnScroll = Math.abs(this.state.touchCurrentX - this.state.touchStartX) < CANCEL_DISTANCE_ON_SCROLL;
+      } else {
+        cancelDistanceOnScroll = Math.abs(this.state.touchStartX - this.state.touchCurrentX) < CANCEL_DISTANCE_ON_SCROLL;
+      }
+      return cancelDistanceOnScroll;
     }
 
     // calculate the sidebarWidth based on current touch info
@@ -223,14 +225,28 @@ var Sidebar = (function (_React$Component) {
       // if the sidebar is open and start point of drag is inside the sidebar
       // we will only drag the distance they moved their finger
       // otherwise we will move the sidebar to be below the finger.
-      if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
-        if (this.state.touchCurrentX > this.state.touchStartX) {
-          return this.state.sidebarWidth;
+      if (this.props.pullRight) {
+
+        if (this.props.open && window.innerWidth - this.state.touchStartX < this.state.sidebarWidth) {
+          if (this.state.touchCurrentX > this.state.touchStartX) {
+            return this.state.sidebarWidth + this.state.touchStartX - this.state.touchCurrentX;
+          } else {
+            return this.state.sidebarWidth;
+          }
         } else {
-          return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+          return Math.min(window.innerWidth - this.state.touchCurrentX, this.state.sidebarWidth);
         }
       } else {
-        return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
+
+        if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
+          if (this.state.touchCurrentX > this.state.touchStartX) {
+            return this.state.sidebarWidth;
+          } else {
+            return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+          }
+        } else {
+          return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
+        }
       }
     }
   }, {
@@ -241,21 +257,54 @@ var Sidebar = (function (_React$Component) {
           overlayStyle = styles.overlay,
           useTouch = this.state.dragSupported && this.props.touch,
           isTouching = this.isTouching(),
-          dragHandle = undefined;
+          dragHandle = undefined,
+          sidebarStyleToMerge = undefined;
 
       var rootProps = {
         style: styles.root
       };
 
+      // sidebarStyle right/left
+      if (this.props.pullRight) {
+        sidebarStyleToMerge = {
+          right: 0,
+          transform: 'translateX(100%)',
+          WebkitTransform: 'translateX(100%)'
+        };
+        if (this.props.shadow) {
+          sidebarStyleToMerge.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+        }
+      } else {
+        sidebarStyleToMerge = {
+          left: 0,
+          transform: 'translateX(-100%)',
+          WebkitTransform: 'translateX(-100%)'
+        };
+        if (this.props.shadow) {
+          sidebarStyleToMerge.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+        }
+      }
+
+      sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleToMerge });
+
       if (isTouching) {
 
         var percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
+        var sidebarStyleTouchToMerge = undefined;
 
         // slide open to what we dragged
-        sidebarStyle = update(sidebarStyle, { $merge: {
+        if (this.props.pullRight) {
+          sidebarStyleTouchToMerge = {
+            transform: 'translateX(' + (1 - percentage) * 100 + '%)',
+            WebkitTransform: 'translateX(' + (1 - percentage) * 100 + '%)'
+          };
+        } else {
+          sidebarStyleTouchToMerge = {
             transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
             WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)'
-          } });
+          };
+        }
+        sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleTouchToMerge });
 
         // fade overlay to match distance of drag
         overlayStyle = update(overlayStyle, { $merge: {
@@ -272,10 +321,18 @@ var Sidebar = (function (_React$Component) {
             } });
         }
 
-        // make space on the left size of the sidebar
-        contentStyle = update(contentStyle, { $merge: {
+        // make space on the left/right size of the sidebar
+        var spaceSidebar = undefined;
+        if (this.props.pullRight) {
+          spaceSidebar = {
+            right: this.state.sidebarWidth + 'px'
+          };
+        } else {
+          spaceSidebar = {
             left: this.state.sidebarWidth + 'px'
-          } });
+          };
+        }
+        contentStyle = update(contentStyle, { $merge: spaceSidebar });
       } else if (this.props.open) {
 
         // slide open sidebar
@@ -314,9 +371,18 @@ var Sidebar = (function (_React$Component) {
           rootProps.onTouchCancel = this.onTouchEnd;
           rootProps.onScroll = this.onScroll;
         } else {
-          var dragHandleStyle = update(styles.dragHandle, { $merge: {
-              width: this.props.touchHandleWidth
-            } });
+          var dragHandleStyleToMerge = {
+            width: this.props.touchHandleWidth
+          };
+
+          // dragHandleStyle right/left
+          if (this.props.pullRight) {
+            dragHandleStyleToMerge.right = 0;
+          } else {
+            dragHandleStyleToMerge.left = 0;
+          }
+
+          var dragHandleStyle = update(styles.dragHandle, { $merge: dragHandleStyleToMerge });
 
           dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
@@ -371,6 +437,12 @@ Sidebar.propTypes = {
   // max distance from the edge we can start touching
   touchHandleWidth: _reactAddons2['default'].PropTypes.number,
 
+  // Place the sidebar on the right
+  pullRight: _reactAddons2['default'].PropTypes.bool,
+
+  // Enable/Disable sidebar shadow
+  shadow: _reactAddons2['default'].PropTypes.bool,
+
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: _reactAddons2['default'].PropTypes.number,
 
@@ -384,6 +456,8 @@ Sidebar.defaultProps = {
   transitions: true,
   touch: true,
   touchHandleWidth: 20,
+  pullRight: false,
+  shadow: true,
   dragToggleDistance: 30,
   onSetOpen: function onSetOpen() {}
 };
