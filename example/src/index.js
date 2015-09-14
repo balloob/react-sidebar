@@ -1,11 +1,8 @@
 import React from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Sidebar from '../../src';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
-
-injectTapEventPlugin();
 
 const styles = {
   contentHeaderMenuLink: {
