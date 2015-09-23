@@ -1,6 +1,5 @@
-import React from 'react/addons';
-
-const update = React.addons.update;
+import React from 'react';
+import update from 'react-addons-update';
 
 const styles = {
   root: {

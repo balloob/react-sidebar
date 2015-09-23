@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Sidebar from '../../src';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
@@ -80,4 +81,4 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('example'))
+ReactDOM.render(<App />, document.getElementById('example'))

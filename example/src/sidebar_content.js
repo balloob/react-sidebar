@@ -1,7 +1,6 @@
-import React from 'react/addons';
+import React from 'react';
 import MaterialTitlePanel from './material_title_panel';
-
-const update = React.addons.update;
+import update from 'react-addons-update';
 
 const styles = {
   sidebar: {
