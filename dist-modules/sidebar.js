@@ -4,6 +4,8 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -17,8 +19,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var _reactAddons = require('react/addons');
 
 var _reactAddons2 = _interopRequireDefault(_reactAddons);
-
-var update = _reactAddons2['default'].addons.update;
 
 var CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -252,115 +252,78 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var sidebarStyle = styles.sidebar,
-          contentStyle = styles.content,
-          overlayStyle = styles.overlay,
-          useTouch = this.state.dragSupported && this.props.touch,
-          isTouching = this.isTouching(),
-          dragHandle = undefined,
-          sidebarStyleToMerge = undefined;
-
+      var sidebarStyle = _extends({}, styles.sidebar);
+      var contentStyle = _extends({}, styles.content);
+      var overlayStyle = _extends({}, styles.overlay);
+      var useTouch = this.state.dragSupported && this.props.touch;
+      var isTouching = this.isTouching();
       var rootProps = {
         style: styles.root
       };
+      var dragHandle = undefined;
 
       // sidebarStyle right/left
       if (this.props.pullRight) {
-        sidebarStyleToMerge = {
-          right: 0,
-          transform: 'translateX(100%)',
-          WebkitTransform: 'translateX(100%)'
-        };
+        sidebarStyle.right = 0;
+        sidebarStyle.transform = 'translateX(100%)';
+        sidebarStyle.WebkitTransform = 'translateX(100%)';
         if (this.props.shadow) {
-          sidebarStyleToMerge.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+          sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
       } else {
-        sidebarStyleToMerge = {
-          left: 0,
-          transform: 'translateX(-100%)',
-          WebkitTransform: 'translateX(-100%)'
-        };
+        sidebarStyle.left = 0;
+        sidebarStyle.transform = 'translateX(-100%)';
+        sidebarStyle.WebkitTransform = 'translateX(-100%)';
         if (this.props.shadow) {
-          sidebarStyleToMerge.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+          sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
       }
 
-      sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleToMerge });
-
       if (isTouching) {
-
         var percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
-        var sidebarStyleTouchToMerge = undefined;
 
         // slide open to what we dragged
         if (this.props.pullRight) {
-          sidebarStyleTouchToMerge = {
-            transform: 'translateX(' + (1 - percentage) * 100 + '%)',
-            WebkitTransform: 'translateX(' + (1 - percentage) * 100 + '%)'
-          };
+          sidebarStyle.transform = 'translateX(' + (1 - percentage) * 100 + '%)';
+          sidebarStyle.WebkitTransform = 'translateX(' + (1 - percentage) * 100 + '%)';
         } else {
-          sidebarStyleTouchToMerge = {
-            transform: 'translateX(-' + (1 - percentage) * 100 + '%)',
-            WebkitTransform: 'translateX(-' + (1 - percentage) * 100 + '%)'
-          };
+          sidebarStyle.transform = 'translateX(-' + (1 - percentage) * 100 + '%)';
+          sidebarStyle.WebkitTransform = 'translateX(-' + (1 - percentage) * 100 + '%)';
         }
-        sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleTouchToMerge });
 
         // fade overlay to match distance of drag
-        overlayStyle = update(overlayStyle, { $merge: {
-            opacity: percentage,
-            visibility: 'visible'
-          } });
+        overlayStyle.opacity = percentage;
+        overlayStyle.visibility = 'visible';
       } else if (this.props.docked) {
 
         // show sidebar
         if (this.state.sidebarWidth !== 0) {
-          sidebarStyle = update(sidebarStyle, { $merge: {
-              transform: 'translateX(0%)',
-              WebkitTransform: 'translateX(0%)'
-            } });
+          sidebarStyle.transform = 'translateX(0%)';
+          sidebarStyle.WebkitTransform = 'translateX(0%)';
         }
 
-        // make space on the left/right size of the sidebar
-        var spaceSidebar = undefined;
+        // make space on the left/right side of the content for the sidebar
         if (this.props.pullRight) {
-          spaceSidebar = {
-            right: this.state.sidebarWidth + 'px'
-          };
+          contentStyle.right = this.state.sidebarWidth + 'px';
         } else {
-          spaceSidebar = {
-            left: this.state.sidebarWidth + 'px'
-          };
+          contentStyle.left = this.state.sidebarWidth + 'px';
         }
-        contentStyle = update(contentStyle, { $merge: spaceSidebar });
       } else if (this.props.open) {
 
         // slide open sidebar
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            transform: 'translateX(0%)',
-            WebkitTransform: 'translateX(0%)'
-          } });
+        sidebarStyle.transform = 'translateX(0%)';
+        sidebarStyle.WebkitTransform = 'translateX(0%)';
 
         // show overlay
-        overlayStyle = update(overlayStyle, { $merge: {
-            opacity: 1,
-            visibility: 'visible'
-          } });
+        overlayStyle.opacity = 1;
+        overlayStyle.visibility = 'visible';
       }
 
       if (isTouching || !this.props.transitions) {
-        sidebarStyle = update(sidebarStyle, { $merge: {
-            transition: 'none',
-            WebkitTransition: 'none'
-          } });
-
-        contentStyle = update(contentStyle, { $merge: {
-            transition: 'none'
-          } });
-
-        overlayStyle = update(overlayStyle, { $merge: {
-            transition: 'none'
-          } });
+        sidebarStyle.transition = 'none';
+        sidebarStyle.WebkitTransition = 'none';
+        contentStyle.transition = 'none';
+        overlayStyle.transition = 'none';
       }
 
       if (useTouch) {
@@ -371,18 +334,15 @@ var Sidebar = (function (_React$Component) {
           rootProps.onTouchCancel = this.onTouchEnd;
           rootProps.onScroll = this.onScroll;
         } else {
-          var dragHandleStyleToMerge = {
-            width: this.props.touchHandleWidth
-          };
+          var dragHandleStyle = _extends({}, styles.dragHandle);
+          dragHandleStyle.width = this.props.touchHandleWidth;
 
           // dragHandleStyle right/left
           if (this.props.pullRight) {
-            dragHandleStyleToMerge.right = 0;
+            dragHandleStyle.right = 0;
           } else {
-            dragHandleStyleToMerge.left = 0;
+            dragHandleStyle.left = 0;
           }
-
-          var dragHandleStyle = update(styles.dragHandle, { $merge: dragHandleStyleToMerge });
 
           dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
