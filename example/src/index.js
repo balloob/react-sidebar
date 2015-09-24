@@ -91,7 +91,7 @@ var App = React.createClass({
           <p>React Sidebar is a sidebar component for React. It offers the following features:</p>
           <ul>
             <li>Have the sidebar slide over main content</li>
-            <li>Dock the sidebar on the left of the content</li>
+            <li>Dock the sidebar next to the content</li>
             <li>Touch enabled: swipe to open and close the sidebar</li>
             <li>Easy to combine with media queries for auto-docking (<a href='responsive_example.html'>see example</a>)</li>
             <li>Sidebar and content passed in as PORCs (Plain Old React Components)</li>
