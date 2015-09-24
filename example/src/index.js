@@ -19,6 +19,8 @@ var App = React.createClass({
       open: false,
       transitions: true,
       touch: true,
+      shadow: true,
+      pullRight: false,
       touchHandleWidth: 20,
       dragToggleDistance: 30,
     };
@@ -75,6 +77,8 @@ var App = React.createClass({
       docked: this.state.docked,
       open: this.state.open,
       touch: this.state.touch,
+      shadow: this.state.shadow,
+      pullRight: this.state.pullRight,
       touchHandleWidth: this.state.touchHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
@@ -96,7 +100,7 @@ var App = React.createClass({
           </ul>
           <p><a href='https://github.com/balloob/react-sidebar#installation'>Instructions how to get started.</a></p>
           <p><b>Current rendered sidebar properties:</b></p>
-          {['open', 'docked', 'transitions', 'touch'].map(this.renderPropCheckbox)}
+          {['open', 'docked', 'transitions', 'touch', 'shadow', 'pullRight'].map(this.renderPropCheckbox)}
           {['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
         </MaterialTitlePanel>
       </Sidebar>
