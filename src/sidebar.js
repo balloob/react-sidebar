@@ -1,7 +1,5 @@
 import React from 'react/addons';
 
-const update = React.addons.update;
-
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
 const styles = {
@@ -219,118 +217,81 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let sidebarStyle = styles.sidebar,
-        contentStyle = styles.content,
-        overlayStyle = styles.overlay,
-        useTouch = this.state.dragSupported && this.props.touch,
-        isTouching = this.isTouching(),
-        dragHandle,
-        sidebarStyleToMerge;
-
-    let rootProps = {
+    const sidebarStyle = {...styles.sidebar};
+    const contentStyle = {...styles.content};
+    const overlayStyle = {...styles.overlay};
+    const useTouch = this.state.dragSupported && this.props.touch;
+    const isTouching = this.isTouching();
+    const rootProps = {
       style: styles.root,
     };
+    let dragHandle;
 
     // sidebarStyle right/left
     if (this.props.pullRight) {
-      sidebarStyleToMerge = {
-        right: 0,
-        transform: 'translateX(100%)',
-        WebkitTransform: 'translateX(100%)',
-      }
+      sidebarStyle.right = 0;
+      sidebarStyle.transform = 'translateX(100%)';
+      sidebarStyle.WebkitTransform = 'translateX(100%)';
       if (this.props.shadow) {
-        sidebarStyleToMerge.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
       }
     } else {
-      sidebarStyleToMerge = {
-        left: 0,
-        transform: 'translateX(-100%)',
-        WebkitTransform: 'translateX(-100%)',
-      }
+      sidebarStyle.left = 0;
+      sidebarStyle.transform = 'translateX(-100%)';
+      sidebarStyle.WebkitTransform = 'translateX(-100%)';
       if (this.props.shadow) {
-        sidebarStyleToMerge.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
       }
     }
 
-    sidebarStyle = update(sidebarStyle, { $merge: sidebarStyleToMerge });
-
     if (isTouching) {
-
-      let percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
-      let sidebarStyleTouchToMerge;
+      const percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
 
       // slide open to what we dragged
       if (this.props.pullRight) {
-        sidebarStyleTouchToMerge = {
-          transform: `translateX(${(1-percentage)*100}%)`,
-          WebkitTransform: `translateX(${(1-percentage)*100}%)`,
-        };
+        sidebarStyle.transform = `translateX(${(1-percentage)*100}%)`;
+        sidebarStyle.WebkitTransform = `translateX(${(1-percentage)*100}%)`;
       } else {
-        sidebarStyleTouchToMerge = {
-          transform: `translateX(-${(1-percentage)*100}%)`,
-          WebkitTransform: `translateX(-${(1-percentage)*100}%)`,
-        };
+        sidebarStyle.transform = `translateX(-${(1-percentage)*100}%)`;
+        sidebarStyle.WebkitTransform = `translateX(-${(1-percentage)*100}%)`;
       }
-      sidebarStyle = update(sidebarStyle, {$merge: sidebarStyleTouchToMerge});
 
       // fade overlay to match distance of drag
-      overlayStyle = update(overlayStyle, {$merge: {
-        opacity: percentage,
-        visibility: 'visible',
-      }});
+      overlayStyle.opacity = percentage;
+      overlayStyle.visibility = 'visible';
 
     } else if (this.props.docked) {
 
       // show sidebar
       if (this.state.sidebarWidth !== 0) {
-        sidebarStyle = update(sidebarStyle, {$merge: {
-          transform: `translateX(0%)`,
-          WebkitTransform: `translateX(0%)`,
-        }});
+        sidebarStyle.transform = `translateX(0%)`;
+        sidebarStyle.WebkitTransform = `translateX(0%)`;
       }
 
-      // make space on the left/right size of the sidebar
-     let spaceSidebar;
-     if (this.props.pullRight) {
-       spaceSidebar = {
-         right: this.state.sidebarWidth + 'px'
-       };
-     } else {
-       spaceSidebar = {
-         left: this.state.sidebarWidth + 'px'
-       };
-     }
-     contentStyle = update(contentStyle, { $merge: spaceSidebar });
+      // make space on the left/right side of the content for the sidebar
+      if (this.props.pullRight) {
+        contentStyle.right = `${this.state.sidebarWidth}px`;
+      } else {
+        contentStyle.left = `${this.state.sidebarWidth}px`;
+      }
 
     } else if (this.props.open) {
 
       // slide open sidebar
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transform: `translateX(0%)`,
-        WebkitTransform: `translateX(0%)`,
-      }});
+      sidebarStyle.transform = `translateX(0%)`;
+      sidebarStyle.WebkitTransform = `translateX(0%)`;
 
       // show overlay
-      overlayStyle = update(overlayStyle, {$merge: {
-        opacity: 1,
-        visibility: 'visible',
-      }});
+      overlayStyle.opacity = 1;
+      overlayStyle.visibility = 'visible';
 
     }
 
     if (isTouching || !this.props.transitions) {
-      sidebarStyle = update(sidebarStyle, {$merge: {
-        transition: 'none',
-        WebkitTransition: 'none',
-      }});
-
-      contentStyle = update(contentStyle, {$merge: {
-        transition: 'none',
-      }});
-
-      overlayStyle = update(overlayStyle, {$merge: {
-        transition: 'none',
-      }});
+      sidebarStyle.transition = 'none';
+      sidebarStyle.WebkitTransition = 'none';
+      contentStyle.transition = 'none';
+      overlayStyle.transition = 'none';
     }
 
     if (useTouch) {
@@ -341,18 +302,15 @@ class Sidebar extends React.Component {
         rootProps.onTouchCancel = this.onTouchEnd;
         rootProps.onScroll = this.onScroll;
       } else {
-        let dragHandleStyleToMerge = {
-          width: this.props.touchHandleWidth,
-        };
+        const dragHandleStyle = {...styles.dragHandle};
+        dragHandleStyle.width = this.props.touchHandleWidth;
 
         // dragHandleStyle right/left
         if (this.props.pullRight) {
-          dragHandleStyleToMerge.right = 0;
+          dragHandleStyle.right = 0;
         } else {
-          dragHandleStyleToMerge.left = 0;
+          dragHandleStyle.left = 0;
         }
-
-        let dragHandleStyle = update(styles.dragHandle, {$merge: dragHandleStyleToMerge});
 
         dragHandle = (
           <div style={dragHandleStyle}
