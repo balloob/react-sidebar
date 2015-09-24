@@ -1,11 +1,8 @@
 import React from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Sidebar from '../../src';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
-
-injectTapEventPlugin();
 
 const styles = {
   contentHeaderMenuLink: {
@@ -22,6 +19,8 @@ var App = React.createClass({
       open: false,
       transitions: true,
       touch: true,
+      shadow: true,
+      pullRight: false,
       touchHandleWidth: 20,
       dragToggleDistance: 30,
     };
@@ -78,6 +77,8 @@ var App = React.createClass({
       docked: this.state.docked,
       open: this.state.open,
       touch: this.state.touch,
+      shadow: this.state.shadow,
+      pullRight: this.state.pullRight,
       touchHandleWidth: this.state.touchHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
@@ -90,7 +91,7 @@ var App = React.createClass({
           <p>React Sidebar is a sidebar component for React. It offers the following features:</p>
           <ul>
             <li>Have the sidebar slide over main content</li>
-            <li>Dock the sidebar on the left of the content</li>
+            <li>Dock the sidebar next to the content</li>
             <li>Touch enabled: swipe to open and close the sidebar</li>
             <li>Easy to combine with media queries for auto-docking (<a href='responsive_example.html'>see example</a>)</li>
             <li>Sidebar and content passed in as PORCs (Plain Old React Components)</li>
@@ -99,7 +100,7 @@ var App = React.createClass({
           </ul>
           <p><a href='https://github.com/balloob/react-sidebar#installation'>Instructions how to get started.</a></p>
           <p><b>Current rendered sidebar properties:</b></p>
-          {['open', 'docked', 'transitions', 'touch'].map(this.renderPropCheckbox)}
+          {['open', 'docked', 'transitions', 'touch', 'shadow', 'pullRight'].map(this.renderPropCheckbox)}
           {['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
         </MaterialTitlePanel>
       </Sidebar>

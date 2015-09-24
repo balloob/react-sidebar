@@ -1,4 +1,4 @@
-React Sidebar
+React Sidebar [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar)
 =============
 
 React Sidebar is a sidebar component for React. It offers the following features:
@@ -35,6 +35,8 @@ Supported props
 | touch | boolean | true | If touch gestures should be enabled |
 | touchHandleWidth | number | 20 | Width in pixels you can start dragging from the edge when the sidebar is closed. |
 | dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
+| pullRight | boolean | false | Place the sidebar on the right |
+| shadow | boolean | true | Enable/Disable sidebar shadow |
 
 Installation
 ------------
