@@ -19,12 +19,11 @@ const styles = {
   },
 };
 
-var SidebarContent = React.createClass({
-  render() {
+const SidebarContent = (props) => {
     let style = styles.sidebar;
 
-    if (this.props.style) {
-      style = update(style, {$merge: this.props.style});
+    if (props.style) {
+      style = update(style, {$merge: props.style});
     }
 
     let links = [];
@@ -40,8 +39,9 @@ var SidebarContent = React.createClass({
         <a href='responsive_example.html' style={styles.sidebarLink}>Responsive Example</a>
         <div style={styles.divider} />
         {links}
-      </MaterialTitlePanel>);
-  },
-});
+      </MaterialTitlePanel>
+    );
+  
+};
 
 export default SidebarContent;

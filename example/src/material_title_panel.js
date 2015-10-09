@@ -17,19 +17,18 @@ const styles = {
   },
 };
 
-class MaterialTitlePanel extends React.Component {
-  render() {
-    let rootStyle = this.props.style ?
-                      update(styles.root, {$merge: this.props.style}) :
+const MaterialTitlePanel = (props) => {
+    let rootStyle =   props.style ?
+                      update(styles.root, {$merge: props.style}) :
                       styles.root;
 
     return (
       <div style={rootStyle}>
-        <div style={styles.header}>{this.props.title}</div>
-        <div style={styles.content}>{this.props.children}</div>
+        <div style={styles.header}>{props.title}</div>
+        <div style={styles.content}>{props.children}</div>
       </div>
     );
-  }
+  
 }
 
 export default MaterialTitlePanel;
