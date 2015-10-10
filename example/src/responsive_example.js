@@ -12,7 +12,7 @@ const styles = {
   },
   content: {
     padding: '16px',
-  }
+  },
 };
 
 const App = React.createClass({

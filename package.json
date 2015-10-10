@@ -7,7 +7,7 @@
   "scripts": {
     "build": "babel src --out-dir dist-modules && webpack",
     "dev": "webpack --watch",
-    "lint": "eslint src"
+    "lint": "eslint src example/src"
   },
   "keywords": [
     "component",

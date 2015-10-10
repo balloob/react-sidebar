@@ -2,8 +2,8 @@ import React from 'react';
 
 const styles = {
   root: {
-   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-   fontWeight: 300,
+    fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+    fontWeight: 300,
   },
   header: {
     backgroundColor: '#03a9f4',
@@ -14,15 +14,14 @@ const styles = {
 };
 
 const MaterialTitlePanel = (props) => {
-    let rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
+  const rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
 
-    return (
-      <div style={rootStyle}>
-        <div style={styles.header}>{props.title}</div>
-        {props.children}
-      </div>
-    );
-  
-}
+  return (
+    <div style={rootStyle}>
+      <div style={styles.header}>{props.title}</div>
+      {props.children}
+    </div>
+  );
+};
 
 export default MaterialTitlePanel;
