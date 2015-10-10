@@ -1,6 +1,4 @@
-import React from 'react/addons';
-
-const update = React.addons.update;
+import React from 'react';
 
 const styles = {
   root: {
@@ -13,24 +11,18 @@ const styles = {
     padding: '16px',
     fontSize: '1.5em',
   },
-  content: {
-    padding: '16px',
-  },
 };
 
-class MaterialTitlePanel extends React.Component {
-  render() {
-    let rootStyle = this.props.style ?
-                      update(styles.root, {$merge: this.props.style}) :
-                      styles.root;
+const MaterialTitlePanel = (props) => {
+    let rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
 
     return (
       <div style={rootStyle}>
-        <div style={styles.header}>{this.props.title}</div>
-        <div style={styles.content}>{this.props.children}</div>
+        <div style={styles.header}>{props.title}</div>
+        {props.children}
       </div>
     );
-  }
+  
 }
 
 export default MaterialTitlePanel;

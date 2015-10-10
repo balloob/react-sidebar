@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "comma-dangle": [2, "always-multiline"],
+    "no-underscore-dangle": 0
+  }
+}

@@ -16,9 +16,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _reactAddons = require('react/addons');
+var _react = require('react');
 
-var _reactAddons2 = _interopRequireDefault(_reactAddons);
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -39,7 +43,6 @@ var styles = {
     transition: 'transform .3s ease-out',
     WebkitTransition: '-webkit-transform .3s ease-out',
     willChange: 'transform',
-    backgroundColor: 'white',
     overflowY: 'auto'
   },
   content: {
@@ -102,10 +105,16 @@ var Sidebar = (function (_React$Component) {
   }
 
   _createClass(Sidebar, [{
-    key: 'overlayClicked',
-    value: function overlayClicked() {
-      if (this.props.open) {
-        this.props.onSetOpen(false);
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.saveSidebarWidth();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      // filter out the updates when we're touching
+      if (!this.isTouching()) {
+        this.saveSidebarWidth();
       }
     }
   }, {
@@ -127,12 +136,12 @@ var Sidebar = (function (_React$Component) {
     key: 'onTouchMove',
     value: function onTouchMove(ev) {
       if (this.isTouching()) {
-        for (var i = 0; i < ev.targetTouches.length; i++) {
+        for (var ind = 0; ind < ev.targetTouches.length; ind++) {
           // we only care about the finger that we are tracking
-          if (ev.targetTouches[i].identifier == this.state.touchIdentifier) {
+          if (ev.targetTouches[ind].identifier === this.state.touchIdentifier) {
             this.setState({
-              touchCurrentX: ev.targetTouches[i].clientX,
-              touchCurrentY: ev.targetTouches[i].clientY
+              touchCurrentX: ev.targetTouches[ind].clientX,
+              touchCurrentY: ev.targetTouches[ind].clientY
             });
             break;
           }
@@ -141,7 +150,7 @@ var Sidebar = (function (_React$Component) {
     }
   }, {
     key: 'onTouchEnd',
-    value: function onTouchEnd(ev) {
+    value: function onTouchEnd() {
       if (this.isTouching()) {
         // trigger a change to open if sidebar has been dragged beyond dragToggleDistance
         var touchWidth = this.touchSidebarWidth();
@@ -165,7 +174,7 @@ var Sidebar = (function (_React$Component) {
     // cancelling the ongoing gesture if it did not move horizontally much.
   }, {
     key: 'onScroll',
-    value: function onScroll(ev) {
+    value: function onScroll() {
       if (this.isTouching() && this.inCancelDistanceOnScroll()) {
         this.setState({
           touchIdentifier: null,
@@ -175,33 +184,6 @@ var Sidebar = (function (_React$Component) {
           touchCurrentY: null
         });
       }
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.saveSidebarWidth();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevState, prevProps) {
-      // filter out the updates when we're touching
-      if (!this.isTouching()) {
-        this.saveSidebarWidth();
-      }
-    }
-  }, {
-    key: 'saveSidebarWidth',
-    value: function saveSidebarWidth() {
-      var width = _reactAddons2['default'].findDOMNode(this.refs.sidebar).offsetWidth;
-
-      if (width != this.state.sidebarWidth) {
-        this.setState({ sidebarWidth: width });
-      }
-    }
-  }, {
-    key: 'isTouching',
-    value: function isTouching() {
-      return this.state.touchIdentifier !== null;
     }
 
     // True if the on going gesture X distance is less than the cancel distance
@@ -217,6 +199,27 @@ var Sidebar = (function (_React$Component) {
       }
       return cancelDistanceOnScroll;
     }
+  }, {
+    key: 'isTouching',
+    value: function isTouching() {
+      return this.state.touchIdentifier !== null;
+    }
+  }, {
+    key: 'overlayClicked',
+    value: function overlayClicked() {
+      if (this.props.open) {
+        this.props.onSetOpen(false);
+      }
+    }
+  }, {
+    key: 'saveSidebarWidth',
+    value: function saveSidebarWidth() {
+      var width = _reactDom2['default'].findDOMNode(this.refs.sidebar).offsetWidth;
+
+      if (width !== this.state.sidebarWidth) {
+        this.setState({ sidebarWidth: width });
+      }
+    }
 
     // calculate the sidebarWidth based on current touch info
   }, {
@@ -226,28 +229,22 @@ var Sidebar = (function (_React$Component) {
       // we will only drag the distance they moved their finger
       // otherwise we will move the sidebar to be below the finger.
       if (this.props.pullRight) {
-
         if (this.props.open && window.innerWidth - this.state.touchStartX < this.state.sidebarWidth) {
           if (this.state.touchCurrentX > this.state.touchStartX) {
             return this.state.sidebarWidth + this.state.touchStartX - this.state.touchCurrentX;
-          } else {
-            return this.state.sidebarWidth;
           }
-        } else {
-          return Math.min(window.innerWidth - this.state.touchCurrentX, this.state.sidebarWidth);
+          return this.state.sidebarWidth;
         }
-      } else {
-
-        if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
-          if (this.state.touchCurrentX > this.state.touchStartX) {
-            return this.state.sidebarWidth;
-          } else {
-            return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
-          }
-        } else {
-          return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
-        }
+        return Math.min(window.innerWidth - this.state.touchCurrentX, this.state.sidebarWidth);
       }
+
+      if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
+        if (this.state.touchCurrentX > this.state.touchStartX) {
+          return this.state.sidebarWidth;
+        }
+        return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+      }
+      return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
     }
   }, {
     key: 'render',
@@ -295,7 +292,6 @@ var Sidebar = (function (_React$Component) {
         overlayStyle.opacity = percentage;
         overlayStyle.visibility = 'visible';
       } else if (this.props.docked) {
-
         // show sidebar
         if (this.state.sidebarWidth !== 0) {
           sidebarStyle.transform = 'translateX(0%)';
@@ -309,7 +305,6 @@ var Sidebar = (function (_React$Component) {
           contentStyle.left = this.state.sidebarWidth + 'px';
         }
       } else if (this.props.open) {
-
         // slide open sidebar
         sidebarStyle.transform = 'translateX(0%)';
         sidebarStyle.WebkitTransform = 'translateX(0%)';
@@ -344,23 +339,23 @@ var Sidebar = (function (_React$Component) {
             dragHandleStyle.left = 0;
           }
 
-          dragHandle = _reactAddons2['default'].createElement('div', { style: dragHandleStyle,
+          dragHandle = _react2['default'].createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
             onTouchEnd: this.onTouchEnd, onTouchCancel: this.onTouchEnd });
         }
       }
 
-      return _reactAddons2['default'].createElement(
+      return _react2['default'].createElement(
         'div',
         rootProps,
-        _reactAddons2['default'].createElement(
+        _react2['default'].createElement(
           'div',
           { style: sidebarStyle, ref: 'sidebar' },
           this.props.sidebar
         ),
-        _reactAddons2['default'].createElement('div', { style: overlayStyle,
+        _react2['default'].createElement('div', { style: overlayStyle,
           onClick: this.overlayClicked, onTouchTap: this.overlayClicked }),
-        _reactAddons2['default'].createElement(
+        _react2['default'].createElement(
           'div',
           { style: contentStyle },
           dragHandle,
@@ -371,43 +366,41 @@ var Sidebar = (function (_React$Component) {
   }]);
 
   return Sidebar;
-})(_reactAddons2['default'].Component);
-
-;
+})(_react2['default'].Component);
 
 Sidebar.propTypes = {
   // main content to render
-  children: _reactAddons2['default'].PropTypes.node.isRequired,
+  children: _react2['default'].PropTypes.node.isRequired,
 
   // sidebar content to render
-  sidebar: _reactAddons2['default'].PropTypes.node.isRequired,
+  sidebar: _react2['default'].PropTypes.node.isRequired,
 
   // boolean if sidebar should be docked
-  docked: _reactAddons2['default'].PropTypes.bool,
+  docked: _react2['default'].PropTypes.bool,
 
   // boolean if sidebar should slide open
-  open: _reactAddons2['default'].PropTypes.bool,
+  open: _react2['default'].PropTypes.bool,
 
   // boolean if transitions should be disabled
-  transitions: _reactAddons2['default'].PropTypes.bool,
+  transitions: _react2['default'].PropTypes.bool,
 
   // boolean if touch gestures are enabled
-  touch: _reactAddons2['default'].PropTypes.bool,
+  touch: _react2['default'].PropTypes.bool,
 
   // max distance from the edge we can start touching
-  touchHandleWidth: _reactAddons2['default'].PropTypes.number,
+  touchHandleWidth: _react2['default'].PropTypes.number,
 
   // Place the sidebar on the right
-  pullRight: _reactAddons2['default'].PropTypes.bool,
+  pullRight: _react2['default'].PropTypes.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: _reactAddons2['default'].PropTypes.bool,
+  shadow: _react2['default'].PropTypes.bool,
 
   // distance we have to drag the sidebar to toggle open state
-  dragToggleDistance: _reactAddons2['default'].PropTypes.number,
+  dragToggleDistance: _react2['default'].PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _reactAddons2['default'].PropTypes.func
+  onSetOpen: _react2['default'].PropTypes.func
 };
 
 Sidebar.defaultProps = {
