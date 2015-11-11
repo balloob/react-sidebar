@@ -104,7 +104,7 @@ var App = React.createClass({
   componentWillMount: function() {
     var mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, docked: mql.matches});
+    this.setState({mql: mql, sidebarDocked: mql.matches});
   },
 
   componentWillUnmount: function() {
