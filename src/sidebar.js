@@ -213,6 +213,7 @@ class Sidebar extends React.Component {
     const contentStyle = {...styles.content};
     const overlayStyle = {...styles.overlay};
     const useTouch = this.state.dragSupported && this.props.touch;
+    const sidebarClassName = this.props.className || '';
     const isTouching = this.isTouching();
     const rootProps = {
       style: styles.root,
@@ -308,7 +309,7 @@ class Sidebar extends React.Component {
 
     return (
       <div {...rootProps}>
-        <div style={sidebarStyle} ref="sidebar">
+        <div className={sidebarClassName} style={sidebarStyle} ref="sidebar">
           {this.props.sidebar}
         </div>
         <div style={overlayStyle}
@@ -325,6 +326,9 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   // main content to render
   children: React.PropTypes.node.isRequired,
+
+  // sidebar optional class
+  className: React.PropTypes.string,
 
   // sidebar content to render
   sidebar: React.PropTypes.node.isRequired,
