@@ -30,7 +30,7 @@ Supported props
 | Property name | Type | Default | Description |
 |---------------|------|---------|-------------|
 | children | Anything React can render | n/a | The main content |
-| className | string | n/a | Add a custom class to the sidebar |
+| sidebarClassName | string | n/a | Add a custom class to the sidebar |
 | sidebar | Anything React can render | n/a | The sidebar content |
 | onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
 | docked | boolean | false | If the sidebar should be always visible |
