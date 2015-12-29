@@ -79,6 +79,7 @@ const App = React.createClass({
     const sidebarProps = {
       sidebar: sidebar,
       docked: this.state.docked,
+      className: 'custom-sidebar-class',
       open: this.state.open,
       touch: this.state.touch,
       shadow: this.state.shadow,
