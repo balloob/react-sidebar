@@ -16,6 +16,15 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 
 [See a demo here.](http://balloob.github.io/react-sidebar/example/)
 
+Change log
+----------
+
+## 2.0.1
+ - Allow adding className to sidebar using sidebarClassName prop.
+
+## 2.0.0
+ - React 0.14 release
+
 Touch specifics
 ---------------
 The touch interaction of the React Sidebar mimics the interactions that are supported by Android apps that implement the material design spec:
