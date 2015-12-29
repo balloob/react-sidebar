@@ -25,6 +25,9 @@ const styles = {
 };
 
 const SidebarContent = (props) => {
+  this.propTypes = {
+    style: React.PropTypes.object,
+  };
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   const links = [];
