@@ -14,6 +14,9 @@ const styles = {
 };
 
 const MaterialTitlePanel = (props) => {
+  this.propTypes = {
+    style: React.PropTypes.object,
+  };
   const rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
 
   return (
