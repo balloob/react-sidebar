@@ -1,0 +1,6 @@
+
+{
+  "presets": ["es2015", "babel-preset-react"],
+  "plugins": ["transform-object-rest-spread"],
+  "highlightCode": true
+}

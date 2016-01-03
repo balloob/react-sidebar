@@ -1,20 +1,12 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _react = require('react');
 
@@ -23,6 +15,16 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -80,9 +82,9 @@ var Sidebar = (function (_React$Component) {
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
-    _get(Object.getPrototypeOf(Sidebar.prototype), 'constructor', this).call(this, props);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).call(this, props));
 
-    this.state = {
+    _this.state = {
       // the detected width of the sidebar in pixels
       sidebarWidth: 0,
 
@@ -94,14 +96,15 @@ var Sidebar = (function (_React$Component) {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: typeof window === 'object' && 'ontouchstart' in window
+      dragSupported: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && 'ontouchstart' in window
     };
 
-    this.overlayClicked = this.overlayClicked.bind(this);
-    this.onTouchStart = this.onTouchStart.bind(this);
-    this.onTouchMove = this.onTouchMove.bind(this);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
-    this.onScroll = this.onScroll.bind(this);
+    _this.overlayClicked = _this.overlayClicked.bind(_this);
+    _this.onTouchStart = _this.onTouchStart.bind(_this);
+    _this.onTouchMove = _this.onTouchMove.bind(_this);
+    _this.onTouchEnd = _this.onTouchEnd.bind(_this);
+    _this.onScroll = _this.onScroll.bind(_this);
+    return _this;
   }
 
   _createClass(Sidebar, [{
@@ -172,6 +175,7 @@ var Sidebar = (function (_React$Component) {
     // This logic helps us prevents the user from sliding the sidebar horizontally
     // while scrolling the sidebar vertically. When a scroll event comes in, we're
     // cancelling the ongoing gesture if it did not move horizontally much.
+
   }, {
     key: 'onScroll',
     value: function onScroll() {
@@ -187,6 +191,7 @@ var Sidebar = (function (_React$Component) {
     }
 
     // True if the on going gesture X distance is less than the cancel distance
+
   }, {
     key: 'inCancelDistanceOnScroll',
     value: function inCancelDistanceOnScroll() {
@@ -214,7 +219,7 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'saveSidebarWidth',
     value: function saveSidebarWidth() {
-      var width = _reactDom2['default'].findDOMNode(this.refs.sidebar).offsetWidth;
+      var width = _reactDom2.default.findDOMNode(this.refs.sidebar).offsetWidth;
 
       if (width !== this.state.sidebarWidth) {
         this.setState({ sidebarWidth: width });
@@ -222,6 +227,7 @@ var Sidebar = (function (_React$Component) {
     }
 
     // calculate the sidebarWidth based on current touch info
+
   }, {
     key: 'touchSidebarWidth',
     value: function touchSidebarWidth() {
@@ -339,23 +345,23 @@ var Sidebar = (function (_React$Component) {
             dragHandleStyle.left = 0;
           }
 
-          dragHandle = _react2['default'].createElement('div', { style: dragHandleStyle,
+          dragHandle = _react2.default.createElement('div', { style: dragHandleStyle,
             onTouchStart: this.onTouchStart, onTouchMove: this.onTouchMove,
             onTouchEnd: this.onTouchEnd, onTouchCancel: this.onTouchEnd });
         }
       }
 
-      return _react2['default'].createElement(
+      return _react2.default.createElement(
         'div',
         rootProps,
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'div',
           { className: this.props.sidebarClassName, style: sidebarStyle, ref: 'sidebar' },
           this.props.sidebar
         ),
-        _react2['default'].createElement('div', { style: overlayStyle,
+        _react2.default.createElement('div', { style: overlayStyle,
           onClick: this.overlayClicked, onTouchTap: this.overlayClicked }),
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'div',
           { style: contentStyle },
           dragHandle,
@@ -366,53 +372,53 @@ var Sidebar = (function (_React$Component) {
   }]);
 
   return Sidebar;
-})(_react2['default'].Component);
+})(_react2.default.Component);
 
 Sidebar.propTypes = {
   // main content to render
-  children: _react2['default'].PropTypes.node.isRequired,
+  children: _react2.default.PropTypes.node.isRequired,
 
   // styles
-  styles: _react2['default'].PropTypes.shape({
-    root: _react2['default'].PropTypes.object,
-    sidebar: _react2['default'].PropTypes.object,
-    content: _react2['default'].PropTypes.object,
-    overlay: _react2['default'].PropTypes.object,
-    dragHandle: _react2['default'].PropTypes.object
+  styles: _react2.default.PropTypes.shape({
+    root: _react2.default.PropTypes.object,
+    sidebar: _react2.default.PropTypes.object,
+    content: _react2.default.PropTypes.object,
+    overlay: _react2.default.PropTypes.object,
+    dragHandle: _react2.default.PropTypes.object
   }),
 
   // sidebar optional class
-  sidebarClassName: _react2['default'].PropTypes.string,
+  sidebarClassName: _react2.default.PropTypes.string,
 
   // sidebar content to render
-  sidebar: _react2['default'].PropTypes.node.isRequired,
+  sidebar: _react2.default.PropTypes.node.isRequired,
 
   // boolean if sidebar should be docked
-  docked: _react2['default'].PropTypes.bool,
+  docked: _react2.default.PropTypes.bool,
 
   // boolean if sidebar should slide open
-  open: _react2['default'].PropTypes.bool,
+  open: _react2.default.PropTypes.bool,
 
   // boolean if transitions should be disabled
-  transitions: _react2['default'].PropTypes.bool,
+  transitions: _react2.default.PropTypes.bool,
 
   // boolean if touch gestures are enabled
-  touch: _react2['default'].PropTypes.bool,
+  touch: _react2.default.PropTypes.bool,
 
   // max distance from the edge we can start touching
-  touchHandleWidth: _react2['default'].PropTypes.number,
+  touchHandleWidth: _react2.default.PropTypes.number,
 
   // Place the sidebar on the right
-  pullRight: _react2['default'].PropTypes.bool,
+  pullRight: _react2.default.PropTypes.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: _react2['default'].PropTypes.bool,
+  shadow: _react2.default.PropTypes.bool,
 
   // distance we have to drag the sidebar to toggle open state
-  dragToggleDistance: _react2['default'].PropTypes.number,
+  dragToggleDistance: _react2.default.PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _react2['default'].PropTypes.func
+  onSetOpen: _react2.default.PropTypes.func
 };
 
 Sidebar.defaultProps = {
@@ -428,5 +434,4 @@ Sidebar.defaultProps = {
   styles: {}
 };
 
-exports['default'] = Sidebar;
-module.exports = exports['default'];
+exports.default = Sidebar;
