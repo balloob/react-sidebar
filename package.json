@@ -1,6 +1,6 @@
 {
   "name": "react-sidebar",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>",
   "description": "A sidebar component for React.",
   "main": "dist-modules/index.js",
