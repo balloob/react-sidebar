@@ -8,7 +8,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -26,7 +26,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var CANCEL_DISTANCE_ON_SCROLL = 20;
 
-var styles = {
+var defaultStyles = {
   root: {
     position: 'absolute',
     top: 0,
@@ -249,13 +249,13 @@ var Sidebar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var sidebarStyle = _extends({}, styles.sidebar);
-      var contentStyle = _extends({}, styles.content);
-      var overlayStyle = _extends({}, styles.overlay);
+      var sidebarStyle = _extends({}, defaultStyles.sidebar, this.props.styles.sidebar);
+      var contentStyle = _extends({}, defaultStyles.content, this.props.styles.content);
+      var overlayStyle = _extends({}, defaultStyles.overlay, this.props.styles.overlay);
       var useTouch = this.state.dragSupported && this.props.touch;
       var isTouching = this.isTouching();
       var rootProps = {
-        style: styles.root
+        style: _extends({}, defaultStyles.root, this.props.styles.root)
       };
       var dragHandle = undefined;
 
@@ -329,7 +329,7 @@ var Sidebar = (function (_React$Component) {
           rootProps.onTouchCancel = this.onTouchEnd;
           rootProps.onScroll = this.onScroll;
         } else {
-          var dragHandleStyle = _extends({}, styles.dragHandle);
+          var dragHandleStyle = _extends({}, defaultStyles.dragHandle, this.props.styles.dragHandle);
           dragHandleStyle.width = this.props.touchHandleWidth;
 
           // dragHandleStyle right/left
@@ -350,7 +350,7 @@ var Sidebar = (function (_React$Component) {
         rootProps,
         _react2['default'].createElement(
           'div',
-          { style: sidebarStyle, ref: 'sidebar' },
+          { className: this.props.sidebarClassName, style: sidebarStyle, ref: 'sidebar' },
           this.props.sidebar
         ),
         _react2['default'].createElement('div', { style: overlayStyle,
@@ -371,6 +371,18 @@ var Sidebar = (function (_React$Component) {
 Sidebar.propTypes = {
   // main content to render
   children: _react2['default'].PropTypes.node.isRequired,
+
+  // styles
+  styles: _react2['default'].PropTypes.shape({
+    root: _react2['default'].PropTypes.object,
+    sidebar: _react2['default'].PropTypes.object,
+    content: _react2['default'].PropTypes.object,
+    overlay: _react2['default'].PropTypes.object,
+    dragHandle: _react2['default'].PropTypes.object
+  }),
+
+  // sidebar optional class
+  sidebarClassName: _react2['default'].PropTypes.string,
 
   // sidebar content to render
   sidebar: _react2['default'].PropTypes.node.isRequired,
@@ -412,7 +424,8 @@ Sidebar.defaultProps = {
   pullRight: false,
   shadow: true,
   dragToggleDistance: 30,
-  onSetOpen: function onSetOpen() {}
+  onSetOpen: function onSetOpen() {},
+  styles: {}
 };
 
 exports['default'] = Sidebar;

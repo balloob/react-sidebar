@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
-const styles = {
+const defaultStyles = {
   root: {
     position: 'absolute',
     top: 0,
@@ -209,13 +209,13 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const sidebarStyle = {...styles.sidebar};
-    const contentStyle = {...styles.content};
-    const overlayStyle = {...styles.overlay};
+    const sidebarStyle = {...defaultStyles.sidebar, ...this.props.styles.sidebar};
+    const contentStyle = {...defaultStyles.content, ...this.props.styles.content};
+    const overlayStyle = {...defaultStyles.overlay, ...this.props.styles.overlay};
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
-      style: styles.root,
+      style: {...defaultStyles.root, ...this.props.styles.root},
     };
     let dragHandle;
 
@@ -289,7 +289,7 @@ class Sidebar extends React.Component {
         rootProps.onTouchCancel = this.onTouchEnd;
         rootProps.onScroll = this.onScroll;
       } else {
-        const dragHandleStyle = {...styles.dragHandle};
+        const dragHandleStyle = {...defaultStyles.dragHandle, ...this.props.styles.dragHandle};
         dragHandleStyle.width = this.props.touchHandleWidth;
 
         // dragHandleStyle right/left
@@ -325,6 +325,15 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   // main content to render
   children: React.PropTypes.node.isRequired,
+
+  // styles
+  styles: React.PropTypes.shape({
+    root: React.PropTypes.object,
+    sidebar: React.PropTypes.object,
+    content: React.PropTypes.object,
+    overlay: React.PropTypes.object,
+    dragHandle: React.PropTypes.object,
+  }),
 
   // sidebar optional class
   sidebarClassName: React.PropTypes.string,
@@ -370,6 +379,7 @@ Sidebar.defaultProps = {
   shadow: true,
   dragToggleDistance: 30,
   onSetOpen: () => {},
+  styles: {},
 };
 
 export default Sidebar;
