@@ -37,8 +37,9 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'auto',
     transition: 'left .3s ease-out',
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch'
   },
   overlay: {
     zIndex: 1,
