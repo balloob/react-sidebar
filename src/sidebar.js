@@ -10,10 +10,12 @@ const CANCEL_DISTANCE_ON_SCROLL = 20;
 const styles = {
   root: {
     position: 'absolute',
-    top: 0,
+    top: '74px',
     left: 0,
     right: 0,
     bottom: 0,
+    width: '100%',
+    heigt: '100%',
     overflow: 'hidden',
   },
   sidebar: {
@@ -39,11 +41,13 @@ const styles = {
     bottom: 0,
     transition: 'left .3s ease-out',
     overflowY: 'scroll',
-    WebkitOverflowScrolling: 'touch'
+    WebkitOverflowScrolling: 'touch',
+    MsTouchAction: 'pan-y',
+    TouchAction: 'pan-y'
   },
   overlay: {
     zIndex: 1,
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -55,7 +59,7 @@ const styles = {
   },
   dragHandle: {
     zIndex: 1,
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
     left: 0,
     bottom: 0,
