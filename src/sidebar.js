@@ -316,7 +316,7 @@ class Sidebar extends React.Component {
         </div>
         <div style={overlayStyle}
              onClick={this.overlayClicked} onTouchTap={this.overlayClicked} />
-        <div style={contentStyle}>
+        <div style={contentStyle} className='scroll-container'>
           {dragHandle}
           {this.props.children}
         </div>
