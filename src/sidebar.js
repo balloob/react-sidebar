@@ -1,9 +1,9 @@
-import React from 'react/addons';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import update from 'react-addons-update';
 
 const isBrowser = typeof window !== 'undefined';
 const Modernizr = isBrowser ? require('./lib/modernizr.custom.js') : undefined;
-
-const update = React.addons.update;
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -174,7 +174,7 @@ class Sidebar extends React.Component {
   }
 
   saveSidebarWidth() {
-    let width = React.findDOMNode(this.refs.sidebar).offsetWidth;
+    let width = findDOMNode(this.refs.sidebar).offsetWidth;
 
     if (width != this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});

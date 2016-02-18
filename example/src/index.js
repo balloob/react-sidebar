@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Sidebar from '../../src';
@@ -107,4 +108,4 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById('example'))
+render(<App />, document.getElementById('example'))
