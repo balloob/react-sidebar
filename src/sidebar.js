@@ -19,7 +19,7 @@ const styles = {
     overflow: 'hidden',
   },
   sidebar: {
-    zIndex: 2,
+    zIndex: 32,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -46,7 +46,7 @@ const styles = {
     TouchAction: 'pan-y'
   },
   overlay: {
-    zIndex: 1,
+    zIndex: 31,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -58,7 +58,7 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,.3)',
   },
   dragHandle: {
-    zIndex: 1,
+    zIndex: 31,
     position: 'absolute',
     top: 0,
     left: 0,
