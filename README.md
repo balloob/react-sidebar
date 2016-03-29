@@ -69,7 +69,7 @@ The minimum React component to integrate React Sidebar looks like this:
 
 ```javascript
 var React = require('react');
-var Sidebar = require('react-sidebar');
+var Sidebar = require('react-sidebar').default;
 
 var App = React.createClass({
   getInitialState: function() {
