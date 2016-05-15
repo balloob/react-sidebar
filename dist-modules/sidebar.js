@@ -96,7 +96,7 @@ var Sidebar = (function (_React$Component) {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && 'ontouchstart' in window
+      dragSupported: false
     };
 
     _this.overlayClicked = _this.overlayClicked.bind(_this);
@@ -110,6 +110,9 @@ var Sidebar = (function (_React$Component) {
   _createClass(Sidebar, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.setState({
+        dragSupported: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' && 'ontouchstart' in window
+      });
       this.saveSidebarWidth();
     }
   }, {
