@@ -19,6 +19,9 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 
+## 2.1.2
+ - Fix server side rendering
+
 ## 2.1
  - Allow overriding embedded styles.
 
