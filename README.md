@@ -38,6 +38,7 @@ The touch interaction of the React Sidebar mimics the interactions that are supp
  - When the sidebar is closed, dragging from the left side of the screen will have the right side of the sidebar follow your finger.
  - When the sidebar is open, sliding your finger over the screen will only affect the sidebar once your finger is over the sidebar.
  - On release, it will call `onSetOpen` prop if the distance the sidebar was dragged is more than the `dragToggleDistance` prop.
+ - Taps are handled with `onTouchTap` from [react-tap-event-plugin](https://www.npmjs.com/package/react-tap-event-plugin), so make sure you have this plugin installed to remove tap delays.
 
 Supported props
 ---------------
