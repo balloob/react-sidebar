@@ -218,6 +218,7 @@ class Sidebar extends React.Component {
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
+      className: this.props.rootClassName,
       style: {...defaultStyles.root, ...this.props.styles.root},
     };
     let dragHandle;
