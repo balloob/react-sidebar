@@ -19,6 +19,9 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 
+## 2.1.3
+ - Added optional classNames.
+
 ## 2.1.2
  - Fix server side rendering
 
@@ -45,7 +48,10 @@ Supported props
 | Property name | Type | Default | Description |
 |---------------|------|---------|-------------|
 | children | Anything React can render | n/a | The main content |
+| rootClassName | string | n/a | Add a custom class to the root component |
 | sidebarClassName | string | n/a | Add a custom class to the sidebar |
+| contentClassName | string | n/a | Add a custom class to the content |
+| overlayClassName | string | n/a | Add a custom class to the overlay |
 | sidebar | Anything React can render | n/a | The sidebar content |
 | onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
 | docked | boolean | false | If the sidebar should be always visible |
