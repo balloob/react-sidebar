@@ -19,6 +19,9 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 
+## 2.1.4
+ - Update included ES5 build with 2.1.3 changes
+
 ## 2.1.3
  - Added optional classNames.
 
