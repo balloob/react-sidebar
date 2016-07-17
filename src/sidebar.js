@@ -316,8 +316,12 @@ class Sidebar extends React.Component {
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
-             style={overlayStyle}
-             onClick={this.overlayClicked} onTouchTap={this.overlayClicked} />
+          style={overlayStyle}
+          role="presentation"
+          tabIndex="0"
+          onClick={this.overlayClicked}
+          onTouchTap={this.overlayClicked}
+          />
         <div className={this.props.contentClassName} style={contentStyle}>
           {dragHandle}
           {this.props.children}
