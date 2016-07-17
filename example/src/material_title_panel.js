@@ -14,9 +14,6 @@ const styles = {
 };
 
 const MaterialTitlePanel = (props) => {
-  this.propTypes = {
-    style: React.PropTypes.object,
-  };
   const rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
 
   return (
@@ -25,6 +22,15 @@ const MaterialTitlePanel = (props) => {
       {props.children}
     </div>
   );
+};
+
+MaterialTitlePanel.propTypes = {
+  style: React.PropTypes.object,
+  title: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object,
+  ]),
+  children: React.PropTypes.object,
 };
 
 export default MaterialTitlePanel;
