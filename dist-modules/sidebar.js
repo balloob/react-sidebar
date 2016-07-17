@@ -367,8 +367,7 @@ var Sidebar = function (_React$Component) {
           style: overlayStyle,
           role: 'presentation',
           tabIndex: '0',
-          onClick: this.overlayClicked,
-          onTouchTap: this.overlayClicked
+          onClick: this.overlayClicked
         }),
         _react2.default.createElement(
           'div',
