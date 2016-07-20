@@ -19,20 +19,24 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 
+## 2.2
+ - Move from onTouchTap to onClick for React 15.2 compatibility (@factorize)
+ - Fix accessibility issues (@cristian-sima)
+
 ## 2.1.4
  - Update included ES5 build with 2.1.3 changes
 
 ## 2.1.3
- - Added optional classNames.
+ - Added optional classNames (@sugarshin)
 
 ## 2.1.2
- - Fix server side rendering
+ - Fix server side rendering (@elliottsj)
 
 ## 2.1
- - Allow overriding embedded styles.
+ - Allow overriding embedded styles (@kulesa)
 
 ## 2.0.1
- - Allow adding className to sidebar using sidebarClassName prop.
+ - Allow adding className to sidebar using sidebarClassName prop (@lostdalek)
 
 ## 2.0.0
  - React 0.14 release
