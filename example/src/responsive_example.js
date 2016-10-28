@@ -73,7 +73,7 @@ const App = React.createClass({
             </p>
             <p>
               This functionality should live in the component that renders the sidebar.
-              This way you're able to modify the sidebar and main content based on the
+              This way you’re able to modify the sidebar and main content based on the
               responsiveness data. For example, the menu button in the header of the
               content is now {this.state.docked ? 'hidden' : 'shown'} because the sidebar
               is {!this.state.docked && 'not'} visible.
