@@ -30,6 +30,7 @@ const defaultStyles = {
     bottom: 0,
     overflow: 'auto',
     transition: 'left .3s ease-out, right .3s ease-out',
+    backgroundColor: 'white',
   },
   overlay: {
     zIndex: 1,
