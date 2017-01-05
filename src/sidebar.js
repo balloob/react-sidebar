@@ -40,7 +40,7 @@ const defaultStyles = {
     bottom: 0,
     opacity: 0,
     visibility: 'hidden',
-    transition: 'opacity .3s ease-out',
+    transition: 'opacity .3s ease-out, visibility .3s ease-out',
     backgroundColor: 'rgba(0,0,0,.3)',
   },
   dragHandle: {
