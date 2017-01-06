@@ -75,7 +75,7 @@ Installation
 ------------
 React Sidebar is available on NPM. Install the package into your project: `npm install react-sidebar --save`
 
-Typings for react-sidebar are available on DefinitlyTyped. Install the typings into your project: `npm install --save @types/react-sidebar`
+If you use TypeScript, typings are available on DefinitlyTyped and can be installed with: `npm install --save @types/react-sidebar`
 
 Getting started
 -----------------
