@@ -75,6 +75,8 @@ Installation
 ------------
 React Sidebar is available on NPM. Install the package into your project: `npm install react-sidebar --save`
 
+If you use TypeScript, typings are available on DefinitlyTyped and can be installed with: `npm install --save @types/react-sidebar`
+
 Getting started
 -----------------
 By design, React Sidebar does not keep track of whether it is open or not. This has to be done by the parent component. This allows the parent component to make changes to the sidebar and main content based on the open/docked state. An example could be to hide the "show menu" button from the main content when the sidebar is docked.
