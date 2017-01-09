@@ -91,6 +91,12 @@ class Sidebar extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.open && this.props.currentPathname != nextProps.currentPathname) {
+      this.props.onSetOpen(false);
+    }
+  }
+
   onTouchStart(ev) {
     // filter out if a user starts swiping with a second finger
     if (!this.isTouching()) {
@@ -384,6 +390,9 @@ Sidebar.propTypes = {
 
   // callback called when the overlay is clicked
   onSetOpen: React.PropTypes.func,
+
+  // current pathname from react-router
+  currentPathname: React.PropTypes.string,
 };
 
 Sidebar.defaultProps = {
