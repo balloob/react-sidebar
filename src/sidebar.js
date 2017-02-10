@@ -57,7 +57,7 @@ class Sidebar extends React.Component {
 
     this.state = {
       // the detected width of the sidebar in pixels
-      sidebarWidth: props.sidebarWidth,
+      sidebarWidth: props.defaultSidebarWidth,
 
       // keep track of touching params
       touchIdentifier: null,
@@ -384,6 +384,9 @@ Sidebar.propTypes = {
 
   // callback called when the overlay is clicked
   onSetOpen: React.PropTypes.func,
+
+  // Intial sidebar width when page loads
+  defaultSidebarWidth: React.PropTypes.number,
 };
 
 Sidebar.defaultProps = {
@@ -397,7 +400,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
-  sidebarWidth: 0,
+  defaultSidebarWidth: 0,
 };
 
 export default Sidebar;
