@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -313,7 +312,7 @@ class Sidebar extends React.Component {
     return (
       <div {...rootProps}>
         <div className={this.props.sidebarClassName} style={sidebarStyle}
-          ref={node => this.sidebar = node}>
+             ref={node => (this.sidebar = node)}>
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
