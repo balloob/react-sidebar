@@ -74,9 +74,8 @@ class Sidebar extends React.Component {
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onScroll = this.onScroll.bind(this);
+    this.saveSidebarRef = this.saveSidebarRef.bind(this);
   }
-
-  saveSidebarRef = (node) => this.sidebar = node;
 
   componentDidMount() {
     this.setState({
@@ -186,6 +185,10 @@ class Sidebar extends React.Component {
     if (width !== this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
     }
+  }
+
+  saveSidebarRef(node) {
+    this.sidebar = node; 
   }
 
   // calculate the sidebarWidth based on current touch info
