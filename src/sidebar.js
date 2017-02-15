@@ -76,6 +76,8 @@ class Sidebar extends React.Component {
     this.onScroll = this.onScroll.bind(this);
   }
 
+  saveSidebarRef = (node) => this.sidebar = node;
+
   componentDidMount() {
     this.setState({
       dragSupported: typeof window === 'object' && 'ontouchstart' in window,
@@ -179,7 +181,7 @@ class Sidebar extends React.Component {
   }
 
   saveSidebarWidth() {
-    const width = this.refs.sidebar.offsetWidth;
+    const width = this.sidebar.offsetWidth;
 
     if (width !== this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
@@ -311,7 +313,7 @@ class Sidebar extends React.Component {
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref="sidebar">
+        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
