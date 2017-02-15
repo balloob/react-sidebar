@@ -179,7 +179,7 @@ class Sidebar extends React.Component {
   }
 
   saveSidebarWidth() {
-    const width = this.sidebar.offsetWidth;
+    const width = this.refs.sidebar.offsetWidth;
 
     if (width !== this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
@@ -311,8 +311,7 @@ class Sidebar extends React.Component {
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle}
-             ref={node => (this.sidebar = node)}>
+        <div className={this.props.sidebarClassName} style={sidebarStyle} ref="sidebar">
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
