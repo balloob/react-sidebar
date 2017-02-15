@@ -14,10 +14,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,7 +61,7 @@ var defaultStyles = {
     bottom: 0,
     opacity: 0,
     visibility: 'hidden',
-    transition: 'opacity .3s ease-out',
+    transition: 'opacity .3s ease-out, visibility .3s ease-out',
     backgroundColor: 'rgba(0,0,0,.3)'
   },
   dragHandle: {
@@ -86,7 +82,7 @@ var Sidebar = function (_React$Component) {
 
     _this.state = {
       // the detected width of the sidebar in pixels
-      sidebarWidth: 0,
+      sidebarWidth: props.defaultSidebarWidth,
 
       // keep track of touching params
       touchIdentifier: null,
@@ -104,6 +100,7 @@ var Sidebar = function (_React$Component) {
     _this.onTouchMove = _this.onTouchMove.bind(_this);
     _this.onTouchEnd = _this.onTouchEnd.bind(_this);
     _this.onScroll = _this.onScroll.bind(_this);
+    _this.saveSidebarRef = _this.saveSidebarRef.bind(_this);
     return _this;
   }
 
@@ -222,11 +219,16 @@ var Sidebar = function (_React$Component) {
   }, {
     key: 'saveSidebarWidth',
     value: function saveSidebarWidth() {
-      var width = _reactDom2.default.findDOMNode(this.refs.sidebar).offsetWidth;
+      var width = this.sidebar.offsetWidth;
 
       if (width !== this.state.sidebarWidth) {
         this.setState({ sidebarWidth: width });
       }
+    }
+  }, {
+    key: 'saveSidebarRef',
+    value: function saveSidebarRef(node) {
+      this.sidebar = node;
     }
 
     // calculate the sidebarWidth based on current touch info
@@ -360,7 +362,7 @@ var Sidebar = function (_React$Component) {
         rootProps,
         _react2.default.createElement(
           'div',
-          { className: this.props.sidebarClassName, style: sidebarStyle, ref: 'sidebar' },
+          { className: this.props.sidebarClassName, style: sidebarStyle, ref: this.saveSidebarRef },
           this.props.sidebar
         ),
         _react2.default.createElement('div', { className: this.props.overlayClassName,
@@ -435,7 +437,10 @@ Sidebar.propTypes = {
   dragToggleDistance: _react2.default.PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _react2.default.PropTypes.func
+  onSetOpen: _react2.default.PropTypes.func,
+
+  // Intial sidebar width when page loads
+  defaultSidebarWidth: _react2.default.PropTypes.number
 };
 
 Sidebar.defaultProps = {
@@ -448,7 +453,8 @@ Sidebar.defaultProps = {
   shadow: true,
   dragToggleDistance: 30,
   onSetOpen: function onSetOpen() {},
-  styles: {}
+  styles: {},
+  defaultSidebarWidth: 0
 };
 
 exports.default = Sidebar;
