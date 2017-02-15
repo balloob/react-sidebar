@@ -188,7 +188,7 @@ class Sidebar extends React.Component {
   }
 
   saveSidebarRef(node) {
-    this.sidebar = node; 
+    this.sidebar = node;
   }
 
   // calculate the sidebarWidth based on current touch info
