@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -75,6 +74,7 @@ class Sidebar extends React.Component {
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
     this.onScroll = this.onScroll.bind(this);
+    this.saveSidebarRef = this.saveSidebarRef.bind(this);
   }
 
   componentDidMount() {
@@ -180,11 +180,15 @@ class Sidebar extends React.Component {
   }
 
   saveSidebarWidth() {
-    const width = ReactDOM.findDOMNode(this.refs.sidebar).offsetWidth;
+    const width = this.sidebar.offsetWidth;
 
     if (width !== this.state.sidebarWidth) {
       this.setState({sidebarWidth: width});
     }
+  }
+
+  saveSidebarRef(node) {
+    this.sidebar = node;
   }
 
   // calculate the sidebarWidth based on current touch info
@@ -312,7 +316,7 @@ class Sidebar extends React.Component {
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref="sidebar">
+        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
