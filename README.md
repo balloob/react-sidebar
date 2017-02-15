@@ -1,9 +1,6 @@
 React Sidebar 2.0 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
 =============
 
-#### [If you're on React 0.13, use React Sidebar 1.1.0.](https://github.com/balloob/react-sidebar/tree/63b5f19527afd50c9cae4705a5766f8f845a795d)
-#### Breaking change since v1.1.0 is that the sidebar no longer has a white background.
-
 React Sidebar is a sidebar component for React 0.14+. It offers the following features:
 
   - Have the sidebar slide over main content
