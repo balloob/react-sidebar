@@ -19,6 +19,10 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 
+## 2.3
+ - Replace findDOMNode by ref callback (@BDav24)
+ - Allow setting initial sidebar width (@BDav24)
+
 ## 2.2
  - Move from onTouchTap to onClick for React 15.2 compatibility (@factorize)
  - Fix accessibility issues (@cristian-sima)
