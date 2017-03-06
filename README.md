@@ -1,6 +1,8 @@
 React Sidebar 2.0 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
 =============
 
+# This project is no longer maintained as of Mar 5, 2017. Pull requests and issues will be ignored.
+
 React Sidebar is a sidebar component for React 0.14+. It offers the following features:
 
   - Have the sidebar slide over main content
