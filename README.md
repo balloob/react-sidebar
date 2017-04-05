@@ -15,6 +15,8 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 
 Change log
 ----------
+## 2.3.1
+ - Modify content styles to have momentum scrolling (@Fallenstedt)
 
 ## 2.3
  - Replace findDOMNode by ref callback (@BDav24)
