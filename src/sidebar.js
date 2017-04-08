@@ -225,6 +225,7 @@ class Sidebar extends React.Component {
     const rootProps = {
       className: this.props.rootClassName,
       style: {...defaultStyles.root, ...this.props.styles.root},
+      role: "navigation",
     };
     let dragHandle;
 
