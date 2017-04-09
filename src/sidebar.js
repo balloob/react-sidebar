@@ -1,4 +1,4 @@
-import  React, { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;

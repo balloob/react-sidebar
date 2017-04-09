@@ -13,14 +13,14 @@ const styles = {
   },
   content: {
     padding: '16px',
-  }
+  },
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state ={
+    this.state = {
       docked: false,
       open: false,
       transitions: true,
@@ -29,7 +29,7 @@ class App extends React.Component {
       pullRight: false,
       touchHandleWidth: 20,
       dragToggleDistance: 30,
-    }
+    };
 
     this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
     this.renderPropNumber = this.renderPropNumber.bind(this);
@@ -120,6 +120,6 @@ class App extends React.Component {
       </Sidebar>
     );
   }
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('example'));

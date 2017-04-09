@@ -19,13 +19,13 @@ const mql = window.matchMedia(`(min-width: 800px)`);
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       mql: mql,
-      docked: props.docked,
-      open: props.open,
-    }
+      docked: false,
+      open: false,
+    };
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
@@ -48,7 +48,7 @@ class App extends React.Component {
   mediaQueryChanged() {
     this.setState({
       mql: mql,
-      docked: this.state.mql.matches
+      docked: this.state.mql.matches,
     });
   }
 
@@ -74,7 +74,7 @@ class App extends React.Component {
       sidebar: sidebar,
       docked: this.state.docked,
       open: this.state.open,
-      onSetOpen: this.onSetOpen
+      onSetOpen: this.onSetOpen,
     };
 
     return (
