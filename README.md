@@ -1,4 +1,4 @@
-React Sidebar 2.0 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
+React Sidebar 2.3 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
 =============
 
 React Sidebar is a sidebar component for React 0.14+. It offers the following features:
@@ -17,6 +17,8 @@ Change log
 ----------
 ## 2.3.1
  - Modify content styles to have momentum scrolling (@Fallenstedt)
+ - Update examples to eliminate depreciation warnings(@Fallenstedt)
+ - Update readme's examples(@Fallenstedt)
 
 ## 2.3
  - Replace findDOMNode by ref callback (@BDav24)
@@ -89,17 +91,23 @@ Because React Sidebar can be toggled by dragging the sidebar into its open/close
 The minimum React component to integrate React Sidebar looks like this:
 
 ```javascript
-var React = require('react');
-var Sidebar = require('react-sidebar').default;
+import React from 'react';
+import Sidebar from 'react-sidebar';
 
-var App = React.createClass({
-  getInitialState: function() {
-    return {sidebarOpen: false};
-  },
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sidebarOpen: false
+    }
+
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
 
   onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
-  },
+  }
 
   render: function() {
     var sidebarContent = <b>Sidebar content</b>;
@@ -112,9 +120,9 @@ var App = React.createClass({
       </Sidebar>
     );
   }
-});
+};
 
-module.exports = App;
+export default App;
 ```
 
 Responsive sidebar
@@ -124,20 +132,31 @@ A common use case for a sidebar is to show it automatically when there is enough
 [mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
 ```javascript
-var React = require('react');
-var Sidebar = require('react-sidebar');
+import React from 'react';
+import Sidebar 'react-sidebar';
 
-var App = React.createClass({
-  getInitialState() {
-    return {sidebarOpen: false, sidebarDocked: false};
-  },
+const mql = window.matchMedia(`(min-width: 800px)`);
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mql: mql,
+      docked: props.docked,
+      open: props.open
+    }
+
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
 
   onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
   },
 
   componentWillMount: function() {
-    var mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
     this.setState({mql: mql, sidebarDocked: mql.matches});
   },
@@ -152,6 +171,11 @@ var App = React.createClass({
 
   render: function() {
     var sidebarContent = <b>Sidebar content</b>;
+    var sidebarProps = {
+      sidebar: this.state.sidebarOpen,
+      docked: this.state.sidebarDocked,
+      onSetOpen: this.onSetSidebarOpen
+    };
 
     return (
       <Sidebar sidebar={sidebarContent}
@@ -162,9 +186,9 @@ var App = React.createClass({
       </Sidebar>
     );
   }
-});
+};
 
-module.exports = App;
+export default App;
 ```
 
 Styles
@@ -198,7 +222,8 @@ Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overl
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'auto',
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
     transition: 'left .3s ease-out, right .3s ease-out',
   },
   overlay: {
@@ -210,7 +235,7 @@ Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overl
     bottom: 0,
     opacity: 0,
     visibility: 'hidden',
-    transition: 'opacity .3s ease-out',
+    transition: 'opacity .3s ease-out, visibility .3s ease-out',
     backgroundColor: 'rgba(0,0,0,.3)',
   },
   dragHandle: {
@@ -219,7 +244,7 @@ Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overl
     top: 0,
     bottom: 0,
   },
-}
+};
 ```
 
 Acknowledgements
