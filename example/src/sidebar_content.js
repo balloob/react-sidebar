@@ -1,5 +1,6 @@
 import React from 'react';
 import MaterialTitlePanel from './material_title_panel';
+import PropTypes from 'prop-types';
 
 const styles = {
   sidebar: {
@@ -47,7 +48,7 @@ const SidebarContent = (props) => {
 };
 
 SidebarContent.propTypes = {
-  style: React.PropTypes.object,
+  style: PropTypes.object,
 };
 
 export default SidebarContent;

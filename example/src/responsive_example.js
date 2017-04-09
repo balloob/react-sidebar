@@ -15,28 +15,42 @@ const styles = {
   },
 };
 
-const App = React.createClass({
-  getInitialState() {
-    return {docked: false, open: false};
-  },
+const mql = window.matchMedia(`(min-width: 800px)`);
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mql: mql,
+      docked: false,
+      open: false,
+    };
+
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.toggleOpen = this.toggleOpen.bind(this);
+    this.onSetOpen = this.onSetOpen.bind(this);
+  }
 
   componentWillMount() {
-    const mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
     this.setState({mql: mql, docked: mql.matches});
-  },
+  }
 
   componentWillUnmount() {
     this.state.mql.removeListener(this.mediaQueryChanged);
-  },
+  }
 
   onSetOpen(open) {
     this.setState({open: open});
-  },
+  }
 
   mediaQueryChanged() {
-    this.setState({docked: this.state.mql.matches});
-  },
+    this.setState({
+      mql: mql,
+      docked: this.state.mql.matches,
+    });
+  }
 
   toggleOpen(ev) {
     this.setState({open: !this.state.open});
@@ -44,7 +58,7 @@ const App = React.createClass({
     if (ev) {
       ev.preventDefault();
     }
-  },
+  }
 
   render() {
     const sidebar = <SidebarContent />;
@@ -52,7 +66,7 @@ const App = React.createClass({
     const contentHeader = (
       <span>
         {!this.state.docked &&
-         <a onClick={this.toggleOpen} href="#" style={styles.contentHeaderMenuLink}>=</a>}
+         <a onClick={this.toggleOpen.bind(this)} href="#" style={styles.contentHeaderMenuLink}>=</a>}
         <span> Responsive React Sidebar</span>
       </span>);
 
@@ -82,7 +96,7 @@ const App = React.createClass({
         </MaterialTitlePanel>
       </Sidebar>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('example'));

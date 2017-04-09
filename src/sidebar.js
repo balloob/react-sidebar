@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
@@ -51,7 +52,7 @@ const defaultStyles = {
   },
 };
 
-class Sidebar extends React.Component {
+class Sidebar extends Component {
   constructor(props) {
     super(props);
 
@@ -225,6 +226,7 @@ class Sidebar extends React.Component {
     const rootProps = {
       className: this.props.rootClassName,
       style: {...defaultStyles.root, ...this.props.styles.root},
+      role: "navigation",
     };
     let dragHandle;
 
@@ -337,61 +339,61 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   // main content to render
-  children: React.PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 
   // styles
-  styles: React.PropTypes.shape({
-    root: React.PropTypes.object,
-    sidebar: React.PropTypes.object,
-    content: React.PropTypes.object,
-    overlay: React.PropTypes.object,
-    dragHandle: React.PropTypes.object,
+  styles: PropTypes.shape({
+    root: PropTypes.object,
+    sidebar: PropTypes.object,
+    content: PropTypes.object,
+    overlay: PropTypes.object,
+    dragHandle: PropTypes.object,
   }),
 
   // root component optional class
-  rootClassName: React.PropTypes.string,
+  rootClassName: PropTypes.string,
 
   // sidebar optional class
-  sidebarClassName: React.PropTypes.string,
+  sidebarClassName: PropTypes.string,
 
   // content optional class
-  contentClassName: React.PropTypes.string,
+  contentClassName: PropTypes.string,
 
   // overlay optional class
-  overlayClassName: React.PropTypes.string,
+  overlayClassName: PropTypes.string,
 
   // sidebar content to render
-  sidebar: React.PropTypes.node.isRequired,
+  sidebar: PropTypes.node.isRequired,
 
   // boolean if sidebar should be docked
-  docked: React.PropTypes.bool,
+  docked: PropTypes.bool,
 
   // boolean if sidebar should slide open
-  open: React.PropTypes.bool,
+  open: PropTypes.bool,
 
   // boolean if transitions should be disabled
-  transitions: React.PropTypes.bool,
+  transitions: PropTypes.bool,
 
   // boolean if touch gestures are enabled
-  touch: React.PropTypes.bool,
+  touch: PropTypes.bool,
 
   // max distance from the edge we can start touching
-  touchHandleWidth: React.PropTypes.number,
+  touchHandleWidth: PropTypes.number,
 
   // Place the sidebar on the right
-  pullRight: React.PropTypes.bool,
+  pullRight: PropTypes.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: React.PropTypes.bool,
+  shadow: PropTypes.bool,
 
   // distance we have to drag the sidebar to toggle open state
-  dragToggleDistance: React.PropTypes.number,
+  dragToggleDistance: PropTypes.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: React.PropTypes.func,
+  onSetOpen: PropTypes.func,
 
   // Intial sidebar width when page loads
-  defaultSidebarWidth: React.PropTypes.number,
+  defaultSidebarWidth: PropTypes.number,
 };
 
 Sidebar.defaultProps = {

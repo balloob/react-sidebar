@@ -16,9 +16,11 @@ const styles = {
   },
 };
 
-const App = React.createClass({
-  getInitialState() {
-    return {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       docked: false,
       open: false,
       transitions: true,
@@ -28,16 +30,21 @@ const App = React.createClass({
       touchHandleWidth: 20,
       dragToggleDistance: 30,
     };
-  },
+
+    this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
+    this.renderPropNumber = this.renderPropNumber.bind(this);
+    this.onSetOpen = this.onSetOpen.bind(this);
+    this.menuButtonClick = this.menuButtonClick.bind(this);
+  }
 
   onSetOpen(open) {
     this.setState({open: open});
-  },
+  }
 
   menuButtonClick(ev) {
     ev.preventDefault();
     this.onSetOpen(!this.state.open);
-  },
+  }
 
   renderPropCheckbox(prop) {
     const toggleMethod = (ev) => {
@@ -51,7 +58,7 @@ const App = React.createClass({
         <input type="checkbox" onChange={toggleMethod} checked={this.state[prop]} id={prop} />
         <label htmlFor={prop}> {prop}</label>
       </p>);
-  },
+  }
 
   renderPropNumber(prop) {
     const setMethod = (ev) => {
@@ -64,7 +71,7 @@ const App = React.createClass({
       <p key={prop}>
          {prop} <input type="number" onChange={setMethod} value={this.state[prop]} />
       </p>);
-  },
+  }
 
   render() {
     const sidebar = <SidebarContent />;
@@ -112,7 +119,7 @@ const App = React.createClass({
         </MaterialTitlePanel>
       </Sidebar>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('example'));

@@ -6,13 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,7 +53,8 @@ var defaultStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'auto',
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
     transition: 'left .3s ease-out, right .3s ease-out'
   },
   overlay: {
@@ -72,13 +77,13 @@ var defaultStyles = {
   }
 };
 
-var Sidebar = function (_React$Component) {
-  _inherits(Sidebar, _React$Component);
+var Sidebar = function (_Component) {
+  _inherits(Sidebar, _Component);
 
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 
     _this.state = {
       // the detected width of the sidebar in pixels
@@ -267,7 +272,8 @@ var Sidebar = function (_React$Component) {
       var isTouching = this.isTouching();
       var rootProps = {
         className: this.props.rootClassName,
-        style: _extends({}, defaultStyles.root, this.props.styles.root)
+        style: _extends({}, defaultStyles.root, this.props.styles.root),
+        role: "navigation"
       };
       var dragHandle = void 0;
 
@@ -382,65 +388,65 @@ var Sidebar = function (_React$Component) {
   }]);
 
   return Sidebar;
-}(_react2.default.Component);
+}(_react.Component);
 
 Sidebar.propTypes = {
   // main content to render
-  children: _react2.default.PropTypes.node.isRequired,
+  children: _propTypes2.default.node.isRequired,
 
   // styles
-  styles: _react2.default.PropTypes.shape({
-    root: _react2.default.PropTypes.object,
-    sidebar: _react2.default.PropTypes.object,
-    content: _react2.default.PropTypes.object,
-    overlay: _react2.default.PropTypes.object,
-    dragHandle: _react2.default.PropTypes.object
+  styles: _propTypes2.default.shape({
+    root: _propTypes2.default.object,
+    sidebar: _propTypes2.default.object,
+    content: _propTypes2.default.object,
+    overlay: _propTypes2.default.object,
+    dragHandle: _propTypes2.default.object
   }),
 
   // root component optional class
-  rootClassName: _react2.default.PropTypes.string,
+  rootClassName: _propTypes2.default.string,
 
   // sidebar optional class
-  sidebarClassName: _react2.default.PropTypes.string,
+  sidebarClassName: _propTypes2.default.string,
 
   // content optional class
-  contentClassName: _react2.default.PropTypes.string,
+  contentClassName: _propTypes2.default.string,
 
   // overlay optional class
-  overlayClassName: _react2.default.PropTypes.string,
+  overlayClassName: _propTypes2.default.string,
 
   // sidebar content to render
-  sidebar: _react2.default.PropTypes.node.isRequired,
+  sidebar: _propTypes2.default.node.isRequired,
 
   // boolean if sidebar should be docked
-  docked: _react2.default.PropTypes.bool,
+  docked: _propTypes2.default.bool,
 
   // boolean if sidebar should slide open
-  open: _react2.default.PropTypes.bool,
+  open: _propTypes2.default.bool,
 
   // boolean if transitions should be disabled
-  transitions: _react2.default.PropTypes.bool,
+  transitions: _propTypes2.default.bool,
 
   // boolean if touch gestures are enabled
-  touch: _react2.default.PropTypes.bool,
+  touch: _propTypes2.default.bool,
 
   // max distance from the edge we can start touching
-  touchHandleWidth: _react2.default.PropTypes.number,
+  touchHandleWidth: _propTypes2.default.number,
 
   // Place the sidebar on the right
-  pullRight: _react2.default.PropTypes.bool,
+  pullRight: _propTypes2.default.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: _react2.default.PropTypes.bool,
+  shadow: _propTypes2.default.bool,
 
   // distance we have to drag the sidebar to toggle open state
-  dragToggleDistance: _react2.default.PropTypes.number,
+  dragToggleDistance: _propTypes2.default.number,
 
   // callback called when the overlay is clicked
-  onSetOpen: _react2.default.PropTypes.func,
+  onSetOpen: _propTypes2.default.func,
 
   // Intial sidebar width when page loads
-  defaultSidebarWidth: _react2.default.PropTypes.number
+  defaultSidebarWidth: _propTypes2.default.number
 };
 
 Sidebar.defaultProps = {
