@@ -9,19 +9,23 @@ module.exports = {
   output: {
     path: '.',
     filename: '[name].js',
-    publicPath: '/example/compiled/'
+    publicPath: '/example/compiled/',
   },
 
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?optional=es7.objectRestSpread'},
-    ]
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+      },
+    ],
   },
 
   devServer: {
     contentBase: './example',
     host: 'localhost',
     inline: true,
-    info: false
-  }
+    info: false,
+  },
 };

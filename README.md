@@ -1,7 +1,7 @@
-React Sidebar [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar)
+React Sidebar 2.3 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
 =============
 
-React Sidebar is a sidebar component for React. It offers the following features:
+React Sidebar is a sidebar component for React 0.14+. It offers the following features:
 
   - Have the sidebar slide over main content
   - Dock the sidebar on the left of the content
@@ -12,6 +12,39 @@ React Sidebar is a sidebar component for React. It offers the following features
   - Only dependency is React.
 
 [See a demo here.](http://balloob.github.io/react-sidebar/example/)
+
+Change log
+----------
+## 2.3.1
+ - Modify content styles to have momentum scrolling (@Fallenstedt)
+ - Update examples to eliminate depreciation warnings(@Fallenstedt)
+ - Update readme's examples(@Fallenstedt)
+
+## 2.3
+ - Replace findDOMNode by ref callback (@BDav24)
+ - Allow setting initial sidebar width (@BDav24)
+
+## 2.2
+ - Move from onTouchTap to onClick for React 15.2 compatibility (@factorize)
+ - Fix accessibility issues (@cristian-sima)
+
+## 2.1.4
+ - Update included ES5 build with 2.1.3 changes
+
+## 2.1.3
+ - Added optional classNames (@sugarshin)
+
+## 2.1.2
+ - Fix server side rendering (@elliottsj)
+
+## 2.1
+ - Allow overriding embedded styles (@kulesa)
+
+## 2.0.1
+ - Allow adding className to sidebar using sidebarClassName prop (@lostdalek)
+
+## 2.0.0
+ - React 0.14 release
 
 Touch specifics
 ---------------
@@ -27,6 +60,10 @@ Supported props
 | Property name | Type | Default | Description |
 |---------------|------|---------|-------------|
 | children | Anything React can render | n/a | The main content |
+| rootClassName | string | n/a | Add a custom class to the root component |
+| sidebarClassName | string | n/a | Add a custom class to the sidebar |
+| contentClassName | string | n/a | Add a custom class to the content |
+| overlayClassName | string | n/a | Add a custom class to the overlay |
 | sidebar | Anything React can render | n/a | The sidebar content |
 | onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
 | docked | boolean | false | If the sidebar should be always visible |
@@ -37,10 +74,13 @@ Supported props
 | dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
 | pullRight | boolean | false | Place the sidebar on the right |
 | shadow | boolean | true | Enable/Disable sidebar shadow |
+| styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
 
 Installation
 ------------
 React Sidebar is available on NPM. Install the package into your project: `npm install react-sidebar --save`
+
+If you use TypeScript, typings are available on DefinitlyTyped and can be installed with: `npm install --save @types/react-sidebar`
 
 Getting started
 -----------------
@@ -51,17 +91,23 @@ Because React Sidebar can be toggled by dragging the sidebar into its open/close
 The minimum React component to integrate React Sidebar looks like this:
 
 ```javascript
-var React = require('react');
-var Sidebar = require('react-sidebar');
+import React from 'react';
+import Sidebar from 'react-sidebar';
 
-var App = React.createClass({
-  getInitialState: function() {
-    return {sidebarOpen: false};
-  },
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sidebarOpen: false
+    }
+
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
 
   onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
-  },
+  }
 
   render: function() {
     var sidebarContent = <b>Sidebar content</b>;
@@ -74,9 +120,9 @@ var App = React.createClass({
       </Sidebar>
     );
   }
-});
+};
 
-module.exports = App;
+export default App;
 ```
 
 Responsive sidebar
@@ -86,22 +132,33 @@ A common use case for a sidebar is to show it automatically when there is enough
 [mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
 ```javascript
-var React = require('react');
-var Sidebar = require('react-sidebar');
+import React from 'react';
+import Sidebar 'react-sidebar';
 
-var App = React.createClass({
-  getInitialState() {
-    return {sidebarOpen: false, sidebarDocked: false};
-  },
+const mql = window.matchMedia(`(min-width: 800px)`);
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mql: mql,
+      docked: props.docked,
+      open: props.open
+    }
+
+    this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+  }
 
   onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
   },
 
   componentWillMount: function() {
-    var mql = window.matchMedia(`(min-width: 800px)`);
     mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, docked: mql.matches});
+    this.setState({mql: mql, sidebarDocked: mql.matches});
   },
 
   componentWillUnmount: function() {
@@ -114,6 +171,11 @@ var App = React.createClass({
 
   render: function() {
     var sidebarContent = <b>Sidebar content</b>;
+    var sidebarProps = {
+      sidebar: this.state.sidebarOpen,
+      docked: this.state.sidebarDocked,
+      onSetOpen: this.onSetSidebarOpen
+    };
 
     return (
       <Sidebar sidebar={sidebarContent}
@@ -124,9 +186,65 @@ var App = React.createClass({
       </Sidebar>
     );
   }
-});
+};
 
-module.exports = App;
+export default App;
+```
+
+Styles
+----------------
+
+Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overlay` and `dragHandle`, and merged to the defaults:
+
+```javascript
+{
+  root: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+  sidebar: {
+    zIndex: 2,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    transition: 'transform .3s ease-out',
+    WebkitTransition: '-webkit-transform .3s ease-out',
+    willChange: 'transform',
+    overflowY: 'auto',
+  },
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
+    transition: 'left .3s ease-out, right .3s ease-out',
+  },
+  overlay: {
+    zIndex: 1,
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'opacity .3s ease-out, visibility .3s ease-out',
+    backgroundColor: 'rgba(0,0,0,.3)',
+  },
+  dragHandle: {
+    zIndex: 1,
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+  },
+};
 ```
 
 Acknowledgements

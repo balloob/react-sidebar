@@ -1,11 +1,11 @@
-import React from 'react/addons';
+import React from 'react';
 import MaterialTitlePanel from './material_title_panel';
-
-const update = React.addons.update;
+import PropTypes from 'prop-types';
 
 const styles = {
   sidebar: {
     width: 256,
+    height: '100%',
   },
   sidebarLink: {
     display: 'block',
@@ -18,31 +18,37 @@ const styles = {
     height: 1,
     backgroundColor: '#757575',
   },
+  content: {
+    padding: '16px',
+    height: '100%',
+    backgroundColor: 'white',
+  },
 };
 
-var SidebarContent = React.createClass({
-  render() {
-    let style = styles.sidebar;
+const SidebarContent = (props) => {
+  const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
-    if (this.props.style) {
-      style = update(style, {$merge: this.props.style});
-    }
+  const links = [];
 
-    let links = [];
+  for (let ind = 0; ind < 10; ind++) {
+    links.push(
+      <a key={ind} href="#" style={styles.sidebarLink}>Mock menu item {ind}</a>);
+  }
 
-    for(let i=0; i < 10; i++) {
-      links.push(
-        <a key={i} href='#' style={styles.sidebarLink}>Mock menu item {i}</a>);
-    }
-
-    return (
-      <MaterialTitlePanel title="Menu" style={style}>
-        <a href='index.html' style={styles.sidebarLink}>Home</a>
-        <a href='responsive_example.html' style={styles.sidebarLink}>Responsive Example</a>
+  return (
+    <MaterialTitlePanel title="Menu" style={style}>
+      <div style={styles.content}>
+        <a href="index.html" style={styles.sidebarLink}>Home</a>
+        <a href="responsive_example.html" style={styles.sidebarLink}>Responsive Example</a>
         <div style={styles.divider} />
         {links}
-      </MaterialTitlePanel>);
-  },
-});
+      </div>
+    </MaterialTitlePanel>
+  );
+};
+
+SidebarContent.propTypes = {
+  style: PropTypes.object,
+};
 
 export default SidebarContent;

@@ -1,11 +1,10 @@
-import React from 'react/addons';
-
-const update = React.addons.update;
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const styles = {
   root: {
-   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-   fontWeight: 300,
+    fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+    fontWeight: 300,
   },
   header: {
     backgroundColor: '#03a9f4',
@@ -13,24 +12,26 @@ const styles = {
     padding: '16px',
     fontSize: '1.5em',
   },
-  content: {
-    padding: '16px',
-  },
 };
 
-class MaterialTitlePanel extends React.Component {
-  render() {
-    let rootStyle = this.props.style ?
-                      update(styles.root, {$merge: this.props.style}) :
-                      styles.root;
+const MaterialTitlePanel = (props) => {
+  const rootStyle = props.style ? {...styles.root, ...props.style} : styles.root;
 
-    return (
-      <div style={rootStyle}>
-        <div style={styles.header}>{this.props.title}</div>
-        <div style={styles.content}>{this.props.children}</div>
-      </div>
-    );
-  }
-}
+  return (
+    <div style={rootStyle}>
+      <div style={styles.header}>{props.title}</div>
+      {props.children}
+    </div>
+  );
+};
+
+MaterialTitlePanel.propTypes = {
+  style: PropTypes.object,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
+  children: PropTypes.object,
+};
 
 export default MaterialTitlePanel;

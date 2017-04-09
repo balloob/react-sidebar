@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "comma-dangle": [2, "always-multiline"],
+    "no-underscore-dangle": 0,
+    "object-curly-spacing": 0,
+    "no-empty-label": 0,
+    "space-before-keywords": 0,
+    "space-return-throw-case": 0,
+    "space-after-keywords": 0,
+    "quotes": 0,
+    "object-shorthand": 0,
+    "react/no-did-mount-set-state": 0,
+    "react/jsx-indent-props": [2, 5],
+    'react/jsx-closing-bracket-location': 0
+  }
+}
