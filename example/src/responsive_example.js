@@ -26,8 +26,10 @@ class App extends React.Component {
       docked: props.docked,
       open: props.open,
     }
+
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.toggleOpen = this.toggleOpen.bind(this);
+    this.onSetOpen = this.onSetOpen.bind(this);
   }
 
   componentWillMount() {
@@ -44,7 +46,6 @@ class App extends React.Component {
   }
 
   mediaQueryChanged() {
-
     this.setState({
       mql: mql,
       docked: this.state.mql.matches
@@ -73,7 +74,7 @@ class App extends React.Component {
       sidebar: sidebar,
       docked: this.state.docked,
       open: this.state.open,
-      onSetOpen: this.onSetOpen.bind(this),
+      onSetOpen: this.onSetOpen
     };
 
     return (
