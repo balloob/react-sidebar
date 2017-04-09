@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const styles = {
   root: {
@@ -25,12 +26,12 @@ const MaterialTitlePanel = (props) => {
 };
 
 MaterialTitlePanel.propTypes = {
-  style: React.PropTypes.object,
-  title: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.object,
+  style: PropTypes.object,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
   ]),
-  children: React.PropTypes.object,
+  children: PropTypes.object,
 };
 
 export default MaterialTitlePanel;
