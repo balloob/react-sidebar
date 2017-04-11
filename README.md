@@ -154,20 +154,20 @@ class App extends React.Component {
 
   onSetSidebarOpen: function(open) {
     this.setState({sidebarOpen: open});
-  },
+  }
 
   componentWillMount: function() {
     mql.addListener(this.mediaQueryChanged);
     this.setState({mql: mql, sidebarDocked: mql.matches});
-  },
+  }
 
   componentWillUnmount: function() {
     this.state.mql.removeListener(this.mediaQueryChanged);
-  },
+  }
 
   mediaQueryChanged: function() {
     this.setState({sidebarDocked: this.state.mql.matches});
-  },
+  }
 
   render: function() {
     var sidebarContent = <b>Sidebar content</b>;
