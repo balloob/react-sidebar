@@ -15,6 +15,9 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 
 Change log
 ----------
+## 2.3.2
+ - prop-types is now a peer dependency (@Fallenstedt)
+
 ## 2.3.1
  - Modify content styles to have momentum scrolling (@Fallenstedt)
  - Update examples to eliminate depreciation warnings(@Fallenstedt)
