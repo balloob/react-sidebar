@@ -31,6 +31,7 @@ const defaultStyles = {
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
     transition: 'left .3s ease-out, right .3s ease-out',
+    backgroundColor: 'white',
   },
   overlay: {
     zIndex: 1,
