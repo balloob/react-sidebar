@@ -11,6 +11,7 @@ const defaultStyles = {
     right: 0,
     bottom: 0,
     overflow: 'hidden',
+    WebkitTapHighlightColor: 'rgba(0,0,0,0)'
   },
   sidebar: {
     zIndex: 2,
