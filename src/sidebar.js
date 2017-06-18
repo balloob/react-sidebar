@@ -224,6 +224,7 @@ class Sidebar extends Component {
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
+      ...this.props.otherProps.root,
       className: this.props.rootClassName,
       style: {...defaultStyles.root, ...this.props.styles.root},
       role: "navigation",
@@ -311,7 +312,8 @@ class Sidebar extends Component {
         }
 
         dragHandle = (
-          <div style={dragHandleStyle}
+          <div {...this.props.otherProps.dragHandle}
+               style={dragHandleStyle}
                onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove}
                onTouchEnd={this.onTouchEnd} onTouchCancel={this.onTouchEnd} />);
       }
@@ -319,16 +321,18 @@ class Sidebar extends Component {
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
+        <div {...this.props.otherProps.sidebar}
+             className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
           {this.props.sidebar}
         </div>
-        <div className={this.props.overlayClassName}
+        <div {...this.props.otherProps.overlay}
+             className={this.props.overlayClassName}
              style={overlayStyle}
              role="presentation"
              tabIndex="0"
              onClick={this.overlayClicked}
           />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        <div {...this.props.otherProps.content} className={this.props.contentClassName} style={contentStyle}>
           {dragHandle}
           {this.props.children}
         </div>
@@ -394,6 +398,15 @@ Sidebar.propTypes = {
 
   // Intial sidebar width when page loads
   defaultSidebarWidth: PropTypes.number,
+
+  // Optional other props
+  otherProps: PropTypes.shape({
+    root: PropTypes.object,
+    sidebar: PropTypes.object,
+    content: PropTypes.object,
+    overlay: PropTypes.object,
+    dragHandle: PropTypes.object,
+  }),
 };
 
 Sidebar.defaultProps = {
@@ -408,6 +421,7 @@ Sidebar.defaultProps = {
   onSetOpen: () => {},
   styles: {},
   defaultSidebarWidth: 0,
+  otherProps: {},
 };
 
 export default Sidebar;

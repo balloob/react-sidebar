@@ -78,6 +78,7 @@ Supported props
 | pullRight | boolean | false | Place the sidebar on the right |
 | shadow | boolean | true | Enable/Disable sidebar shadow |
 | styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
+| otherProps | object | {} | Optional other props. |
 
 Installation
 ------------
@@ -249,6 +250,11 @@ Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overl
   },
 };
 ```
+
+Other props
+-----------
+
+Other props are passed as an object with 5 keys, same as `styles` , and merged to the default `{}` .
 
 Acknowledgements
 ----------------
