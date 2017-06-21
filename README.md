@@ -136,7 +136,7 @@ A common use case for a sidebar is to show it automatically when there is enough
 
 ```javascript
 import React from 'react';
-import Sidebar 'react-sidebar';
+import Sidebar from 'react-sidebar';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
