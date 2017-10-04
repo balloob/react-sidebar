@@ -147,8 +147,8 @@ class App extends React.Component {
 
     this.state = {
       mql: mql,
-      docked: props.docked,
-      open: props.open
+      sidebarDocked: props.docked,
+      sidebarOpen: props.open
     }
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
