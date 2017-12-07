@@ -235,16 +235,12 @@ class Sidebar extends Component {
       sidebarStyle.right = 0;
       sidebarStyle.transform = 'translateX(100%)';
       sidebarStyle.WebkitTransform = 'translateX(100%)';
-      if (this.props.shadow) {
-        sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
-      }
+      sidebarStyle.boxShadow = this.props.shadow || '-2px 2px 4px rgba(0, 0, 0, 0.15)';
     } else {
       sidebarStyle.left = 0;
       sidebarStyle.transform = 'translateX(-100%)';
       sidebarStyle.WebkitTransform = 'translateX(-100%)';
-      if (this.props.shadow) {
-        sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
-      }
+      sidebarStyle.boxShadow = this.props.shadow || '2px 2px 4px rgba(0, 0, 0, 0.15)';
     }
 
     if (isTouching) {
