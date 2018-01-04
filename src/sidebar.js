@@ -69,6 +69,8 @@ class Sidebar extends Component {
 
       // if touch is supported by the browser
       dragSupported: false,
+      slimOnClose: props.slimOnClose,
+      slimWidth: props.slimWidth,
     };
 
     this.overlayClicked = this.overlayClicked.bind(this);
@@ -239,9 +241,16 @@ class Sidebar extends Component {
         sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
       }
     } else {
+      let leftAlign = 0;
+      let slimPercent = 100;
+      if(this.props.slimOnClose && !this.props.docked) {
+        slimPercent = 100 - this.props.slimWidthPercent;
+        leftAlign = `${Math.floor((1 - (slimPercent / 100)) * this.state.sidebarWidth)}px`;
+      }
       sidebarStyle.left = 0;
-      sidebarStyle.transform = 'translateX(-100%)';
-      sidebarStyle.WebkitTransform = 'translateX(-100%)';
+      contentStyle.left = leftAlign;
+      sidebarStyle.transform = `translateX(-${slimPercent}%)`; // -90%
+      sidebarStyle.WebkitTransform = `translateX(-${slimPercent}%)`;
       if (this.props.shadow) {
         sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
       }
@@ -316,6 +325,8 @@ class Sidebar extends Component {
                onTouchEnd={this.onTouchEnd} onTouchCancel={this.onTouchEnd} />);
       }
     }
+
+    // sidebarStyle.width = this.props.slimOnClose && this.props.docked ? this.state.slimWidth : this.state.sidebarWidth;
 
     return (
       <div {...rootProps}>
@@ -394,6 +405,12 @@ Sidebar.propTypes = {
 
   // Intial sidebar width when page loads
   defaultSidebarWidth: PropTypes.number,
+
+  // Whether or not to hide the sidebar all the way when closed
+  slimOnClose: PropTypes.bool,
+
+  // % of how wide to leave the sidebar when closed
+  slimWidthPercent: PropTypes.number,
 };
 
 Sidebar.defaultProps = {
@@ -408,6 +425,8 @@ Sidebar.defaultProps = {
   onSetOpen: () => {},
   styles: {},
   defaultSidebarWidth: 0,
+  slimOnClose: false,
+  slimWidthPercent: 10,
 };
 
 export default Sidebar;

@@ -97,7 +97,9 @@ var Sidebar = function (_Component) {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: false
+      dragSupported: false,
+      slimOnClose: props.slimOnClose,
+      slimWidth: props.slimWidth
     };
 
     _this.overlayClicked = _this.overlayClicked.bind(_this);
@@ -286,9 +288,16 @@ var Sidebar = function (_Component) {
           sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
       } else {
+        var leftAlign = 0;
+        var slimPercent = 100;
+        if (this.props.slimOnClose && !this.props.docked) {
+          slimPercent = 100 - this.props.slimWidthPercent;
+          leftAlign = Math.floor((1 - slimPercent / 100) * this.state.sidebarWidth) + 'px';
+        }
         sidebarStyle.left = 0;
-        sidebarStyle.transform = 'translateX(-100%)';
-        sidebarStyle.WebkitTransform = 'translateX(-100%)';
+        contentStyle.left = leftAlign;
+        sidebarStyle.transform = 'translateX(-' + slimPercent + '%)'; // -90%
+        sidebarStyle.WebkitTransform = 'translateX(-' + slimPercent + '%)';
         if (this.props.shadow) {
           sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
         }
@@ -362,6 +371,8 @@ var Sidebar = function (_Component) {
             onTouchEnd: this.onTouchEnd, onTouchCancel: this.onTouchEnd });
         }
       }
+
+      // sidebarStyle.width = this.props.slimOnClose && this.props.docked ? this.state.slimWidth : this.state.sidebarWidth;
 
       return _react2.default.createElement(
         'div',
@@ -446,7 +457,13 @@ Sidebar.propTypes = {
   onSetOpen: _propTypes2.default.func,
 
   // Intial sidebar width when page loads
-  defaultSidebarWidth: _propTypes2.default.number
+  defaultSidebarWidth: _propTypes2.default.number,
+
+  // Whether or not to hide the sidebar all the way when closed
+  slimOnClose: _propTypes2.default.bool,
+
+  // % of how wide to leave the sidebar when closed
+  slimWidthPercent: _propTypes2.default.number
 };
 
 Sidebar.defaultProps = {
@@ -460,7 +477,9 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: function onSetOpen() {},
   styles: {},
-  defaultSidebarWidth: 0
+  defaultSidebarWidth: 0,
+  slimOnClose: false,
+  slimWidthPercent: 10
 };
 
 exports.default = Sidebar;
