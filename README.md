@@ -16,7 +16,7 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 Change log
 ----------
 ## 2.3.2
- - prop-types is now a peer dependency (@Fallenstedt)
+ - Prop-types is now a peer dependency (@Fallenstedt)
 
 ## 2.3.1
  - Modify content styles to have momentum scrolling (@Fallenstedt)
@@ -136,7 +136,7 @@ A common use case for a sidebar is to show it automatically when there is enough
 
 ```javascript
 import React from 'react';
-import Sidebar 'react-sidebar';
+import Sidebar from 'react-sidebar';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -147,8 +147,8 @@ class App extends React.Component {
 
     this.state = {
       mql: mql,
-      docked: props.docked,
-      open: props.open
+      sidebarDocked: props.docked,
+      sidebarOpen: props.open
     }
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
