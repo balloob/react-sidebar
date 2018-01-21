@@ -433,7 +433,7 @@ Sidebar.propTypes = {
   pullRight: _propTypes2.default.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: _propTypes2.default.bool | _propTypes2.default.string,
+  shadow: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
 
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: _propTypes2.default.number,
