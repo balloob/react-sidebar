@@ -218,9 +218,9 @@ class Sidebar extends Component {
   }
 
   render() {
-    const sidebarStyle = {...defaultStyles.sidebar, ...this.props.styles.sidebar};
-    const contentStyle = {...defaultStyles.content, ...this.props.styles.content};
-    const overlayStyle = {...defaultStyles.overlay, ...this.props.styles.overlay};
+    const sidebarStyle = {...this.props.externalStylesOnly ? {} : defaultStyles.sidebar, ...this.props.styles.sidebar};
+    const contentStyle = {...this.props.externalStylesOnly ? {} : defaultStyles.content, ...this.props.styles.content};
+    const overlayStyle = {...this.props.externalStylesOnly ? {} : defaultStyles.overlay, ...this.props.styles.overlay};
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
@@ -328,7 +328,8 @@ class Sidebar extends Component {
              tabIndex="0"
              onClick={this.overlayClicked}
           />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        <div className={this.props.contentClassName}
+             style={contentStyle}>
           {dragHandle}
           {this.props.children}
         </div>
@@ -349,6 +350,9 @@ Sidebar.propTypes = {
     overlay: PropTypes.object,
     dragHandle: PropTypes.object,
   }),
+
+  // Are styles loaded via an external source / stylesheet? If so, sets no styles on the component.
+  externalStylesOnly: PropTypes.bool,
 
   // root component optional class
   rootClassName: PropTypes.string,
@@ -407,6 +411,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
+  externalStylesOnly: false,
   defaultSidebarWidth: 0,
 };
 
