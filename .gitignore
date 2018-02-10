@@ -1,4 +1,6 @@
-.DS_Store
-node_modules
+.idea/
+_dev/
+node_modules/
 example/compiled
+.DS_Store
 npm-debug.log
