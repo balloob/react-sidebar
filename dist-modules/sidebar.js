@@ -363,14 +363,24 @@ var Sidebar = function (_Component) {
         }
       }
 
+      var sideBar = this.props.sidebarElement === 'nav' ? _react2.default.createElement(
+        'nav',
+        { className: this.props.sidebarClassName,
+          style: sidebarStyle,
+          ref: this.saveSidebarRef },
+        this.props.sidebar
+      ) : _react2.default.createElement(
+        'div',
+        { className: this.props.sidebarClassName,
+          style: sidebarStyle,
+          ref: this.saveSidebarRef },
+        this.props.sidebar
+      );
+
       return _react2.default.createElement(
         'div',
         rootProps,
-        _react2.default.createElement(
-          'div',
-          { className: this.props.sidebarClassName, style: sidebarStyle, ref: this.saveSidebarRef },
-          this.props.sidebar
-        ),
+        sideBar,
         _react2.default.createElement('div', { className: this.props.overlayClassName,
           style: overlayStyle,
           role: 'presentation',
@@ -439,6 +449,9 @@ Sidebar.propTypes = {
   // Enable/Disable sidebar shadow
   shadow: _propTypes2.default.bool,
 
+  // if an element other than 'div' is to be rendered as the sidebar root.
+  sidebarElement: _propTypes2.default.string,
+
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: _propTypes2.default.number,
 
@@ -457,6 +470,7 @@ Sidebar.defaultProps = {
   touchHandleWidth: 20,
   pullRight: false,
   shadow: true,
+  sidebarElement: 'div',
   dragToggleDistance: 30,
   onSetOpen: function onSetOpen() {},
   styles: {},

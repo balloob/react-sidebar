@@ -317,11 +317,23 @@ class Sidebar extends Component {
       }
     }
 
+    const sideBar = this.props.sidebarElement === 'nav'
+      ? <nav className={this.props.sidebarClassName}
+           style={sidebarStyle}
+           ref={this.saveSidebarRef}>
+          {this.props.sidebar}
+        </nav>
+      : <div className={this.props.sidebarClassName}
+           style={sidebarStyle}
+           ref={this.saveSidebarRef}>
+          {this.props.sidebar}
+        </div>;
+
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
-          {this.props.sidebar}
-        </div>
+
+        {sideBar}
+
         <div className={this.props.overlayClassName}
              style={overlayStyle}
              role="presentation"
@@ -386,6 +398,9 @@ Sidebar.propTypes = {
   // Enable/Disable sidebar shadow
   shadow: PropTypes.bool,
 
+  // if an element other than 'div' is to be rendered as the sidebar root.
+  sidebarElement: PropTypes.string,
+
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: PropTypes.number,
 
@@ -404,6 +419,7 @@ Sidebar.defaultProps = {
   touchHandleWidth: 20,
   pullRight: false,
   shadow: true,
+  sidebarElement: 'div',
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
