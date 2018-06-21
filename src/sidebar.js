@@ -235,16 +235,12 @@ class Sidebar extends Component {
       sidebarStyle.right = 0;
       sidebarStyle.transform = 'translateX(100%)';
       sidebarStyle.WebkitTransform = 'translateX(100%)';
-      if (this.props.shadow) {
-        sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
-      }
+      sidebarStyle.boxShadow = this.props.shadow || 'rgba(0, 0, 0, 0.15) -2px 2px 4px';
     } else {
       sidebarStyle.left = 0;
       sidebarStyle.transform = 'translateX(-100%)';
       sidebarStyle.WebkitTransform = 'translateX(-100%)';
-      if (this.props.shadow) {
-        sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
-      }
+      sidebarStyle.boxShadow = this.props.shadow || 'rgba(0, 0, 0, 0.15) 2px 2px 4px';
     }
 
     if (isTouching) {
@@ -384,7 +380,7 @@ Sidebar.propTypes = {
   pullRight: PropTypes.bool,
 
   // Enable/Disable sidebar shadow
-  shadow: PropTypes.bool,
+  shadow: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 
   // distance we have to drag the sidebar to toggle open state
   dragToggleDistance: PropTypes.number,
