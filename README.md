@@ -78,6 +78,7 @@ Supported props
 | pullRight | boolean | false | Place the sidebar on the right |
 | shadow | boolean | true | Enable/Disable sidebar shadow |
 | styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
+| onContentScroll | function | n/a | Callback called when main content is scrolled |
 
 Installation
 ------------

@@ -328,7 +328,7 @@ class Sidebar extends Component {
              tabIndex="0"
              onClick={this.overlayClicked}
           />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        <div onScroll={this.props.onContentScroll} className={this.props.contentClassName} style={contentStyle}>
           {dragHandle}
           {this.props.children}
         </div>
@@ -394,6 +394,9 @@ Sidebar.propTypes = {
 
   // Intial sidebar width when page loads
   defaultSidebarWidth: PropTypes.number,
+
+  // callback called when main content is scrolled
+  onContentScroll: PropTypes.func
 };
 
 Sidebar.defaultProps = {
