@@ -319,7 +319,10 @@ class Sidebar extends Component {
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
+        <div className={this.props.sidebarClassName}
+             id={this.props.sidebarId}
+             style={sidebarStyle}
+             ref={this.saveSidebarRef}>
           {this.props.sidebar}
         </div>
         <div className={this.props.overlayClassName}
@@ -368,6 +371,9 @@ Sidebar.propTypes = {
   // boolean if sidebar should be docked
   docked: PropTypes.bool,
 
+  // optional element id
+  sidebarId: PropTypes.string,
+
   // boolean if sidebar should slide open
   open: PropTypes.bool,
 
@@ -398,6 +404,7 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   docked: false,
+  sidebarId: '',
   open: false,
   transitions: true,
   touch: true,

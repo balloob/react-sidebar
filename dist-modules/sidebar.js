@@ -368,7 +368,10 @@ var Sidebar = function (_Component) {
         rootProps,
         _react2.default.createElement(
           'div',
-          { className: this.props.sidebarClassName, style: sidebarStyle, ref: this.saveSidebarRef },
+          { className: this.props.sidebarClassName,
+            id: this.props.sidebarId,
+            style: sidebarStyle,
+            ref: this.saveSidebarRef },
           this.props.sidebar
         ),
         _react2.default.createElement('div', { className: this.props.overlayClassName,
@@ -421,6 +424,9 @@ Sidebar.propTypes = {
   // boolean if sidebar should be docked
   docked: _propTypes2.default.bool,
 
+  // optional element id
+  sidebarId: _propTypes2.default.string,
+
   // boolean if sidebar should slide open
   open: _propTypes2.default.bool,
 
@@ -451,6 +457,7 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   docked: false,
+  sidebarId: '',
   open: false,
   transitions: true,
   touch: true,
