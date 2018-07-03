@@ -379,7 +379,7 @@ var Sidebar = function (_Component) {
         }),
         _react2.default.createElement(
           'div',
-          { className: this.props.contentClassName, style: contentStyle },
+          { className: this.props.contentClassName, style: contentStyle, id: this.props.contentID },
           dragHandle,
           this.props.children
         )
@@ -411,6 +411,9 @@ Sidebar.propTypes = {
 
   // content optional class
   contentClassName: _propTypes2.default.string,
+
+  // content optional id
+  contentID: _propTypes2.default.string,
 
   // overlay optional class
   overlayClassName: _propTypes2.default.string,

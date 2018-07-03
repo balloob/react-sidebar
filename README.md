@@ -69,6 +69,7 @@ Supported props
 | sidebarClassName | string | n/a | Add a custom class to the sidebar |
 | contentClassName | string | n/a | Add a custom class to the content |
 | overlayClassName | string | n/a | Add a custom class to the overlay |
+| contentID        | string | n/a | Add a custon ID to the content |
 | sidebar | Anything React can render | n/a | The sidebar content |
 | onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
 | docked | boolean | false | If the sidebar should be always visible |

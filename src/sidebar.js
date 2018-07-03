@@ -328,7 +328,7 @@ class Sidebar extends Component {
              tabIndex="0"
              onClick={this.overlayClicked}
           />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        <div className={this.props.contentClassName} style={contentStyle} id={this.props.contentID} >
           {dragHandle}
           {this.props.children}
         </div>
@@ -358,6 +358,9 @@ Sidebar.propTypes = {
 
   // content optional class
   contentClassName: PropTypes.string,
+
+  // content optional id
+  contentID: PropTypes.string,
 
   // overlay optional class
   overlayClassName: PropTypes.string,
