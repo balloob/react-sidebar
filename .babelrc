@@ -1,5 +1,8 @@
 {
-  "presets": [["@babel/env", { "loose": true }], "@babel/react"],
+  "presets": [
+    ["@babel/env", { "loose": true, "modules": false }],
+    "@babel/react"
+  ],
   "plugins": [
     ["@babel/plugin-transform-runtime", { "useBuiltIns": true }],
     "@babel/plugin-proposal-object-rest-spread",
