@@ -2,3 +2,5 @@
 node_modules
 example/compiled
 npm-debug.log
+dist
+.vscode
