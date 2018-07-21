@@ -1,5 +1,3 @@
-# This project is no longer maintained. Pull requests and issues will be ignored.
-
 React Sidebar 2.3 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](http://badge.fury.io/js/react-sidebar) [![Build Status](https://travis-ci.org/balloob/react-sidebar.svg)](https://travis-ci.org/balloob/react-sidebar)
 =============
 
