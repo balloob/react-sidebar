@@ -1,6 +1,11 @@
-
 {
-  "presets": ["es2015", "babel-preset-react"],
-  "plugins": ["transform-object-rest-spread"],
-  "highlightCode": true
+  "presets": [
+    ["@babel/env", { "loose": true, "modules": false }],
+    "@babel/react"
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-runtime", { "useBuiltIns": true }],
+    "@babel/plugin-proposal-object-rest-spread",
+    ["transform-react-remove-prop-types", { "mode": "unsafe-wrap" }]
+  ]
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Sidebar from '../../src';
+import Sidebar from '../../';
 import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
 
