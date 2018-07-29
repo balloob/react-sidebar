@@ -3,13 +3,12 @@ React Sidebar 2.3 [![npm version](https://badge.fury.io/js/react-sidebar.svg)](h
 
 React Sidebar is a sidebar component for React 0.14+. It offers the following features:
 
-  - Have the sidebar slide over main content
-  - Dock the sidebar on the left of the content
-  - Touch enabled: swipe to open and close the sidebar
-  - Easy to combine with media queries for auto-docking ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html))
-  - Sidebar and content passed in as PORCs (Plain Old React Components)
+  - The sidebar can slide over the main content or dock next to it.
+  - Touch enabled: swipe to open and close the sidebar like on a native mobile app.
+  - Easy to combine with media queries to enable different behaviour for different screen sizes ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html)).
+  - Works on both the left and right side.
+  - Tiny size: <2.5kB gzipped
   - MIT license
-  - Only dependency is React.
 
 [See a demo here.](http://balloob.github.io/react-sidebar/example/)
 
