@@ -1,5 +1,12 @@
 Change log
 ===========
+## [Unfinished]
+- prop-types is now dependency instead of peer dependency (@markusenglund)
+- PropTypes are removed in production to save on size (@markusenglund)
+- Now using babel in loose mode & babel-runtime to reduce bundle size further (@markusenglund)
+- Made the library available as ES Module in addition to CommonJS (@markusenglund)
+
+
 ## 2.3.2
  - prop-types is now a peer dependency (@Fallenstedt)
 
