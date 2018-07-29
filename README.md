@@ -39,37 +39,36 @@ Because React Sidebar can be toggled by dragging the sidebar into its open/close
 
 The minimum React component to integrate React Sidebar looks like this:
 
-```javascript
+```jsx
 import React from 'react';
 import Sidebar from 'react-sidebar';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      sidebarOpen: false
-    }
-
+      sidebarOpen: true,
+    };
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
-  onSetSidebarOpen: function(open) {
+  onSetSidebarOpen(open) {
     this.setState({sidebarOpen: open});
   }
 
-  render: function() {
-    var sidebarContent = <b>Sidebar content</b>;
-
+  render() {
     return (
-      <Sidebar sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               onSetOpen={this.onSetSidebarOpen}>
-        <b>Main content</b>
+      <Sidebar
+        sidebar={<b>Sidebar content</b>}
+        open={this.state.sidebarOpen}
+        onSetOpen={this.onSetSidebarOpen}
+        styles={{sidebar: { background: "white" }}}
+      >
+        <button onClick={() => this.onSetSidebarOpen(true)} >Open sidebar</button>
       </Sidebar>
     );
   }
-};
+}
 
 export default App;
 ```
