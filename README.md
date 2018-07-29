@@ -5,7 +5,7 @@ React Sidebar is a sidebar component for React 0.14+. It offers the following fe
 
   - The sidebar can slide over the main content or dock next to it.
   - Touch enabled: swipe to open and close the sidebar like on a native mobile app.
-  - Easy to combine with media queries to enable different behaviour for different screen sizes ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html)).
+  - Easy to combine with media queries to show the sidebar only when there's enough screen-width ([see example](http://balloob.github.io/react-sidebar/example/responsive_example.html)).
   - Works on both the left and right side.
   - Tiny size: <2.5kB gzipped
   - MIT license
@@ -22,33 +22,14 @@ The touch interaction of the React Sidebar mimics the interactions that are supp
  - When the sidebar is open, sliding your finger over the screen will only affect the sidebar once your finger is over the sidebar.
  - On release, it will call `onSetOpen` prop if the distance the sidebar was dragged is more than the `dragToggleDistance` prop.
 
-Supported props
----------------
-
-| Property name | Type | Default | Description |
-|---------------|------|---------|-------------|
-| children | Anything React can render | n/a | The main content |
-| rootClassName | string | n/a | Add a custom class to the root component |
-| sidebarClassName | string | n/a | Add a custom class to the sidebar |
-| contentClassName | string | n/a | Add a custom class to the content |
-| overlayClassName | string | n/a | Add a custom class to the overlay |
-| sidebar | Anything React can render | n/a | The sidebar content |
-| onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
-| docked | boolean | false | If the sidebar should be always visible |
-| open | boolean | false | If the sidebar should be open |
-| transitions | boolean | true | If transitions should be enabled |
-| touch | boolean | true | If touch gestures should be enabled |
-| touchHandleWidth | number | 20 | Width in pixels you can start dragging from the edge when the sidebar is closed. |
-| dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
-| pullRight | boolean | false | Place the sidebar on the right |
-| shadow | boolean | true | Enable/Disable sidebar shadow |
-| styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
 
 Installation
 ------------
-React Sidebar is available on NPM. Install the package into your project: `npm install react-sidebar --save`
+`npm install react-sidebar`
 
-If you use TypeScript, typings are available on DefinitlyTyped and can be installed with: `npm install --save @types/react-sidebar`
+If you use TypeScript, typings are [available on DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-sidebar) and can be installed with:
+
+`npm install @types/react-sidebar`
 
 Getting started
 -----------------
@@ -106,7 +87,7 @@ import Sidebar from 'react-sidebar';
 const mql = window.matchMedia(`(min-width: 800px)`);
 
 class App extends React.Component {
-
+  
   constructor(props) {
     super(props);
 
@@ -159,10 +140,32 @@ class App extends React.Component {
 export default App;
 ```
 
+Supported props
+---------------
+
+| Property name | Type | Default | Description |
+|---------------|------|---------|-------------|
+| children | Anything React can render | n/a | The main content |
+| rootClassName | string | n/a | Add a custom class to the root component |
+| sidebarClassName | string | n/a | Add a custom class to the sidebar |
+| contentClassName | string | n/a | Add a custom class to the content |
+| overlayClassName | string | n/a | Add a custom class to the overlay |
+| sidebar | Anything React can render | n/a | The sidebar content |
+| onSetOpen | function | n/a | Callback called when the sidebar wants to change the open prop. Happens after sliding the sidebar and when the overlay is clicked when the sidebar is open. |
+| docked | boolean | false | If the sidebar should be always visible |
+| open | boolean | false | If the sidebar should be open |
+| transitions | boolean | true | If transitions should be enabled |
+| touch | boolean | true | If touch gestures should be enabled |
+| touchHandleWidth | number | 20 | Width in pixels you can start dragging from the edge when the sidebar is closed. |
+| dragToggleDistance | number | 30 | Distance the sidebar has to be dragged before it will open/close after it is released. |
+| pullRight | boolean | false | Place the sidebar on the right |
+| shadow | boolean | true | Enable/Disable sidebar shadow |
+| styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
+
 Styles
 ----------------
 
-Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overlay` and `dragHandle`, and merged to the defaults:
+Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overlay` and `dragHandle`, and merged to the following defaults:
 
 ```javascript
 {
@@ -218,4 +221,4 @@ Styles are passed as an object with 5 keys, `root`, `sidebar`, `content`, `overl
 Acknowledgements
 ----------------
 
-My goal was to make a React Component that implements the [material design spec for navigation drawers](http://www.google.com/design/spec/patterns/navigation-drawer.html#navigation-drawer-content). My initial attempt was to improve [hamburger-basement by arnemart](https://github.com/arnemart/hamburger-basement) but I quickly figured that I better start from scratch. Still, that project helped me a ton to get started.
+My goal was to make a React Component that implements the [material design spec for navigation drawers](https://material.io/design/components/navigation-drawer.html). My initial attempt was to improve [hamburger-basement by arnemart](https://github.com/arnemart/hamburger-basement) but I quickly figured that I better start from scratch. Still, that project helped me a ton to get started.
