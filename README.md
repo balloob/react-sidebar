@@ -79,62 +79,52 @@ A common use case for a sidebar is to show it automatically when there is enough
 
 [mdn-matchmedia]: https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia
 
-```javascript
+```jsx
 import React from 'react';
 import Sidebar from 'react-sidebar';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
 class App extends React.Component {
-  
   constructor(props) {
     super(props);
-
     this.state = {
-      mql: mql,
-      docked: props.docked,
-      open: props.open
-    }
+      sidebarDocked: mql.matches,
+      sidebarOpen: false
+    };
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
-  onSetSidebarOpen: function(open) {
-    this.setState({sidebarOpen: open});
-  }
-
-  componentWillMount: function() {
+  componentWillMount() {
     mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, sidebarDocked: mql.matches});
   }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     this.state.mql.removeListener(this.mediaQueryChanged);
   }
 
-  mediaQueryChanged: function() {
-    this.setState({sidebarDocked: this.state.mql.matches});
+  onSetSidebarOpen(open) {
+    this.setState({sidebarOpen: open});
   }
 
-  render: function() {
-    var sidebarContent = <b>Sidebar content</b>;
-    var sidebarProps = {
-      sidebar: this.state.sidebarOpen,
-      docked: this.state.sidebarDocked,
-      onSetOpen: this.onSetSidebarOpen
-    };
+  mediaQueryChanged() {
+    this.setState({sidebarDocked: mql.matches, sidebarOpen: false});
+  }
 
+  render() {
     return (
-      <Sidebar sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               docked={this.state.sidebarDocked}
-               onSetOpen={this.onSetSidebarOpen}>
+      <Sidebar sidebar={<b>Sidebar content</b>}
+        open={this.state.sidebarOpen}
+        docked={this.state.sidebarDocked}
+        onSetOpen={this.onSetSidebarOpen}
+      >
         <b>Main content</b>
       </Sidebar>
     );
   }
-};
+}
 
 export default App;
 ```
