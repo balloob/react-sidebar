@@ -12,6 +12,9 @@ const styles = {
     padding: '16px 0px',
     color: '#757575',
     textDecoration: 'none',
+    ':focus': {
+      color: 'aliceblue',
+    },
   },
   divider: {
     margin: '8px 0',
