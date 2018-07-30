@@ -1,0 +1,13 @@
+.vscode
+example
+node_modules
+src
+.babelrc
+.eslintrc
+.gitignore
+.nvmrc
+.travis.yml
+CHANGELOG.md
+package-lock.json
+rollup.config.js
+webpack.config.js
