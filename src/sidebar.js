@@ -4,19 +4,14 @@ import PropTypes from "prop-types";
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
 const defaultStyles = {
-  root: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    overflow: "hidden"
-  },
+  root: {},
   sidebar: {
     zIndex: 2,
-    position: "absolute",
+    position: "fixed",
     top: 0,
-    bottom: 0,
+    height: "100vh",
+
+    // bottom: 0,
     transition: "transform .3s ease-out",
     WebkitTransition: "-webkit-transform .3s ease-out",
     willChange: "transform",
@@ -28,7 +23,7 @@ const defaultStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflowY: "scroll",
+    // overflowY: "scroll",
     WebkitOverflowScrolling: "touch",
     transition: "left .3s ease-out, right .3s ease-out"
   },
@@ -38,7 +33,8 @@ const defaultStyles = {
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
+    // bottom: 0,
+    height: "100vh",
     opacity: 0,
     visibility: "hidden",
     transition: "opacity .3s ease-out, visibility .3s ease-out",
@@ -359,7 +355,6 @@ class Sidebar extends Component {
           className={this.props.overlayClassName}
           style={overlayStyle}
           role="presentation"
-          tabIndex="0"
           onClick={this.overlayClicked}
         />
         <div className={this.props.contentClassName} style={contentStyle}>
