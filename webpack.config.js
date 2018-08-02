@@ -38,6 +38,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: "./example"
+    contentBase: "./example",
+    host: "0.0.0.0"
   }
 };
