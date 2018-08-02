@@ -63,9 +63,7 @@ class Sidebar extends Component {
       // keep track of touching params
       touchIdentifier: null,
       touchStartX: null,
-      touchStartY: null,
       touchCurrentX: null,
-      touchCurrentY: null,
 
       // if touch is supported by the browser
       dragSupported: false
@@ -100,9 +98,7 @@ class Sidebar extends Component {
       this.setState({
         touchIdentifier: touch.identifier,
         touchStartX: touch.clientX,
-        touchStartY: touch.clientY,
-        touchCurrentX: touch.clientX,
-        touchCurrentY: touch.clientY
+        touchCurrentX: touch.clientX
       });
     }
   }
@@ -113,8 +109,7 @@ class Sidebar extends Component {
         // we only care about the finger that we are tracking
         if (ev.targetTouches[ind].identifier === this.state.touchIdentifier) {
           this.setState({
-            touchCurrentX: ev.targetTouches[ind].clientX,
-            touchCurrentY: ev.targetTouches[ind].clientY
+            touchCurrentX: ev.targetTouches[ind].clientX
           });
           break;
         }
@@ -139,9 +134,7 @@ class Sidebar extends Component {
       this.setState({
         touchIdentifier: null,
         touchStartX: null,
-        touchStartY: null,
-        touchCurrentX: null,
-        touchCurrentY: null
+        touchCurrentX: null
       });
     }
   }
@@ -154,9 +147,7 @@ class Sidebar extends Component {
       this.setState({
         touchIdentifier: null,
         touchStartX: null,
-        touchStartY: null,
-        touchCurrentX: null,
-        touchCurrentY: null
+        touchCurrentX: null
       });
     }
   }
