@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Sidebar from "../../";
+import Sidebar from "../..";
 import MaterialTitlePanel from "./material_title_panel";
 import SidebarContent from "./sidebar_content";
 
@@ -38,7 +38,7 @@ class App extends React.Component {
   }
 
   onSetOpen(open) {
-    this.setState({ open: open });
+    this.setState({ open });
   }
 
   menuButtonClick(ev) {
@@ -55,13 +55,15 @@ class App extends React.Component {
 
     return (
       <p key={prop}>
-        <input
-          type="checkbox"
-          onChange={toggleMethod}
-          checked={this.state[prop]}
-          id={prop}
-        />
-        <label htmlFor={prop}> {prop}</label>
+        <label htmlFor={prop}>
+          <input
+            type="checkbox"
+            onChange={toggleMethod}
+            checked={this.state[prop]}
+            id={prop}
+          />
+          {prop}
+        </label>
       </p>
     );
   }
@@ -100,7 +102,7 @@ class App extends React.Component {
     );
 
     const sidebarProps = {
-      sidebar: sidebar,
+      sidebar,
       docked: this.state.docked,
       sidebarClassName: "custom-sidebar-class",
       open: this.state.open,

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Sidebar from "../../";
+import Sidebar from "../..";
 import MaterialTitlePanel from "./material_title_panel";
 import SidebarContent from "./sidebar_content";
 
@@ -22,7 +22,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      mql: mql,
+      mql,
       docked: false,
       open: false
     };
@@ -34,7 +34,7 @@ class App extends React.Component {
 
   componentWillMount() {
     mql.addListener(this.mediaQueryChanged);
-    this.setState({ mql: mql, docked: mql.matches });
+    this.setState({ mql, docked: mql.matches });
   }
 
   componentWillUnmount() {
@@ -42,12 +42,12 @@ class App extends React.Component {
   }
 
   onSetOpen(open) {
-    this.setState({ open: open });
+    this.setState({ open });
   }
 
   mediaQueryChanged() {
     this.setState({
-      mql: mql,
+      mql,
       docked: this.state.mql.matches
     });
   }
@@ -67,7 +67,7 @@ class App extends React.Component {
       <span>
         {!this.state.docked && (
           <a
-            onClick={this.toggleOpen.bind(this)}
+            onClick={this.toggleOpen}
             href="#"
             style={styles.contentHeaderMenuLink}
           >
@@ -79,7 +79,7 @@ class App extends React.Component {
     );
 
     const sidebarProps = {
-      sidebar: sidebar,
+      sidebar,
       docked: this.state.docked,
       open: this.state.open,
       onSetOpen: this.onSetOpen
@@ -91,12 +91,12 @@ class App extends React.Component {
           <div style={styles.content}>
             <p>
               This example will automatically dock the sidebar if the page width
-              is above 800px (which is currently {"" + this.state.docked}
+              is above 800px (which is currently {this.state.docked.toString()}
               ).
             </p>
             <p>
               This functionality should live in the component that renders the
-              sidebar. This way you're able to modify the sidebar and main
+              sidebar. This way you&#39;re able to modify the sidebar and main
               content based on the responsiveness data. For example, the menu
               button in the header of the content is now{" "}
               {this.state.docked ? "hidden" : "shown"} because the sidebar is{" "}
