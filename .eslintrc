@@ -21,6 +21,6 @@
     "object-shorthand": 0,
     "react/no-did-mount-set-state": 0,
     "react/jsx-indent-props": [2, 5],
-    'react/jsx-closing-bracket-location': 0
+    "react/jsx-closing-bracket-location": 0
   }
 }

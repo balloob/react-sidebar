@@ -1,55 +1,55 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
 const defaultStyles = {
   root: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflow: 'hidden',
+    overflow: "hidden"
   },
   sidebar: {
     zIndex: 2,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
-    transition: 'transform .3s ease-out',
-    WebkitTransition: '-webkit-transform .3s ease-out',
-    willChange: 'transform',
-    overflowY: 'auto',
+    transition: "transform .3s ease-out",
+    WebkitTransition: "-webkit-transform .3s ease-out",
+    willChange: "transform",
+    overflowY: "auto"
   },
   content: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    overflowY: 'scroll',
-    WebkitOverflowScrolling: 'touch',
-    transition: 'left .3s ease-out, right .3s ease-out',
+    overflowY: "scroll",
+    WebkitOverflowScrolling: "touch",
+    transition: "left .3s ease-out, right .3s ease-out"
   },
   overlay: {
     zIndex: 1,
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     opacity: 0,
-    visibility: 'hidden',
-    transition: 'opacity .3s ease-out, visibility .3s ease-out',
-    backgroundColor: 'rgba(0,0,0,.3)',
+    visibility: "hidden",
+    transition: "opacity .3s ease-out, visibility .3s ease-out",
+    backgroundColor: "rgba(0,0,0,.3)"
   },
   dragHandle: {
     zIndex: 1,
-    position: 'fixed',
+    position: "fixed",
     top: 0,
-    bottom: 0,
-  },
+    bottom: 0
+  }
 };
 
 class Sidebar extends Component {
@@ -68,7 +68,7 @@ class Sidebar extends Component {
       touchCurrentY: null,
 
       // if touch is supported by the browser
-      dragSupported: false,
+      dragSupported: false
     };
 
     this.overlayClicked = this.overlayClicked.bind(this);
@@ -81,7 +81,7 @@ class Sidebar extends Component {
 
   componentDidMount() {
     this.setState({
-      dragSupported: typeof window === 'object' && 'ontouchstart' in window,
+      dragSupported: typeof window === "object" && "ontouchstart" in window
     });
     this.saveSidebarWidth();
   }
@@ -102,7 +102,7 @@ class Sidebar extends Component {
         touchStartX: touch.clientX,
         touchStartY: touch.clientY,
         touchCurrentX: touch.clientX,
-        touchCurrentY: touch.clientY,
+        touchCurrentY: touch.clientY
       });
     }
   }
@@ -114,7 +114,7 @@ class Sidebar extends Component {
         if (ev.targetTouches[ind].identifier === this.state.touchIdentifier) {
           this.setState({
             touchCurrentX: ev.targetTouches[ind].clientX,
-            touchCurrentY: ev.targetTouches[ind].clientY,
+            touchCurrentY: ev.targetTouches[ind].clientY
           });
           break;
         }
@@ -127,8 +127,12 @@ class Sidebar extends Component {
       // trigger a change to open if sidebar has been dragged beyond dragToggleDistance
       const touchWidth = this.touchSidebarWidth();
 
-      if (this.props.open && touchWidth < this.state.sidebarWidth - this.props.dragToggleDistance ||
-          !this.props.open && touchWidth > this.props.dragToggleDistance) {
+      if (
+        (this.props.open &&
+          touchWidth <
+            this.state.sidebarWidth - this.props.dragToggleDistance) ||
+        (!this.props.open && touchWidth > this.props.dragToggleDistance)
+      ) {
         this.props.onSetOpen(!this.props.open);
       }
 
@@ -137,7 +141,7 @@ class Sidebar extends Component {
         touchStartX: null,
         touchStartY: null,
         touchCurrentX: null,
-        touchCurrentY: null,
+        touchCurrentY: null
       });
     }
   }
@@ -152,7 +156,7 @@ class Sidebar extends Component {
         touchStartX: null,
         touchStartY: null,
         touchCurrentX: null,
-        touchCurrentY: null,
+        touchCurrentY: null
       });
     }
   }
@@ -162,11 +166,13 @@ class Sidebar extends Component {
     let cancelDistanceOnScroll;
 
     if (this.props.pullRight) {
-      cancelDistanceOnScroll = Math.abs(this.state.touchCurrentX - this.state.touchStartX) <
-                                        CANCEL_DISTANCE_ON_SCROLL;
+      cancelDistanceOnScroll =
+        Math.abs(this.state.touchCurrentX - this.state.touchStartX) <
+        CANCEL_DISTANCE_ON_SCROLL;
     } else {
-      cancelDistanceOnScroll = Math.abs(this.state.touchStartX - this.state.touchCurrentX) <
-                                        CANCEL_DISTANCE_ON_SCROLL;
+      cancelDistanceOnScroll =
+        Math.abs(this.state.touchStartX - this.state.touchCurrentX) <
+        CANCEL_DISTANCE_ON_SCROLL;
     }
     return cancelDistanceOnScroll;
   }
@@ -185,7 +191,7 @@ class Sidebar extends Component {
     const width = this.sidebar.offsetWidth;
 
     if (width !== this.state.sidebarWidth) {
-      this.setState({sidebarWidth: width});
+      this.setState({ sidebarWidth: width });
     }
   }
 
@@ -199,51 +205,74 @@ class Sidebar extends Component {
     // we will only drag the distance they moved their finger
     // otherwise we will move the sidebar to be below the finger.
     if (this.props.pullRight) {
-      if (this.props.open && window.innerWidth - this.state.touchStartX < this.state.sidebarWidth) {
+      if (
+        this.props.open &&
+        window.innerWidth - this.state.touchStartX < this.state.sidebarWidth
+      ) {
         if (this.state.touchCurrentX > this.state.touchStartX) {
-          return this.state.sidebarWidth + this.state.touchStartX - this.state.touchCurrentX;
+          return (
+            this.state.sidebarWidth +
+            this.state.touchStartX -
+            this.state.touchCurrentX
+          );
         }
         return this.state.sidebarWidth;
       }
-      return Math.min(window.innerWidth - this.state.touchCurrentX, this.state.sidebarWidth);
+      return Math.min(
+        window.innerWidth - this.state.touchCurrentX,
+        this.state.sidebarWidth
+      );
     }
 
     if (this.props.open && this.state.touchStartX < this.state.sidebarWidth) {
       if (this.state.touchCurrentX > this.state.touchStartX) {
         return this.state.sidebarWidth;
       }
-      return this.state.sidebarWidth - this.state.touchStartX + this.state.touchCurrentX;
+      return (
+        this.state.sidebarWidth -
+        this.state.touchStartX +
+        this.state.touchCurrentX
+      );
     }
     return Math.min(this.state.touchCurrentX, this.state.sidebarWidth);
   }
 
   render() {
-    const sidebarStyle = {...defaultStyles.sidebar, ...this.props.styles.sidebar};
-    const contentStyle = {...defaultStyles.content, ...this.props.styles.content};
-    const overlayStyle = {...defaultStyles.overlay, ...this.props.styles.overlay};
+    const sidebarStyle = {
+      ...defaultStyles.sidebar,
+      ...this.props.styles.sidebar
+    };
+    const contentStyle = {
+      ...defaultStyles.content,
+      ...this.props.styles.content
+    };
+    const overlayStyle = {
+      ...defaultStyles.overlay,
+      ...this.props.styles.overlay
+    };
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
       className: this.props.rootClassName,
-      style: {...defaultStyles.root, ...this.props.styles.root},
-      role: "navigation",
+      style: { ...defaultStyles.root, ...this.props.styles.root },
+      role: "navigation"
     };
     let dragHandle;
 
     // sidebarStyle right/left
     if (this.props.pullRight) {
       sidebarStyle.right = 0;
-      sidebarStyle.transform = 'translateX(100%)';
-      sidebarStyle.WebkitTransform = 'translateX(100%)';
+      sidebarStyle.transform = "translateX(100%)";
+      sidebarStyle.WebkitTransform = "translateX(100%)";
       if (this.props.shadow) {
-        sidebarStyle.boxShadow = '-2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyle.boxShadow = "-2px 2px 4px rgba(0, 0, 0, 0.15)";
       }
     } else {
       sidebarStyle.left = 0;
-      sidebarStyle.transform = 'translateX(-100%)';
-      sidebarStyle.WebkitTransform = 'translateX(-100%)';
+      sidebarStyle.transform = "translateX(-100%)";
+      sidebarStyle.WebkitTransform = "translateX(-100%)";
       if (this.props.shadow) {
-        sidebarStyle.boxShadow = '2px 2px 4px rgba(0, 0, 0, 0.15)';
+        sidebarStyle.boxShadow = "2px 2px 4px rgba(0, 0, 0, 0.15)";
       }
     }
 
@@ -256,12 +285,13 @@ class Sidebar extends Component {
         sidebarStyle.WebkitTransform = `translateX(${(1 - percentage) * 100}%)`;
       } else {
         sidebarStyle.transform = `translateX(-${(1 - percentage) * 100}%)`;
-        sidebarStyle.WebkitTransform = `translateX(-${(1 - percentage) * 100}%)`;
+        sidebarStyle.WebkitTransform = `translateX(-${(1 - percentage) *
+          100}%)`;
       }
 
       // fade overlay to match distance of drag
       overlayStyle.opacity = percentage;
-      overlayStyle.visibility = 'visible';
+      overlayStyle.visibility = "visible";
     } else if (this.props.docked) {
       // show sidebar
       if (this.state.sidebarWidth !== 0) {
@@ -282,14 +312,14 @@ class Sidebar extends Component {
 
       // show overlay
       overlayStyle.opacity = 1;
-      overlayStyle.visibility = 'visible';
+      overlayStyle.visibility = "visible";
     }
 
     if (isTouching || !this.props.transitions) {
-      sidebarStyle.transition = 'none';
-      sidebarStyle.WebkitTransition = 'none';
-      contentStyle.transition = 'none';
-      overlayStyle.transition = 'none';
+      sidebarStyle.transition = "none";
+      sidebarStyle.WebkitTransition = "none";
+      contentStyle.transition = "none";
+      overlayStyle.transition = "none";
     }
 
     if (useTouch) {
@@ -300,7 +330,10 @@ class Sidebar extends Component {
         rootProps.onTouchCancel = this.onTouchEnd;
         rootProps.onScroll = this.onScroll;
       } else {
-        const dragHandleStyle = {...defaultStyles.dragHandle, ...this.props.styles.dragHandle};
+        const dragHandleStyle = {
+          ...defaultStyles.dragHandle,
+          ...this.props.styles.dragHandle
+        };
         dragHandleStyle.width = this.props.touchHandleWidth;
 
         // dragHandleStyle right/left
@@ -311,23 +344,33 @@ class Sidebar extends Component {
         }
 
         dragHandle = (
-          <div style={dragHandleStyle}
-               onTouchStart={this.onTouchStart} onTouchMove={this.onTouchMove}
-               onTouchEnd={this.onTouchEnd} onTouchCancel={this.onTouchEnd} />);
+          <div
+            style={dragHandleStyle}
+            onTouchStart={this.onTouchStart}
+            onTouchMove={this.onTouchMove}
+            onTouchEnd={this.onTouchEnd}
+            onTouchCancel={this.onTouchEnd}
+          />
+        );
       }
     }
 
     return (
       <div {...rootProps}>
-        <div className={this.props.sidebarClassName} style={sidebarStyle} ref={this.saveSidebarRef}>
+        <div
+          className={this.props.sidebarClassName}
+          style={sidebarStyle}
+          ref={this.saveSidebarRef}
+        >
           {this.props.sidebar}
         </div>
-        <div className={this.props.overlayClassName}
-             style={overlayStyle}
-             role="presentation"
-             tabIndex="0"
-             onClick={this.overlayClicked}
-          />
+        <div
+          className={this.props.overlayClassName}
+          style={overlayStyle}
+          role="presentation"
+          tabIndex="0"
+          onClick={this.overlayClicked}
+        />
         <div className={this.props.contentClassName} style={contentStyle}>
           {dragHandle}
           {this.props.children}
@@ -347,7 +390,7 @@ Sidebar.propTypes = {
     sidebar: PropTypes.object,
     content: PropTypes.object,
     overlay: PropTypes.object,
-    dragHandle: PropTypes.object,
+    dragHandle: PropTypes.object
   }),
 
   // root component optional class
@@ -393,7 +436,7 @@ Sidebar.propTypes = {
   onSetOpen: PropTypes.func,
 
   // Intial sidebar width when page loads
-  defaultSidebarWidth: PropTypes.number,
+  defaultSidebarWidth: PropTypes.number
 };
 
 Sidebar.defaultProps = {
@@ -407,7 +450,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
-  defaultSidebarWidth: 0,
+  defaultSidebarWidth: 0
 };
 
 export default Sidebar;

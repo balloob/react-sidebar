@@ -1,19 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import Sidebar from '../../';
-import MaterialTitlePanel from './material_title_panel';
-import SidebarContent from './sidebar_content';
+import Sidebar from "../../";
+import MaterialTitlePanel from "./material_title_panel";
+import SidebarContent from "./sidebar_content";
 
 const styles = {
   contentHeaderMenuLink: {
-    textDecoration: 'none',
-    color: 'white',
-    padding: 8,
+    textDecoration: "none",
+    color: "white",
+    padding: 8
   },
   content: {
-    padding: '16px',
-  },
+    padding: "16px"
+  }
 };
 
 class App extends React.Component {
@@ -28,7 +28,7 @@ class App extends React.Component {
       shadow: true,
       pullRight: false,
       touchHandleWidth: 20,
-      dragToggleDistance: 30,
+      dragToggleDistance: 30
     };
 
     this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
@@ -38,7 +38,7 @@ class App extends React.Component {
   }
 
   onSetOpen(open) {
-    this.setState({open: open});
+    this.setState({ open: open });
   }
 
   menuButtonClick(ev) {
@@ -47,7 +47,7 @@ class App extends React.Component {
   }
 
   renderPropCheckbox(prop) {
-    const toggleMethod = (ev) => {
+    const toggleMethod = ev => {
       const newState = {};
       newState[prop] = ev.target.checked;
       this.setState(newState);
@@ -55,13 +55,19 @@ class App extends React.Component {
 
     return (
       <p key={prop}>
-        <input type="checkbox" onChange={toggleMethod} checked={this.state[prop]} id={prop} />
+        <input
+          type="checkbox"
+          onChange={toggleMethod}
+          checked={this.state[prop]}
+          id={prop}
+        />
         <label htmlFor={prop}> {prop}</label>
-      </p>);
+      </p>
+    );
   }
 
   renderPropNumber(prop) {
-    const setMethod = (ev) => {
+    const setMethod = ev => {
       const newState = {};
       newState[prop] = parseInt(ev.target.value, 10);
       this.setState(newState);
@@ -69,8 +75,10 @@ class App extends React.Component {
 
     return (
       <p key={prop}>
-         {prop} <input type="number" onChange={setMethod} value={this.state[prop]} />
-      </p>);
+        {prop}{" "}
+        <input type="number" onChange={setMethod} value={this.state[prop]} />
+      </p>
+    );
   }
 
   render() {
@@ -78,15 +86,23 @@ class App extends React.Component {
 
     const contentHeader = (
       <span>
-        {!this.state.docked &&
-         <a onClick={this.menuButtonClick} href="#" style={styles.contentHeaderMenuLink}>=</a>}
+        {!this.state.docked && (
+          <a
+            onClick={this.menuButtonClick}
+            href="#"
+            style={styles.contentHeaderMenuLink}
+          >
+            =
+          </a>
+        )}
         <span> React Sidebar</span>
-      </span>);
+      </span>
+    );
 
     const sidebarProps = {
       sidebar: sidebar,
       docked: this.state.docked,
-      sidebarClassName: 'custom-sidebar-class',
+      sidebarClassName: "custom-sidebar-class",
       open: this.state.open,
       touch: this.state.touch,
       shadow: this.state.shadow,
@@ -94,27 +110,56 @@ class App extends React.Component {
       touchHandleWidth: this.state.touchHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
-      onSetOpen: this.onSetOpen,
+      onSetOpen: this.onSetOpen
     };
 
     return (
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.content}>
-            <p>React Sidebar is a sidebar component for React. It offers the following features:</p>
+            <p>
+              React Sidebar is a sidebar component for React. It offers the
+              following features:
+            </p>
             <ul>
               <li>Have the sidebar slide over main content</li>
               <li>Dock the sidebar next to the content</li>
               <li>Touch enabled: swipe to open and close the sidebar</li>
-              <li>Easy to combine with media queries for auto-docking (<a href="responsive_example.html">see example</a>)</li>
-              <li>Sidebar and content passed in as PORCs (Plain Old React Components)</li>
-              <li><a href="https://github.com/balloob/react-sidebar">Source on GitHub</a> (MIT license)</li>
+              <li>
+                Easy to combine with media queries for auto-docking (
+                <a href="responsive_example.html">see example</a>)
+              </li>
+              <li>
+                Sidebar and content passed in as PORCs (Plain Old React
+                Components)
+              </li>
+              <li>
+                <a href="https://github.com/balloob/react-sidebar">
+                  Source on GitHub
+                </a>{" "}
+                (MIT license)
+              </li>
               <li>Only dependency is React</li>
             </ul>
-            <p><a href="https://github.com/balloob/react-sidebar#installation">Instructions how to get started.</a></p>
-            <p><b>Current rendered sidebar properties:</b></p>
-            {['open', 'docked', 'transitions', 'touch', 'shadow', 'pullRight'].map(this.renderPropCheckbox)}
-            {['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
+            <p>
+              <a href="https://github.com/balloob/react-sidebar#installation">
+                Instructions how to get started.
+              </a>
+            </p>
+            <p>
+              <b>Current rendered sidebar properties:</b>
+            </p>
+            {[
+              "open",
+              "docked",
+              "transitions",
+              "touch",
+              "shadow",
+              "pullRight"
+            ].map(this.renderPropCheckbox)}
+            {["touchHandleWidth", "dragToggleDistance"].map(
+              this.renderPropNumber
+            )}
           </div>
         </MaterialTitlePanel>
       </Sidebar>
@@ -122,4 +167,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('example'));
+ReactDOM.render(<App />, document.getElementById("example"));
