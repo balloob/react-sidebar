@@ -10,14 +10,14 @@
     "example:prod": "NODE_ENV=production webpack --mode production",
     "build": "rollup -c",
     "build:watch": "rollup -c --watch",
-    "dev": "webpack-dev-server",
     "lint": "eslint src example/src"
   },
   "keywords": [
-    "component",
     "react",
     "react-component",
-    "sidebar"
+    "sidebar",
+    "drawer",
+    "navigation"
   ],
   "repository": {
     "type": "git",
