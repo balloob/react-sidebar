@@ -346,12 +346,17 @@ class Sidebar extends Component {
       }
     }
 
+    if (this.props.rootId) {
+      rootProps.id = this.props.rootId;
+    }
+
     return (
       <div {...rootProps}>
         <div
           className={this.props.sidebarClassName}
           style={sidebarStyle}
           ref={this.saveSidebarRef}
+          id={this.props.sidebarId}
         >
           {this.props.sidebar}
         </div>
@@ -361,8 +366,13 @@ class Sidebar extends Component {
           role="presentation"
           tabIndex="0"
           onClick={this.overlayClicked}
+          id={this.props.overlayId}
         />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        <div
+          className={this.props.contentClassName}
+          style={contentStyle}
+          id={this.props.contentId}
+        >
           {dragHandle}
           {this.props.children}
         </div>
@@ -426,8 +436,20 @@ Sidebar.propTypes = {
   // callback called when the overlay is clicked
   onSetOpen: PropTypes.func,
 
-  // Intial sidebar width when page loads
-  defaultSidebarWidth: PropTypes.number
+  // Initial sidebar width when page loads
+  defaultSidebarWidth: PropTypes.number,
+
+  // root component optional id
+  rootId: PropTypes.string,
+
+  // sidebar optional id
+  sidebarId: PropTypes.string,
+
+  // content optional id
+  contentId: PropTypes.string,
+
+  // overlay optional id
+  overlayId: PropTypes.string
 };
 
 Sidebar.defaultProps = {

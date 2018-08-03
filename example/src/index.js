@@ -105,6 +105,7 @@ class App extends React.Component {
       sidebar,
       docked: this.state.docked,
       sidebarClassName: "custom-sidebar-class",
+      contentId: "custom-sidebar-content-id",
       open: this.state.open,
       touch: this.state.touch,
       shadow: this.state.shadow,
