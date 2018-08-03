@@ -246,7 +246,8 @@ class Sidebar extends Component {
     const rootProps = {
       className: this.props.rootClassName,
       style: { ...defaultStyles.root, ...this.props.styles.root },
-      role: "navigation"
+      role: "navigation",
+      id: this.props.rootId
     };
     let dragHandle;
 
@@ -344,10 +345,6 @@ class Sidebar extends Component {
           />
         );
       }
-    }
-
-    if (this.props.rootId) {
-      rootProps.id = this.props.rootId;
     }
 
     return (
