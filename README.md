@@ -150,6 +150,10 @@ Supported props
 | pullRight | boolean | false | Place the sidebar on the right |
 | shadow | boolean | true | Enable/Disable sidebar shadow |
 | styles | object | [See below](#styles) | Inline styles. These styles are merged with the defaults and applied to the respective elements. |
+| rootId | string | n/a | Add an id to the root component |
+| sidebarId | string | n/a | Add an id to the sidebar |
+| contentId | string | n/a | Add an id to the content. The driving use case for adding an element id to content was to allow react-scroll to scroll the content area of the site using react-sidebar. |
+| overlayId | string | n/a | Add an an id to the overlay |
 
 Styles
 ----------------
