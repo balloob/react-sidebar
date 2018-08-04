@@ -4,14 +4,11 @@ import PropTypes from "prop-types";
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
 const defaultStyles = {
-  root: {},
   sidebar: {
     zIndex: 2,
     position: "fixed",
     top: 0,
     height: "100vh",
-
-    // bottom: 0,
     transition: "transform .3s ease-out",
     WebkitTransition: "-webkit-transform .3s ease-out",
     willChange: "transform",
@@ -23,8 +20,6 @@ const defaultStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    // overflowY: "scroll",
-    WebkitOverflowScrolling: "touch",
     transition: "left .3s ease-out, right .3s ease-out"
   },
   overlay: {
@@ -33,7 +28,6 @@ const defaultStyles = {
     top: 0,
     left: 0,
     right: 0,
-    // bottom: 0,
     height: "100vh",
     opacity: 0,
     visibility: "hidden",
@@ -47,6 +41,29 @@ const defaultStyles = {
     bottom: 0
   }
 };
+
+let scrollTop;
+let isScrollable = true;
+
+function enableScroll() {
+  if (typeof document === "undefined") return;
+  const doc = document.documentElement;
+  doc.style.width = "";
+  doc.style.position = "";
+  doc.style.top = "";
+  window.scroll(0, scrollTop);
+  isScrollable = true;
+}
+
+function disableScroll() {
+  if (typeof document === "undefined") return;
+  const doc = document.documentElement;
+  scrollTop = window.pageYOffset;
+  doc.style.width = "100%";
+  doc.style.position = "fixed";
+  doc.style.top = `${-scrollTop}px`;
+  isScrollable = false;
+}
 
 class Sidebar extends Component {
   constructor(props) {
@@ -82,8 +99,15 @@ class Sidebar extends Component {
 
   componentDidUpdate() {
     // filter out the updates when we're touching
-    if (!this.isTouching()) {
+    const isTouching = this.isTouching();
+    if (!isTouching) {
       this.saveSidebarWidth();
+    }
+    // Disable or enable scrolling depending on state
+    if (isScrollable && (this.props.open || isTouching)) {
+      disableScroll();
+    } else if (!isScrollable && !this.props.open && !isTouching) {
+      enableScroll();
     }
   }
 
@@ -241,7 +265,7 @@ class Sidebar extends Component {
     const isTouching = this.isTouching();
     const rootProps = {
       className: this.props.rootClassName,
-      style: { ...defaultStyles.root, ...this.props.styles.root },
+      style: this.props.styles.root,
       role: "navigation"
     };
     let dragHandle;
@@ -265,8 +289,6 @@ class Sidebar extends Component {
 
     if (isTouching) {
       const percentage = this.touchSidebarWidth() / this.state.sidebarWidth;
-
-      // slide open to what we dragged
       if (this.props.pullRight) {
         sidebarStyle.transform = `translateX(${(1 - percentage) * 100}%)`;
         sidebarStyle.WebkitTransform = `translateX(${(1 - percentage) * 100}%)`;
