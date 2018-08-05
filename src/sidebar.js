@@ -363,7 +363,6 @@ class Sidebar extends Component {
           className={this.props.overlayClassName}
           style={overlayStyle}
           role="presentation"
-          tabIndex="0"
           onClick={this.overlayClicked}
           id={this.props.overlayId}
         />
