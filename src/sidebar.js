@@ -78,8 +78,10 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
+    const isIos = /iPad|iPhone|iPod/.test(navigator ? navigator.userAgent : "");
     this.setState({
-      dragSupported: typeof window === "object" && "ontouchstart" in window
+      dragSupported:
+        typeof window === "object" && "ontouchstart" in window && !isIos
     });
     this.saveSidebarWidth();
   }
