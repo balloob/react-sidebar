@@ -1,6 +1,6 @@
 {
   "name": "react-sidebar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>",
   "description": "A sidebar component for React.",
   "main": "dist/react-sidebar.cjs.js",
