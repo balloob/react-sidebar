@@ -361,13 +361,14 @@ class Sidebar extends Component {
         >
           {this.props.sidebar}
         </div>
+        {/* eslint-disable */}
         <div
           className={this.props.overlayClassName}
           style={overlayStyle}
-          role="presentation"
           onClick={this.overlayClicked}
           id={this.props.overlayId}
         />
+        {/* eslint-enable */}
         <div
           className={this.props.contentClassName}
           style={contentStyle}
