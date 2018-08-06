@@ -1,12 +1,16 @@
 # Change log
 
-## [Unfinished]
+## 3.0.0
 
 - prop-types is now dependency instead of peer dependency (@markusenglund)
 - PropTypes are removed in production to save on size (@markusenglund)
 - Now using babel in loose mode & babel-runtime to reduce bundle size further (@markusenglund)
 - Made the library available as ES Module in addition to CommonJS (@markusenglund)
 - Remove tab-index from overlay (@markusenglund)
+- Remove scroll bar when not needed by changing default content overflowY from "scroll" to "auto"
+- Added new id props to let users give custom id values to all elements (@rluiten)
+- Remove touch functionality in IOS since it doesn't work due to swipe-to-go-back native behaviour.
+- Remove box-shadow when the sidebar is not visible, so it's not visible at the edge of the screen.
 
 ## 2.3.2
 
