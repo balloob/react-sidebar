@@ -28,7 +28,7 @@ const defaultStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    overflowY: "scroll",
+    overflowY: "auto",
     WebkitOverflowScrolling: "touch",
     transition: "left .3s ease-out, right .3s ease-out"
   },
@@ -78,8 +78,10 @@ class Sidebar extends Component {
   }
 
   componentDidMount() {
+    const isIos = /iPad|iPhone|iPod/.test(navigator ? navigator.userAgent : "");
     this.setState({
-      dragSupported: typeof window === "object" && "ontouchstart" in window
+      dragSupported:
+        typeof window === "object" && "ontouchstart" in window && !isIos
     });
     this.saveSidebarWidth();
   }
@@ -246,23 +248,26 @@ class Sidebar extends Component {
     const rootProps = {
       className: this.props.rootClassName,
       style: { ...defaultStyles.root, ...this.props.styles.root },
-      role: "navigation"
+      role: "navigation",
+      id: this.props.rootId
     };
     let dragHandle;
 
+    const hasBoxShadow =
+      this.props.shadow && (isTouching || this.props.open || this.props.docked);
     // sidebarStyle right/left
     if (this.props.pullRight) {
       sidebarStyle.right = 0;
       sidebarStyle.transform = "translateX(100%)";
       sidebarStyle.WebkitTransform = "translateX(100%)";
-      if (this.props.shadow) {
+      if (hasBoxShadow) {
         sidebarStyle.boxShadow = "-2px 2px 4px rgba(0, 0, 0, 0.15)";
       }
     } else {
       sidebarStyle.left = 0;
       sidebarStyle.transform = "translateX(-100%)";
       sidebarStyle.WebkitTransform = "translateX(-100%)";
-      if (this.props.shadow) {
+      if (hasBoxShadow) {
         sidebarStyle.boxShadow = "2px 2px 4px rgba(0, 0, 0, 0.15)";
       }
     }
@@ -352,17 +357,23 @@ class Sidebar extends Component {
           className={this.props.sidebarClassName}
           style={sidebarStyle}
           ref={this.saveSidebarRef}
+          id={this.props.sidebarId}
         >
           {this.props.sidebar}
         </div>
+        {/* eslint-disable */}
         <div
           className={this.props.overlayClassName}
           style={overlayStyle}
-          role="presentation"
-          tabIndex="0"
           onClick={this.overlayClicked}
+          id={this.props.overlayId}
         />
-        <div className={this.props.contentClassName} style={contentStyle}>
+        {/* eslint-enable */}
+        <div
+          className={this.props.contentClassName}
+          style={contentStyle}
+          id={this.props.contentId}
+        >
           {dragHandle}
           {this.props.children}
         </div>
@@ -426,8 +437,20 @@ Sidebar.propTypes = {
   // callback called when the overlay is clicked
   onSetOpen: PropTypes.func,
 
-  // Intial sidebar width when page loads
-  defaultSidebarWidth: PropTypes.number
+  // Initial sidebar width when page loads
+  defaultSidebarWidth: PropTypes.number,
+
+  // root component optional id
+  rootId: PropTypes.string,
+
+  // sidebar optional id
+  sidebarId: PropTypes.string,
+
+  // content optional id
+  contentId: PropTypes.string,
+
+  // overlay optional id
+  overlayId: PropTypes.string
 };
 
 Sidebar.defaultProps = {
