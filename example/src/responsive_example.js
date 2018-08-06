@@ -23,7 +23,7 @@ class App extends React.Component {
 
     this.state = {
       mql,
-      docked: false,
+      docked: mql.matches,
       open: false
     };
 
@@ -34,11 +34,10 @@ class App extends React.Component {
 
   componentWillMount() {
     mql.addListener(this.mediaQueryChanged);
-    this.setState({ mql, docked: mql.matches });
   }
 
   componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
+    mql.removeListener(this.mediaQueryChanged);
   }
 
   onSetOpen(open) {
@@ -47,8 +46,8 @@ class App extends React.Component {
 
   mediaQueryChanged() {
     this.setState({
-      mql,
-      docked: this.state.mql.matches
+      docked: mql.matches,
+      open: false
     });
   }
 
