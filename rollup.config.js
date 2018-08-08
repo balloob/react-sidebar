@@ -7,14 +7,8 @@ const external = id => !id.startsWith("/") && !id.startsWith(".");
 
 const getBabelOptions = () => ({
   runtimeHelpers: true,
-  plugins: [["@babel/transform-runtime", { useBuiltIns: true }]]
+  plugins: ["@babel/transform-runtime"]
 });
-
-const globals = {
-  react: "React",
-  "react-dom": "ReactDOM",
-  "prop-types": "PropTypes"
-};
 
 export default [
   {

@@ -4,7 +4,7 @@
     "@babel/react"
   ],
   "plugins": [
-    ["@babel/plugin-transform-runtime", { "useBuiltIns": true }],
+    "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-object-rest-spread",
     ["transform-react-remove-prop-types", { "mode": "unsafe-wrap" }]
   ]

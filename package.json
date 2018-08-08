@@ -25,7 +25,7 @@
     "url": "git://github.com/balloob/react-sidebar.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.55",
+    "@babel/runtime": ">=7.0.0-beta.56",
     "prop-types": "^15.6.2"
   },
   "peerDependencies": {
@@ -33,12 +33,12 @@
     "react-dom": ">=16.4.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.55",
-    "@babel/core": "^7.0.0-beta.55",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.55",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.55",
-    "@babel/preset-env": "^7.0.0-beta.55",
-    "@babel/preset-react": "^7.0.0-beta.55",
+    "@babel/cli": "^7.0.0-beta.56",
+    "@babel/core": "^7.0.0-beta.56",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.56",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.56",
+    "@babel/preset-env": "^7.0.0-beta.56",
+    "@babel/preset-react": "^7.0.0-beta.56",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.14",
@@ -54,8 +54,8 @@
     "react": ">=16.4.2",
     "react-dom": ">=16.4.2",
     "rollup": "^0.63.5",
-    "rollup-plugin-babel": "^4.0.0-beta.7",
-    "webpack": "^4.16.4",
+    "rollup-plugin-babel": "^4.0.0-beta.8",
+    "webpack": "^4.16.5",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"
