@@ -472,7 +472,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
-  defaultSidebarWidth: 0,
+  defaultSidebarWidth: 0
 };
 
 export default Sidebar;
