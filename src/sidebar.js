@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 
 const CANCEL_DISTANCE_ON_SCROLL = 20;
 
+const DefaultOverlay = ({...props}) => (
+  <div {...props}></div>
+);
+
 const defaultStyles = {
   root: {
     position: "absolute",
@@ -243,6 +247,7 @@ class Sidebar extends Component {
       ...defaultStyles.overlay,
       ...this.props.styles.overlay
     };
+    const { OverlayComponent = DefaultOverlay  } = this.props;
     const useTouch = this.state.dragSupported && this.props.touch;
     const isTouching = this.isTouching();
     const rootProps = {
@@ -362,7 +367,7 @@ class Sidebar extends Component {
           {this.props.sidebar}
         </div>
         {/* eslint-disable */}
-        <div
+        <OverlayComponent
           className={this.props.overlayClassName}
           style={overlayStyle}
           onClick={this.overlayClicked}
@@ -450,7 +455,10 @@ Sidebar.propTypes = {
   contentId: PropTypes.string,
 
   // overlay optional id
-  overlayId: PropTypes.string
+  overlayId: PropTypes.string,
+
+  // overlay component
+  OverlayComponent: PropTypes.func
 };
 
 Sidebar.defaultProps = {
@@ -464,7 +472,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
-  defaultSidebarWidth: 0
+  defaultSidebarWidth: 0,
 };
 
 export default Sidebar;
