@@ -102,7 +102,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
+    mql.removeListener(this.mediaQueryChanged);
   }
 
   onSetSidebarOpen(open) {
