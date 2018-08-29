@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Sidebar from "../..";
+import Sidebar from "../../src/sidebar";
 import MaterialTitlePanel from "./material_title_panel";
 import SidebarContent from "./sidebar_content";
 
