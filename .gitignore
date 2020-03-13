@@ -4,5 +4,4 @@ node_modules/
 example/compiled
 .DS_Store
 npm-debug.log
-dist
 .vscode
