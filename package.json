@@ -1,7 +1,7 @@
 {
   "name": "react-sidebar",
-  "version": "3.0.2",
-  "author": "Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>",
+  "version": "3.0.3",
+  "author": "Bibazavr",
   "description": "A sidebar component for React.",
   "main": "dist/react-sidebar.cjs.js",
   "module": "dist/react-sidebar.esm.js",
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/balloob/react-sidebar.git"
+    "url": "git://github.com/Bibazavr/react-sidebar.git"
   },
   "dependencies": {
     "@babel/runtime": ">=7.0.0-beta.56",
